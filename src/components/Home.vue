@@ -1,41 +1,43 @@
 <template>
   <v-container fluid>
     <v-row class="row-carrossel" justify="center">
-      <v-carousel cycle hide-delimiter-background show-arrows-on-hover class="carrossel">
+      <v-carousel height="300" interval="15000" cycle hide-delimiter-background show-arrows-on-hover class="carrossel">
         <v-carousel-item
           v-for="(itemCarrossel, i) in imagensCarrossel"
           :key="i"
           :src="itemCarrossel.src"
         >
-          <v-img class="blurred-img" :src="itemCarrossel.src" />
         </v-carousel-item>
       </v-carousel>
     </v-row>
+    
     <v-row class="d-flex flex-no-wrap justify-space-around">
-      <v-col sm="12" md="5" lg="5">
-        <div class="noticias-titulo">Notícias</div>
-        <v-card class="mx-auto" outlined v-for="noticia in noticias" :key="noticia.id">
+      <v-col sm="12" md="6" lg="6">
+        <div class="titulo">Notícias</div>
+        <v-divider class="divisor"></v-divider>
+        <v-card class="mx-auto" outlined v-for="noticia in ultimasNoticias" :key="noticia.id">
+          <v-img v-if="noticia.imagem" height="150px" :src="noticia.imagem" @click="abrirDialogImagem(noticia.imagem)"></v-img>
           <div class="d-flex flex-no-wrap justify-space-between">
             <div>
               <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
               <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
               <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
             </div>
-            <v-avatar v-if="noticia.imagem" class="ma-3" size="150" tile>
-              <v-img :src="noticia.imagem"></v-img>
-            </v-avatar>
           </div>
         </v-card>
       </v-col>
       
-      <v-col sm="12" md="5" lg="5">
-        <div class="feiras-titulo">Feiras</div>
+      <v-col sm="12" md="6" lg="6">
+        <div class="titulo">Feiras</div>
+        <v-divider class="divisor"></v-divider>
          <v-list three-line>
           <template v-for="feira in melhoresFeiras">
-            <v-list-item @click="" :key="feira.id">
+            <v-list-item class="mx-auto" @click="irParaFeira(feira.id)" :key="feira.id">
+              <v-spacer class="d-none d-sm-block"/>
               <v-list-item-content>
                 <v-list-item-title v-html="feira.nome"></v-list-item-title>
                 <v-list-item-subtitle v-text="`${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`"></v-list-item-subtitle>
+              </v-list-item-content>
                 <v-rating
                   v-model="feira.avaliacao"
                   color="yellow darken-3"
@@ -47,7 +49,7 @@
                   half-increments
                   dense
                 ></v-rating>
-              </v-list-item-content>
+              <v-spacer class="d-none d-sm-block"/>
             </v-list-item>
           </template>
         </v-list>
@@ -57,6 +59,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+
 export default {
   name: "Home",
   data() {
@@ -71,81 +75,36 @@ export default {
           ação: ""
         }
       ],
-      noticias: [
-        {
-          id: 1,
-          autor: "Lucas",
-          imagem: require("@/assets/banner-feira3.jpg"),
-          titulo: "Chegaram os produtos!",
-          descricao: "Chegaram couves e abóboras!"
-        },
-        {
-          id: 2,
-          autor: "Natália",
-          imagem: "",
-          titulo: "Não abrirei hoje",
-          descricao: "Por motivos de coronga, não poderem atender hoje."
-        }
-      ],
-      melhoresFeiras: [
-        {
-          id: 1,
-          nome: "Feira do Lucas",
-          avaliacao: 5.0,
-          endereco: {
-              rua: "Rua",
-              numero: 12,
-              bairro: "Bairro",
-              cidade: "Cidade",
-              estado: "ES"
-          },
-          contato: "(48)99999-9999"
-        },
-        {
-          id: 2,
-          nome: "Feira da Natália",
-          avaliacao: 4.5,
-           endereco: {
-              rua: "Rua",
-              numero: 12,
-              bairro: "Bairro",
-              cidade: "Cidade",
-              estado: "ES"
-          },
-          contato: "(48)99999-9999"
-        },
-        {
-            id: 4,
-            nome: "Feira da Jhully",
-            avaliacao: 4.0,
-            endereco: {
-                rua: "Rua",
-                numero: 12,
-                bairro: "Bairro",
-                cidade: "Cidade",
-                estado: "ES"
-            },
-            contato: "(48)99999-9999"
-        },
-        // {
-        //   id: 3,
-        //   nome: "Feira da Laís",
-        //   avaliacao: 3.5,
-        //    endereco: {
-        //       rua: "Rua",
-        //       numero: 12,
-        //       bairro: "Bairro",
-        //       cidade: "Cidade",
-        //       estado: "ES"
-        //   },
-        //   contato: "(48)99999-9999"
-        // },
-      ]
+      imagemDialog: false,
+      imagemDialogSrc: ""
     };
   },
 
-  created() {
-      
+  computed: {
+    ...mapState("Feiras", ["melhoresFeiras", "ultimasNoticias"])
+  },
+
+  async created() {
+    await this.getMelhoresFeiras();
+    await this.getUltimasNoticias();
+  },
+
+  async mounted() {
+    
+  },
+
+  methods: {
+    ...mapActions("Feiras", ["getMelhoresFeiras", "getUltimasNoticias"]),
+
+    ...mapActions("Imagem", ["setImagemDialog", "setImagemDialogSrc"]),
+
+    abrirDialogImagem(imagem) {
+      this.$emit("abrir-imagem-dialog", imagem)
+    },
+
+    irParaFeira(id) {
+      this.$router.push({ path: `/feiras/${id}`})
+    }
   }
 };
 </script>
@@ -153,36 +112,26 @@ export default {
 <style scoped>
 .carrossel {
   height: 45% !important;
-}
-
-/* .blurred-img {
-  filter: blur(3px);
-  -webkit-filter: blur(3px);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
-
-.text-box {
-  /* background-color: rgb(0,0,0); Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
-  color: #558b2f;
-  font-weight: bold;
-  /* border: 3px solid #558b2f; */
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  padding: 10px;
-  text-align: center;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #000;
-  font-size: 3em;
-  color: #fff;
+  padding: 0 12px;
 }
 
 .card-noticia {
   margin: 10px;
 }
+
+.divisor {
+  margin: 12px 0;
+  background-color: #558b2f;
+}
+
+.titulo {
+  font-size: 2em;
+  color: #558b2f;
+  text-align: center; 
+  font-family: "Roboto", sans-serif;
+}
+/* 
+.imagem-dialog{
+  height: 500px;
+} */
 </style>
