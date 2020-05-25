@@ -62,6 +62,31 @@
                         <v-row justify="center">
                             <v-col>
                                 <v-text-field
+                                    label="CPF"
+                                    outlined
+                                    color="light-green darken-3"
+                                    v-model="cpf"
+                                    :rules="[regras.obrigatorio]"
+                                    v-mask="'###.###.###-##'"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center">
+                            <v-col>
+                                <v-text-field
+                                    label="Telefone"
+                                    outlined
+                                    append-icon="mdi-phone"
+                                    color="light-green darken-3"
+                                    v-model="telefone"
+                                    :rules="[regras.obrigatorio]"
+                                    v-mask="'(##) #####-####'"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center">
+                            <v-col>
+                                <v-text-field
                                     label="Email"
                                     outlined
                                     append-icon="mdi-email"
@@ -119,13 +144,19 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState } from "vuex";
+import {mask} from 'vue-the-mask'
 
 export default {
     name: "Cadastro",
+
+    directives: {mask},
+
     data() {
         return {
             nome: "",
+            cpf: "",
+            telefone: "",
             email: "",
             dataNascimento: null,
             senha: "",
@@ -170,6 +201,8 @@ export default {
         if (this.formularioValido) {
             await this.cadastrarUsuario({ 
                 nome: this.nome,
+                cpf: this.cpf,
+                telefone: this.telefone,
                 email: this.email,
                 dataNascimento: this.dataNascimento,
                 senha: this.senha

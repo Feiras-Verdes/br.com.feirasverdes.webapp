@@ -17,6 +17,7 @@ const melhoresFeiras = { "feiras": [
     {
       "id": 1,
       "nome": "Feira do Lucas",
+      "imagem": "https://lh3.googleusercontent.com/proxy/ozN7QPzjZ8DZsDLEdT51Cv5BkR7buBge_3dskRyIKMb27B5Tz-SbgutcFmYdjvgen8f8Sn8Sxa6wiBMnsCs2VNtHyT-6aZVrFfysYA4",
       "avaliacao": 5.0,
       "endereco": {
           "rua": "Rua",
@@ -180,6 +181,18 @@ api.get("/usuarios/detalhes", (req, res) => {
 
 api.put("/usuarios", (req, res) => {
     usuario = req.body;
+    res.send(true);
+})
+
+api.post("/usuarios/undefined", (req, res) => {
+    usuario = req.body;
+    console.log(req)
+    res.send(true);
+})
+
+api.put("/usuarios/undefined/imagem", (req, res) => {
+    console.log(req)
+    usuario.imagem = req.body;
     res.send(true);
 })
 

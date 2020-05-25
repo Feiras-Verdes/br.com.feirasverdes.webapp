@@ -5,8 +5,8 @@
         <v-list class="list-menu">
           <v-list-item v-if="usuario">
             <v-list-item-avatar size="60" class="avatar-align">
-              <img v-if="usuario.avatarUrl" :src="usuario.avatarUrl" />
-              <v-icon left size="60" v-if="!usuario.avatarUrl" color="light-green darken-3">mdi-account</v-icon>
+              <img v-if="usuario.foto" :src="usuario.foto" />
+              <v-icon left size="60" v-else color="light-green darken-3">mdi-account</v-icon>
             </v-list-item-avatar>
           </v-list-item>
 
@@ -48,7 +48,7 @@
                     <v-icon left color="light-green darken-3">mdi-pencil</v-icon>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title class="titulo-item">Editar Conta</v-list-item-title>
+                    <v-list-item-title class="titulo-item">Editar Perfil</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
 

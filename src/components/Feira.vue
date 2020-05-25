@@ -4,11 +4,13 @@
       <v-col sm="12" md="12" lg="12">
         <v-row justify="center">
           <v-col sm="6" md="6" lg="6">
-            <v-avatar class="avatar-feira" color="light-green darken-3" size="140"></v-avatar>
+            <v-avatar class="avatar-feira" size="140">
+              <v-img v-if="feira.imagem" :src="feira.imagem" @click.stop="abrirDialogImagem(feira.imagem)"></v-img>
+              <v-img v-else src="../assets/icone-feira.png"></v-img>
+            </v-avatar>
           </v-col>
         </v-row>
         <v-row>
-          <!-- <div class="d-sm-flex d-inline-flex justify-space-between linha"> -->
           <div class="d-md-flex d-lg-inline-flex justify-space-around informacoes">
             <div class="nome pa-2">{{ feira.nome }}</div>
             <v-rating
@@ -29,10 +31,10 @@
           <div class="d-md-flex d-lg-inline-flex justify-space-around informacoes">
             <div class="contato pa-2">{{ feira.contato }}</div>
             <div
+              v-if="feira.endereco"
               class="endereco pa-2"
             >{{ `${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}` }}</div>
           </div>
-          <!-- </div> -->
         </v-row>
       </v-col>
     </v-row>
@@ -49,41 +51,33 @@
         <v-tabs-items v-model="aba">
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-            <v-card class="ma-3 flex-grow-1" outlined v-for="noticia in noticias" :key="noticia.id">
-              <v-img
-                v-if="noticia.imagem"
-                height="150px"
-                :src="noticia.imagem"
-                @click="abrirDialogImagem(noticia.imagem)"
-              ></v-img>
-              <div class="d-flex flex-no-wrap justify-space-between">
-                <div>
-                  <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
-                  <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
-                  <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
+              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
+              <!-- <v-card
+                class="ma-3 flex-grow-1"
+                outlined
+                v-for="noticia in noticias"
+                :key="noticia.id"
+              >
+                <v-img
+                  v-if="noticia.imagem"
+                  height="150px"
+                  :src="noticia.imagem"
+                  @click="abrirDialogImagem(noticia.imagem)"
+                ></v-img>
+                <div class="d-flex flex-no-wrap justify-space-between">
+                  <div>
+                    <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
+                    <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
+                    <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
+                  </div>
                 </div>
-              </div>
-            </v-card>
+              </v-card> -->
             </div>
           </v-tab-item>
 
-          <v-tab-item >
+          <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-                <v-card class="ma-3 flex-grow-1" v-for="produto in produtos" :key="produto.id">
-                    <div class="d-flex flex-no-wrap justify-space-around">
-                        <div>
-                        <v-card-title v-text="produto.nome"></v-card-title>
-
-                        <v-card-subtitle v-text="`R$ ${produto.preco}/${produto.unidade}`"></v-card-subtitle>
-
-                        <v-card-text v-text="produto.descricao"></v-card-text>
-                        </div>
-
-                        <v-avatar size="120" tile @click="abrirDialogImagem(produto.imagem)">
-                            <v-img :src="produto.imagem"></v-img>
-                        </v-avatar>
-                    </div>
-                </v-card>
+              <CardProduto v-for="produto in produtos" :key="produto.id" :produto="produto" @abrir-imagem-dialog="abrirDialogImagem"/>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -94,6 +88,8 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import CardProduto from "./CardProduto";
+import CardNoticia from "./CardNoticia";
 
 export default {
   name: "Feira",
@@ -101,6 +97,11 @@ export default {
     return {
       aba: 0
     };
+  },
+
+  components: {
+    CardProduto,
+    CardNoticia
   },
 
   computed: {
@@ -132,7 +133,11 @@ export default {
     ]),
 
     avaliarFeira(nota) {
-      this.actionAvaliarFeira({ idUsuario: this.usuario.id, idFeira: this.id, nota})
+      this.actionAvaliarFeira({
+        idUsuario: this.usuario.id,
+        idFeira: this.id,
+        nota
+      });
     },
 
     abrirDialogImagem(imagem) {

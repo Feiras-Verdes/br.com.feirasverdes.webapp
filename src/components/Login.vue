@@ -55,13 +55,6 @@
             </v-form>
             <v-snackbar :value="loginInvalido" multi-line :timeout=5000 color="error">
                 Usuário ou senha inválidos.
-                <!-- <v-btn
-                    color="white"
-                    text
-                    @click="loginInvalido = false"
-                >
-                    Fechar
-                </v-btn> -->
             </v-snackbar>
         </v-card>
     </v-container>

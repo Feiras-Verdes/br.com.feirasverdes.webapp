@@ -15,44 +15,13 @@
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Notícias</div>
         <v-divider class="divisor"></v-divider>
-        <v-card class="mx-auto" outlined v-for="noticia in ultimasNoticias" :key="noticia.id">
-          <v-img v-if="noticia.imagem" height="150px" :src="noticia.imagem" @click="abrirDialogImagem(noticia.imagem)"></v-img>
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
-              <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
-              <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
-            </div>
-          </div>
-        </v-card>
+        <CardNoticia v-for="noticia in ultimasNoticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
       </v-col>
       
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Feiras</div>
         <v-divider class="divisor"></v-divider>
-         <v-list three-line>
-          <template v-for="feira in melhoresFeiras">
-            <v-list-item class="mx-auto" @click="irParaFeira(feira.id)" :key="feira.id">
-              <v-spacer class="d-none d-sm-block"/>
-              <v-list-item-content>
-                <v-list-item-title v-html="feira.nome"></v-list-item-title>
-                <v-list-item-subtitle v-text="`${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`"></v-list-item-subtitle>
-              </v-list-item-content>
-                <v-rating
-                  v-model="feira.avaliacao"
-                  color="yellow darken-3"
-                  background-color="yellow darken-3"
-                  full-icon="mdi-star"
-                  half-icon="mdi-star-half"
-                  empty-icon="mdi-star-outline"
-                  readonly
-                  half-increments
-                  dense
-                ></v-rating>
-              <v-spacer class="d-none d-sm-block"/>
-            </v-list-item>
-          </template>
-        </v-list>
+        <CardFeira v-for="feira in melhoresFeiras" :key="feira.id" :feira="feira" @abrir-imagem-dialog="abrirDialogImagem"/>
       </v-col>
     </v-row>
   </v-container>
@@ -60,9 +29,17 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import CardFeira from './CardFeira';
+import CardNoticia from './CardNoticia';
 
 export default {
   name: "Home",
+
+  components: {
+    CardFeira,
+    CardNoticia
+  },
+
   data() {
     return {
       imagensCarrossel: [

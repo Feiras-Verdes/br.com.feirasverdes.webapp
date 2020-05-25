@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Dashboard from '../components/Dashboard.vue'
 import Home from '../components/Home.vue'
 import Cadastro from '../components/Cadastro.vue'
-import EditarPerfil from '../components/EditarPerfil.vue'
+import EditarUsuario from '../components/EditarUsuario.vue'
 import Login from '../components/Login.vue'
 import Feira from '../components/Feira.vue'
 
@@ -29,7 +29,7 @@ export const router = new VueRouter({
 				},
 				{
 					path: "editarPerfil",
-					component: EditarPerfil
+					component: EditarUsuario
 				},
 				{
 					path: "login",
