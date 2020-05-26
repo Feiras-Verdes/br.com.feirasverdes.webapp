@@ -1,29 +1,57 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+
+import Dashboard from '../components/Dashboard.vue'
+import Home from '../components/Home.vue'
+import Cadastro from '../components/Cadastro.vue'
+import EditarUsuario from '../components/EditarUsuario.vue'
+import Login from '../components/Login.vue'
+import Feira from '../components/Feira.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
-
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+export const router = new VueRouter({
+  mode: 'hash',
+  base: __dirname,
+  routes: [
+    {
+      path: "/",
+			component: Dashboard,
+			props: true,
+			children: [
+				{
+					path:"/",
+					component: Home
+				},
+				{
+					path: "cadastro",
+					component: Cadastro
+				},
+				{
+					path: "editarPerfil",
+					component: EditarUsuario
+				},
+				{
+					path: "login",
+					component: Login,
+					beforeEnter: (to, from, next) => {
+						if (localStorage.getItem("token-usuario")) {
+							next("/");
+						} else{
+							next();
+						}
+						
+					}
+				},
+				{
+					path: "feiras/:id",
+					component: Feira
+				}
+			]
+    }
+  ]
 })
 
-export default router
+// beforeEach()
+
+export default router;
