@@ -1,4 +1,4 @@
-import { fetchMelhoresFeiras, fetchUltimasNoticias, fetchProdutosDeFeira, fetchNoticiasDeFeira, fetchFeira, avaliarFeira } from "@/api/feiras.api"
+import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchProdutosDeFeira, fetchNoticiasDeFeira, fetchFeira, avaliarFeira } from "@/api/feiras.api"
 
 const state = {
     melhoresFeiras: {},
@@ -6,7 +6,8 @@ const state = {
     feira: {},
     produtos: {},
     noticias: {},
-    avaliacaoDoUsuario: -1
+		avaliacaoDoUsuario: -1,
+		estandes: {}
 }
 
 const mutations = {
@@ -32,7 +33,11 @@ const mutations = {
 
     SET_AVALIACAO_USUARIO(state, avaliacaoDoUsuario) {
         state.avaliacaoDoUsuario = avaliacaoDoUsuario;
-    }
+		},
+		
+		SET_ESTANDES(state, estandes) {
+			state.estandes = estandes;
+		}
 }
 
 const actions = {
@@ -43,7 +48,16 @@ const actions = {
         } catch (error) {
             console.log(error)
         }
-    },
+		},
+		
+		async getEstandesDeFeira({ commit }, id) {
+			try {
+				const res = await fetchEstandesDeFeira(id);
+				commit("SET_ESTANDES", res.data);
+		} catch (error) {
+				console.log(error)
+		}
+		},
 
     async getUltimasNoticias({ commit }) {
         try {

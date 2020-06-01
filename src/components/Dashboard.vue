@@ -5,8 +5,8 @@
         <v-list class="list-menu">
           <v-list-item v-if="usuario">
             <v-list-item-avatar size="60" class="avatar-align">
-              <img v-if="usuario.foto" :src="usuario.foto" />
-              <v-icon left size="60" v-else color="light-green darken-3">mdi-account</v-icon>
+              <img v-if="usuario.imagem" :src="usuario.imagem" />
+              <v-icon left size="60" v-else color="light-green darken-3">mdi-account-circle</v-icon>
             </v-list-item-avatar>
           </v-list-item>
 

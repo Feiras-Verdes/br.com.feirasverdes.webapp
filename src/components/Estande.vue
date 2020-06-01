@@ -4,17 +4,17 @@
       <v-col sm="12" md="12" lg="12">
         <v-row justify="center">
           <v-col sm="6" md="6" lg="6">
-            <v-avatar class="avatar-feira" size="140">
-              <v-img v-if="feira.imagem" :src="feira.imagem" @click.stop="abrirDialogImagem(feira.imagem)"></v-img>
+            <v-avatar class="avatar-estande" size="140">
+              <v-img v-if="estande.imagem" :src="estande.imagem" @click.stop="abrirDialogImagem(estande.imagem)"></v-img>
               <v-img v-else src="../assets/icone-feira.png"></v-img>
             </v-avatar>
           </v-col>
         </v-row>
         <v-row>
           <div class="d-md-flex d-lg-inline-flex justify-space-around informacoes">
-            <div class="nome pa-2">{{ feira.nome }}</div>
+            <div class="nome pa-2">{{ estande.nome }}</div>
             <v-rating
-              v-model="feira.avaliacao"
+              v-model="estande.avaliacao"
               class="avaliacao pa-2"
               color="yellow darken-3"
               background-color="yellow darken-3"
@@ -25,15 +25,15 @@
               hover
               half-increments
               dense
-              @input="avaliarFeira"
+              @input="avaliarEstande"
             ></v-rating>
           </div>
           <div class="d-md-flex d-lg-inline-flex justify-space-around informacoes">
-            <div class="contato pa-2">{{ feira.contato }}</div>
+            <div class="contato pa-2">{{ estande.contato }}</div>
             <div
-              v-if="feira.endereco"
+              v-if="estande.endereco"
               class="endereco pa-2"
-            >{{ `${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}` }}</div>
+            >{{ `${estande.endereco.rua}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}` }}</div>
           </div>
         </v-row>
       </v-col>
@@ -45,39 +45,22 @@
 
           <v-tab>Notícias</v-tab>
 
-          <v-tab>Estandes</v-tab>
+          <v-tab>Produtos</v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="aba">
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
               <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
-              <!-- <v-card
-                class="ma-3 flex-grow-1"
-                outlined
-                v-for="noticia in noticias"
-                :key="noticia.id"
-              >
-                <v-img
-                  v-if="noticia.imagem"
-                  height="150px"
-                  :src="noticia.imagem"
-                  @click="abrirDialogImagem(noticia.imagem)"
-                ></v-img>
-                <div class="d-flex flex-no-wrap justify-space-between">
-                  <div>
-                    <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
-                    <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
-                    <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
-                  </div>
-                </div>
-              </v-card> -->
             </div>
           </v-tab-item>
 
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-							<CardEstande v-for="estande in estandes" :key="estande.id" :estande="estande" @abrir-imagem-dialog="abrirDialogImagem"/>
+              <CardProduto v-for="produto in produtos" 
+							:key="produto.id" 
+							:produto="produto" 
+							@abrir-imagem-dialog="abrirDialogImagem"/>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -88,11 +71,11 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import CardEstande from "./CardEstande";
+import CardProduto from "./CardProduto";
 import CardNoticia from "./CardNoticia";
 
 export default {
-  name: "Feira",
+  name: "Estande",
   data() {
     return {
       aba: 0
@@ -100,12 +83,12 @@ export default {
   },
 
   components: {
-    CardEstande,
+    CardProduto,
     CardNoticia
   },
 
   computed: {
-    ...mapState("Feiras", ["feira", "noticias", "estandes"]),
+    ...mapState("Estandes", ["estande", "noticias", "produtos"]),
 
     ...mapState("Usuarios", ["usuario"]),
 
@@ -115,27 +98,27 @@ export default {
   },
 
   async created() {
-    await this.getFeira(this.id);
-    await this.getEstandesDeFeira(this.id);
-    await this.getNoticiasDeFeira(this.id);
+    await this.getEstande(this.id);
+    await this.getProdutosDeEstande(this.id);
+    await this.getNoticiasDeEstande(this.id);
     // if (this.usuario) {
     //     await this.getAvaliacaoDoUsuario(this.id, this.usuario.id);
     // }
   },
 
   methods: {
-    ...mapActions("Feiras", [
-      "getFeira",
-      "getEstandesDeFeira",
-      "getNoticiasDeFeira",
+    ...mapActions("Estandes", [
+      "getEstande",
+      "getProdutosDeEstande",
+      "getNoticiasDeEstande",
       "getAvaliacaoDoUsuario",
-      "actionAvaliarFeira"
+      "actionAvaliarEstande"
     ]),
 
-    avaliarFeira(nota) {
-      this.actionAvaliarFeira({
+    avaliarEstande(nota) {
+      this.actionAvaliarEstande({
         idUsuario: this.usuario.id,
-        idFeira: this.id,
+        idEstande: this.id,
         nota
       });
     },
@@ -173,7 +156,7 @@ export default {
   width: fit-content;
 }
 
-.avatar-feira {
+.avatar-estande {
   margin: 0 auto;
   display: flex;
 }

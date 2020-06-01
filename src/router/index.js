@@ -7,6 +7,7 @@ import Cadastro from '../components/Cadastro.vue'
 import EditarUsuario from '../components/EditarUsuario.vue'
 import Login from '../components/Login.vue'
 import Feira from '../components/Feira.vue'
+import Estande from '../components/Estande.vue'
 
 Vue.use(VueRouter)
 
@@ -46,6 +47,10 @@ export const router = new VueRouter({
 				{
 					path: "feiras/:id",
 					component: Feira
+				},
+				{
+					path: "estandes/:id",
+					component: Estande
 				}
 			]
     }

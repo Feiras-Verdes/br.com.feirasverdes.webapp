@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container v-if="usuario" fluid>
     <v-card class="card-cadastro">
       <v-toolbar dark color="light-green darken-3" height="45px">
         <v-row align="center" justify="center">
@@ -13,8 +13,8 @@
           <v-row justify="center">
             <v-col cols="8" class="d-flex justify-center">
               <v-avatar class="avatar-usuario" size="120">
-                <img v-if="usuario.imagem" :src="usuario.imagem" />
-                <img v-else-if="fotoUrl" :src="fotoUrl" />
+                <img v-if="fotoUrl" :src="fotoUrl" />
+                <img v-else-if="usuario.imagem" :src="usuario.imagem" />
                 <v-icon left size="120" v-else color="light-green darken-3">mdi-account-circle</v-icon>
               </v-avatar>
             </v-col>
