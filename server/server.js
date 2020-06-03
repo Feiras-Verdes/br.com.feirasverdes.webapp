@@ -227,13 +227,13 @@ api.get("/usuarios/detalhes", (req, res) => {
     else res.send(null)
 })
 
-api.put("/usuarios", (req, res) => {
+api.post("/usuarios", (req, res) => {
 		usuario = req.body;
 		usuario.imagem = "https://pbs.twimg.com/profile_images/2390301435/sq8hju8x89jkzuea8dtw_400x400.jpeg",
     res.send(true);
 })
 
-api.post("/usuarios/undefined", (req, res) => {
+api.put("/usuarios/undefined", (req, res) => {
     usuario = req.body;
     console.log(req)
     res.send(true);
