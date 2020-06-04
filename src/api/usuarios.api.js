@@ -6,9 +6,9 @@ const fazerLogin = (email, senha) => httpClient.post(`${endpointUsuarios}/login`
 
 const fetchDetalhesDoUsuario = () => httpClient.get(`${endpointUsuarios}/detalhes`);
 
-const cadastrarUsuarioApi = (usuario) => httpClient.put(`${endpointUsuarios}`, usuario);
+const cadastrarUsuarioApi = (usuario) => httpClient.post(`${endpointUsuarios}`, usuario);
 
-const salvarUsuarioAtualizado = (idUsuario, usuario) => httpClient.post(`${endpointUsuarios}/${idUsuario}`, usuario, { headers: { 'Content-Type': 'multipart/form-data' } });
+const salvarUsuarioAtualizado = (idUsuario, usuario) => httpClient.put(`${endpointUsuarios}/${idUsuario}`, usuario, { headers: { 'Content-Type': 'multipart/form-data' } });
 
 const uploadImagem = (idUsuario, imagem) => httpClient.put(`${endpointUsuarios}/${idUsuario}/imagem`, imagem, {
     headers: {

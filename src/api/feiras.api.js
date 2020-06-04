@@ -16,7 +16,10 @@ const fetchNoticiasDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/not
 
 const avaliarFeira = (idUsuario, idFeira, nota) => httpClient.post(`${endpointFeiras}/${idFeira}/avaliar`, {idUsuario, nota});
 
+const fetchEstandesDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/estandes`)
+
 export {
+	fetchEstandesDeFeira,
 	fetchMelhoresFeiras,
     fetchUltimasNoticias,
     fetchFeira,
