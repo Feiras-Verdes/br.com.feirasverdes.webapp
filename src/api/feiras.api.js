@@ -8,7 +8,7 @@ const fetchUltimasNoticias = () => httpClient.get(`${endpointFeiras}/ultimas-not
 
 const fetchFeira = (id) => httpClient.get(`${endpointFeiras}/${id}`)
 
-const fetchProdutosDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/produtos`)
+// const fetchProdutosDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/produtos`)
 
 const fetchNoticiasDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/noticias`)
 
@@ -23,7 +23,6 @@ export {
 	fetchMelhoresFeiras,
     fetchUltimasNoticias,
     fetchFeira,
-    fetchProdutosDeFeira,
     fetchNoticiasDeFeira,
     avaliarFeira
 };

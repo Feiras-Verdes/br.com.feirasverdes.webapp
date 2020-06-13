@@ -1,7 +1,6 @@
 import router from "@/router";
 import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado, uploadImagem } from "@/api/usuarios.api"
 
-
 const state = {
     usuario: null,
     loginInvalido: false,
@@ -70,7 +69,6 @@ const actions = {
     },
 
     async atualizarUsuario({ dispatch }, payload) {
-
         try {
             const res = await salvarUsuarioAtualizado(payload.id, payload.usuario);
             dispatch("fetchDetalhesDoUsuario");

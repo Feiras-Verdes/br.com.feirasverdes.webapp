@@ -1,4 +1,4 @@
-import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchProdutosDeFeira, fetchNoticiasDeFeira, fetchFeira, avaliarFeira } from "@/api/feiras.api"
+import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchNoticiasDeFeira, fetchFeira, avaliarFeira } from "@/api/feiras.api"
 
 const state = {
     melhoresFeiras: {},
