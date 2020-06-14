@@ -1,7 +1,7 @@
 <template>
   <v-app>
     
-    <v-navigation-drawer v-model="drawer" absolute>
+    <v-navigation-drawer v-model="drawer" app>
       <template v-slot:prepend>
         <v-list class="list-menu">
           <v-list-item v-if="usuario">

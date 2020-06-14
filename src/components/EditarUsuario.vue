@@ -190,7 +190,7 @@ export default {
     this.cpf = this.usuario.cpf;
     this.telefone = this.usuario.telefone;
     this.email = this.usuario.email;
-    this.fotoUrl = this.usuario.foto;
+    this.foto = this.usuario.foto;
   },
 
   computed: {
@@ -227,7 +227,14 @@ export default {
       this.validarFormulario;
 
       let formData = new FormData();
-      formData.append("foto", this.foto);
+      formData.append("imagem", this.foto);
+      formData.append("usuario", {
+        nome: this.nome,
+        cpf: this.cpf,
+        telefone: this.telefone,
+        email: this.email,
+        dataNascimento: this.dataNascimento
+      })
       formData.append("nome", this.nome);
       formData.append("cpf", this.cpf);
       formData.append("telefone", this.telefone);
@@ -237,7 +244,7 @@ export default {
       if (this.formularioValido) {
         await this.atualizarUsuario({
           id: this.usuario.id,
-          usuario: formData
+          formData: formData
         });
       }
     },
