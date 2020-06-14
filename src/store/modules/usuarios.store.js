@@ -1,6 +1,5 @@
 import router from "@/router";
-import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado, uploadImagem } from "@/api/usuarios.api"
-
+import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado } from "@/api/usuarios.api"
 
 const state = {
     usuario: null,
@@ -19,6 +18,10 @@ const mutations = {
 
     SET_CADASTROINVALIDO(state, cadastroInvalido) {
         state.cadastroInvalido = cadastroInvalido
+    },
+
+    IMAGEM_PARA_URL(state) {
+        state.usuario.imagem = `data:${state.usuario.imagem.tipo};base64,${state.usuario.imagem.bytesImagem}`;
     }
 }
 
@@ -27,7 +30,7 @@ const actions = {
         try {
             commit("SET_LOGIN_INVALIDO", false);
             const response = await fazerLogin(payload.email, payload.senha);
-            localStorage.setItem("token-usuario", response.data);
+            localStorage.setItem("token-usuario", response.data.token);
             await dispatch("fetchDetalhesDoUsuario")
             router.push("/");
         } catch (error) {
@@ -53,6 +56,7 @@ const actions = {
         try {
             const res = await fetchDetalhesDoUsuario();
             commit("SET_USUARIO", res.data);
+            commit("IMAGEM_PARA_URL")
         } catch (error) {
             console.log(error);
         }
@@ -70,23 +74,14 @@ const actions = {
     },
 
     async atualizarUsuario({ dispatch }, payload) {
-
         try {
-            const res = await salvarUsuarioAtualizado(payload.id, payload.usuario);
+            const res = await salvarUsuarioAtualizado(payload.id, payload.formData);
             dispatch("fetchDetalhesDoUsuario");
         } catch (error) {
             console.log(error);
         }
-    },
-
-    async enviarImagem({}, payload) {
-        try {
-            console.log(payload.foto)
-            const res = await uploadImagem(payload.id, payload.foto);
-        } catch (error) {
-            console.log(error);
-        }
     }
+
 }
 
 export default {

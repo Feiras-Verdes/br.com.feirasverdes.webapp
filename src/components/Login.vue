@@ -50,7 +50,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn class="white--text" outlined large color="light-green darken-3" @click="cancelar">Cancelar</v-btn>
-                    <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Login</v-btn>
+                    <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Entrar</v-btn>
                 </v-card-actions>
             </v-form>
             <v-snackbar :value="loginInvalido" multi-line :timeout=5000 color="error">

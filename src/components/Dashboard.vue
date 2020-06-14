@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    
     <v-navigation-drawer v-model="drawer" app>
       <template v-slot:prepend>
         <v-list class="list-menu">
@@ -79,7 +80,6 @@
         <v-tabs-slider></v-tabs-slider>
       </v-tabs>
     </v-navigation-drawer>
-    
     <v-app-bar app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="light-green darken-3"></v-app-bar-nav-icon>
 
