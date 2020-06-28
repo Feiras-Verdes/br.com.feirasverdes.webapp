@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    
     <v-navigation-drawer v-model="drawer" app>
       <template v-slot:prepend>
         <v-list class="list-menu">
@@ -17,50 +16,47 @@
             </v-list-item-avatar>
           </v-list-item>
 
-          <v-list-group
-            prepend-icon="mdi-account"
-            color="light-green darken-3"
-          >
-            <template v-slot:activator >
-                <v-list-item-title v-if="usuario" class="titulo-item" >{{usuario.nome}}</v-list-item-title>
-                <v-list-item-title v-else class="titulo-item">Usuário</v-list-item-title>
+          <v-list-group prepend-icon="mdi-account" color="light-green darken-3">
+            <template v-slot:activator>
+              <v-list-item-title v-if="usuario" class="titulo-item">{{usuario.nome}}</v-list-item-title>
+              <v-list-item-title v-else class="titulo-item">Usuário</v-list-item-title>
             </template>
 
-                <v-list-item v-if="!usuario" to="/login">
-                  <v-list-item-avatar class="avatar-align">
-                    <v-icon left color="light-green darken-3">mdi-login</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="titulo-item">Entrar</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+            <v-list-item v-if="!usuario" to="/login">
+              <v-list-item-avatar class="avatar-align">
+                <v-icon left color="light-green darken-3">mdi-login</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="titulo-item">Entrar</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-                <v-list-item v-if="!usuario" to="/cadastro">
-                  <v-list-item-avatar class="avatar-align">
-                    <v-icon left color="light-green darken-3">mdi-account-plus</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="titulo-item">Cadastre-se</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+            <v-list-item v-if="!usuario" to="/cadastro">
+              <v-list-item-avatar class="avatar-align">
+                <v-icon left color="light-green darken-3">mdi-account-plus</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="titulo-item">Cadastre-se</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-                <v-list-item v-if="usuario" to="/editarPerfil">
-                  <v-list-item-avatar class="avatar-align">
-                    <v-icon left color="light-green darken-3">mdi-pencil</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="titulo-item">Editar Perfil</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+            <v-list-item v-if="usuario" to="/editar-perfil">
+              <v-list-item-avatar class="avatar-align">
+                <v-icon left color="light-green darken-3">mdi-pencil</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="titulo-item">Editar Perfil</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-                <v-list-item v-if="usuario" @click="logout">
-                  <v-list-item-avatar class="avatar-align">
-                    <v-icon left color="light-green darken-3">mdi-logout</v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="titulo-item">Sair</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+            <v-list-item v-if="usuario" @click="logout">
+              <v-list-item-avatar class="avatar-align">
+                <v-icon left color="light-green darken-3">mdi-logout</v-icon>
+              </v-list-item-avatar>
+              <v-list-item-content>
+                <v-list-item-title class="titulo-item">Sair</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           </v-list-group>
         </v-list>
       </template>
@@ -73,9 +69,21 @@
       >
         <v-tab v-for="item in items" :key="item.id" :to="item.rota" class="aba" exact>
           <v-avatar class="tab-icon" left>
-            <v-icon left>{{ item.icone }}</v-icon>
+            <v-icon v-if="item.icone" left>{{ item.icone }}</v-icon>
+            <v-img v-else :src="item.imagem"></v-img>
           </v-avatar>
           {{ item.nome }}
+        </v-tab>
+
+        <v-tab
+          v-if="usuario && (usuario.tipoUsuario.descricao == 'ORGANIZADOR')"
+          to="/gerenciar-feiras"
+          class="aba"
+          exact
+        >
+          <v-avatar class="tab-icon" left>
+            <v-icon left>mdi-home</v-icon>
+          </v-avatar>Minhas Feiras
         </v-tab>
         <v-tabs-slider></v-tabs-slider>
       </v-tabs>
@@ -103,21 +111,48 @@
 
       <v-spacer class="d-none d-md-block"></v-spacer>
 
-      <v-btn v-if="usuario" outlined dark class="d-none d-sm-block botao" color="light-green darken-3" @click="logout">Sair</v-btn>
+      <v-btn
+        v-if="usuario"
+        outlined
+        dark
+        class="d-none d-sm-block botao"
+        color="light-green darken-3"
+        @click="logout"
+      >Sair</v-btn>
 
-      <v-btn v-if="!usuario" dark class="d-none d-sm-block botao" color="light-green darken-3" @click="cadastrar">Cadastre-se</v-btn>
+      <v-btn
+        v-if="!usuario"
+        dark
+        class="d-none d-sm-block botao"
+        color="light-green darken-3"
+        @click="cadastrar"
+      >Cadastre-se</v-btn>
 
-      <v-btn v-if="!usuario" dark color="light-green darken-3 d-none d-sm-block" @click="entrar">Entrar</v-btn>
+      <v-btn
+        v-if="!usuario"
+        dark
+        color="light-green darken-3 d-none d-sm-block"
+        @click="entrar"
+      >Entrar</v-btn>
+
+      <v-snackbar :value="mostrarAlerta" :timeout="5000" :color="tipo" @input="setMostrarMensagem(false)">
+        {{ mensagem }}
+        <template v-slot:action="{ attrs }">
+          <v-btn text v-bind="attrs" @click="setMostrarMensagem(false)">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-app-bar>
 
-    <v-content>
-        <router-view @abrir-imagem-dialog="abrirDialogImagem"></router-view>
-    </v-content>
+    <v-main>
+      <router-view @abrir-imagem-dialog="abrirDialogImagem"></router-view>
+    </v-main>
 
-    <v-footer></v-footer>
+    <!-- <v-footer></v-footer> -->
 
     <v-dialog v-model="imagemDialog">
-        <v-img max-height="900" :src="imagemDialogSrc"></v-img>
+      <v-img max-height="900" :src="imagemDialogSrc"></v-img>
     </v-dialog>
   </v-app>
 </template>
@@ -134,7 +169,7 @@ export default {
       expandSearchBar: false,
       drawer: false,
       items: [
-       {
+        {
           id: 1,
           nome: "Home",
           icone: "mdi-home",
@@ -154,24 +189,42 @@ export default {
   computed: {
     ...mapState("Usuarios", ["usuario"]),
 
+    ...mapState("Mensagens", ["mostrarMensagem", "mensagem", "tipo"]),
+
     mostrarImagemDialog() {
       return this.imagemDialog;
+    },
+
+    mostrarAlerta: {
+      get() {
+        return this.mostrarMensagem;
+      },
+
+      set() {
+        this.setMostrarMensagem(false);
+      }
     }
   },
 
   methods: {
     ...mapActions("Usuarios", ["fetchDetalhesDoUsuario", "logout"]),
 
+    ...mapActions("Mensagens", [
+      "setMostrarMensagem",
+      "setMensagem",
+      "setTipo"
+    ]),
+
     cadastrar() {
-      this.$router.push({ path: "/cadastro" })
+      this.$router.push({ path: "/cadastro" });
     },
 
     entrar() {
-      this.$router.push({ path: "/login" })
+      this.$router.push({ path: "/login" });
     },
 
     buscar() {
-      console.log(this.busca)
+      console.log(this.busca);
     },
 
     abrirDialogImagem(imagem) {

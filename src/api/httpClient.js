@@ -28,12 +28,10 @@ const errorInterceptor = error => {
 	switch(error.response.status) {
 	case 400:
 		console.error(error.response.status, error.message);
-		alert("Nothing to display","Data Not Found");
 		break;
 
 	case 401:
-		localStorage.removeItem("token");
-		// router.push("/login");
+		localStorage.removeItem("token-usuario");
 		break;
 
 	default:

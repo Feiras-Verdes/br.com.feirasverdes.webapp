@@ -10,39 +10,24 @@
       </v-toolbar>
       <v-form ref="form" v-model="formularioValido" lazy-validation>
         <v-card-text class="form">
-          <v-row justify="center">
-            <v-col>
-              <v-combobox
+          <v-row>
+            <v-col cols="10">
+              <v-select
                 v-model="tipoSelecionado"
                 :items="tiposUsuario"
                 label="Tipo de Usuário"
                 color="light-green darken-3"
                 item-color="light-green darken-3"
                 outlined
-                :rules="[regras.comboboxPreenxido]"
                 validate-on-blur
-              >
-                <template v-slot:selection="{ attrs, item, selected }">
-                  <v-chip
-                    v-if="item === Object(item)"
-                    v-bind="attrs"
-                    color="light-green darken-3"
-                    :input-value="selected"
-                    label
-                    small
-                    dark
-                  >
-                    <span class="pr-2">{{ item.text }}</span>
-                  </v-chip>
-                </template>
-              </v-combobox>
+              ></v-select>
             </v-col>
             <v-col cols="1">
               <v-icon small color="red darken-3 obrigatorio">mdi-asterisk</v-icon>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Nome"
                 outlined
@@ -55,8 +40,8 @@
               <v-icon small color="red darken-3 obrigatorio">mdi-asterisk</v-icon>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col cols="11">
+          <v-row>
+            <v-col cols="10">
               <v-menu
                 ref="datePicker"
                 v-model="datePicker"
@@ -75,7 +60,6 @@
                     v-on="on"
                     outlined
                     color="light-green darken-3"
-                    :rules="[regras.obrigatorioParaFeirantes]"
                   ></v-text-field>
                 </template>
                 <v-date-picker
@@ -89,86 +73,64 @@
                 ></v-date-picker>
               </v-menu>
             </v-col>
-            <v-col cols="1">
-              <v-icon
-                v-if="tipoSelecionado.value > 1"
-                small
-                color="red darken-3 obrigatorio"
-              >mdi-asterisk</v-icon>
-            </v-col>
           </v-row>
-          <v-row justify="center">
-            <!-- <v-col cols="5"> -->
-            <v-col class="d-flex align-center">
-              <v-text-field
-                label="CPF"
-                outlined
-                color="light-green darken-3"
-                v-model="cpf"
-                v-mask="'###.###.###-##'"
-                :rules="[regras.cpfOuCpnj]"
-                validate-on-blur
-                class=".d-inline-flex"
-              ></v-text-field>
-              <!-- </v-col> -->
-              <!-- <v-col cols="1"> -->
-              <!-- <v-icon
-                v-if="tipoSelecionado.value > 1"
-                small
-                color="red darken-3 obrigatorio"
-              >mdi-asterisk</v-icon>-->
-              <!-- </v-col> -->
-              <!-- </v-row> -->
-              <!-- <v-row justify="center"> -->
-              <!-- <v-col cols="1" v-if="tipoSelecionado.value > 1"> -->
-              <div v-if="tipoSelecionado.value > 1" class=".d-inline-flex mx-5 text-h5 texto ou">ou</div>
-              <!-- </v-col> -->
-              <!-- <v-col v-if="tipoSelecionado.value > 1" cols="5"> -->
-              <v-text-field
-                label="CNPJ"
-                v-if="tipoSelecionado.value > 1"
-                outlined
-                color="light-green darken-3"
-                v-model="cnpj"
-                v-mask="'##.###.###/####-##'"
-                :rules="[regras.cpfOuCpnj]"
-                validate-on-blur
-                class=".d-inline-flex"
-              ></v-text-field>
-              <!-- </v-col> -->
-              <!-- <v-col cols="1"> -->
-            </v-col>
-            <v-col cols="1">
-              <v-icon
-                v-if="tipoSelecionado.value > 1"
-                small
-                color="red darken-3 obrigatorio"
-                class=".d-inline-flex"
-              >mdi-asterisk</v-icon>
-            </v-col>
+          <v-row>
+            <div class="d-sm-inline-flex">
+              <v-radio-group class="pl-3" v-model="cpfOuCpnj" row>
+                <v-radio label="CPF" value="CPF" color="light-green darken-3"></v-radio>
+                <v-radio label="CNPJ" value="CNPJ" color="light-green darken-3"></v-radio>
+              </v-radio-group>
+
+              <div class="d-flex">
+                <v-row justify="center" class="flex-grow-1">
+                  <v-col cols="10" class="flex-grow-1">
+                    <v-text-field
+                      v-if="cpfOuCpnj == 'CPF'"
+                      label="Digite seu CPF"
+                      outlined
+                      color="light-green darken-3"
+                      v-model="cpf"
+                      v-mask="'###.###.###-##'"
+                      :rules="[regras.cpfOuCpnj]"
+                      validate-on-blur
+                    ></v-text-field>
+
+                    <v-text-field
+                      label="Digite seu CNPJ"
+                      v-if="cpfOuCpnj == 'CNPJ'"
+                      outlined
+                      color="light-green darken-3"
+                      v-model="cnpj"
+                      v-mask="'##.###.###/####-##'"
+                      :rules="[regras.cpfOuCpnj]"
+                      validate-on-blur
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="1">
+                    <v-icon
+                      small
+                      color="red darken-3 obrigatorio"
+                      class=".d-inline-flex"
+                    >mdi-asterisk</v-icon>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
           </v-row>
-          <v-row justify="center">
-            <v-col cols="11">
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Telefone"
                 outlined
                 append-icon="mdi-phone"
                 color="light-green darken-3"
                 v-model="telefone"
-                :rules="[regras.obrigatorioParaFeirantes]"
-                v-mask="'(##) #####-####'"
+                v-mask="['(##) ####-####', '(##) #####-####']"
               ></v-text-field>
             </v-col>
-            <v-col cols="1">
-              <v-icon
-                v-if="tipoSelecionado.value > 1"
-                small
-                color="red darken-3 obrigatorio"
-              >mdi-asterisk</v-icon>
-            </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Email"
                 outlined
@@ -183,7 +145,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col cols="10">
               <v-text-field
                 label="Senha"
                 color="light-green darken-3"
@@ -200,7 +162,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col cols="10">
               <v-text-field
                 label="Confirme sua Senha"
                 color="light-green darken-3"
@@ -236,12 +198,6 @@
           >Cadastrar</v-btn>
         </v-card-actions>
       </v-form>
-      <v-snackbar
-        :value="cadastroInvalido"
-        top
-        :timeout="5000"
-        color="error"
-      >Erro ao fazer cadastro. Revise seus dados e tente novamente.</v-snackbar>
     </v-card>
   </v-container>
 </template>
@@ -280,7 +236,6 @@ export default {
           this.senha == this.confirmacaoSenha ||
           "Senha e confirmação de senha devem ser idênticas",
         cpfOuCpnj: valor =>
-          this.tipoSelecionado.value == 1 ||
           this.cpf.trim() != "" ||
           this.cnpj.trim() != "" ||
           "CPF ou CNPJ devem ser preenchidos!"
@@ -291,7 +246,9 @@ export default {
         { value: 2, text: "Feirante" },
         { value: 3, text: "Organizador" }
       ],
-      tipoSelecionado: {}
+      tipoSelecionado: 1,
+      cpfOuCpnj: "CPF",
+      cpfCnpj: ["CPF", "CNPJ"]
     };
   },
 
@@ -302,15 +259,9 @@ export default {
   },
 
   computed: {
-    ...mapState("Usuarios", ["cadastroInvalido"]),
-
     dataNascimentoFormatada() {
       return this.formatarData(this.dataNascimento);
     }
-  },
-
-  mounted() {
-    this.tipoSelecionado = this.tiposUsuario[0];
   },
 
   methods: {
@@ -321,6 +272,10 @@ export default {
 
       const [ano, mes, dia] = data.split("-");
       return `${dia}/${mes}/${ano}`;
+    },
+
+    teste() {
+      console.log(this.cpfOuCpnj);
     },
 
     async cadastrar() {
@@ -335,7 +290,7 @@ export default {
           dataNascimento: this.dataNascimento,
           senha: this.senha,
           tipoUsuario: {
-            id: this.tipoSelecionado.value
+            id: this.tipoSelecionado
           }
         };
         await this.cadastrarUsuario(usuario);

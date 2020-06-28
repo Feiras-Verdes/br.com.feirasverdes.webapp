@@ -1,10 +1,9 @@
 import router from "@/router";
 import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado } from "@/api/usuarios.api"
+import { converterBytesParaDataUrl } from "@/utils/utils.js"
 
 const state = {
-    usuario: null,
-    loginInvalido: false,
-    cadastroInvalido: false
+    usuario: null
 }
 
 const mutations = {
@@ -12,30 +11,21 @@ const mutations = {
         state.usuario = usuario;
     },
 
-    SET_LOGIN_INVALIDO(state, loginInvalido) {
-        state.loginInvalido = loginInvalido
-    },
-
-    SET_CADASTROINVALIDO(state, cadastroInvalido) {
-        state.cadastroInvalido = cadastroInvalido
-    },
-
-    IMAGEM_PARA_URL(state) {
-        state.usuario.imagem = `data:${state.usuario.imagem.tipo};base64,${state.usuario.imagem.bytesImagem}`;
+    SET_IMAGEM(state, imagem) {
+        state.usuario.imagem = imagem;
     }
 }
 
 const actions = {
-    async login({ commit, dispatch }, payload) {
+    async login({ dispatch }, payload) {
         try {
-            commit("SET_LOGIN_INVALIDO", false);
             const response = await fazerLogin(payload.email, payload.senha);
             localStorage.setItem("token-usuario", response.data.token);
             await dispatch("fetchDetalhesDoUsuario")
             router.push("/");
         } catch (error) {
             if (error.response.status == 401) {
-                commit("SET_LOGIN_INVALIDO", true);
+                this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Usuário e/ou senha incorretos", tipo: "error"});
             }
         }
     },
@@ -46,39 +36,42 @@ const actions = {
             commit("SET_USUARIO", null)
             router.push("/login");
         } catch (error) {
-            if (error.res.status == 401) {
+            if (error.response.status == 401) {
                 console.log(error);
             }
         }
     },
 
-    async fetchDetalhesDoUsuario({ commit }) {
+    async fetchDetalhesDoUsuario({ state, commit }) {
         try {
             const res = await fetchDetalhesDoUsuario();
             commit("SET_USUARIO", res.data);
-            commit("IMAGEM_PARA_URL")
+            commit("SET_IMAGEM", converterBytesParaDataUrl(state.usuario.imagem))
         } catch (error) {
             console.log(error);
+            localStorage.removeItem("token-usuario");
         }
     },
 
     async cadastrarUsuario({ commit }, payload) {
         try {
-            commit("SET_CADASTROINVALIDO", false)
             const res = await cadastrarUsuarioApi(payload)
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Cadastro efetuado com sucesso!", tipo: "success"});
             router.push("/login");
         } catch (error) {
             console.log(error);
-            commit("SET_CADASTROINVALIDO", true);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Cadastro inválido. Verifique seus dados.", tipo: "error"});
         }
     },
 
     async atualizarUsuario({ dispatch }, payload) {
         try {
             const res = await salvarUsuarioAtualizado(payload.id, payload.formData);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Usuário atualizado com sucesso!", tipo: "success"});
             dispatch("fetchDetalhesDoUsuario");
         } catch (error) {
             console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
         }
     }
 
