@@ -10,7 +10,7 @@ const fetchProdutosDeEstande = (id) => httpClient.get(`${endpointEstandes}/${id}
 
 const fetchNoticiasDeEstande = (id) => httpClient.get(`${endpointEstandes}/${id}/noticias`)
 
-// const fetchAvaliacaoDoUsuario = (idEstande, idUsuario) => httpClient.get();
+// const fetchAvaliacaoDoUsuario = (idEstande, idUsuario) => httpClient.get();  
 
 const avaliarEstande = (idUsuario, idEstande, nota) => httpClient.post(`${endpointEstandes}/${idEstande}/avaliar`, {idUsuario, nota});
 

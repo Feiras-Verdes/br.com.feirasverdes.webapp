@@ -22,7 +22,7 @@
         </v-card-subtitle>
 
         <v-card-text class="d-flex d-md-inline-flex justify-space-around">
-            <p class="mx-3">{{`Endereço: ${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</p>
+            <p class="mx-3">{{`Endereço: ${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</p>
             <p class="d-none d-sm-block"> - </p>
             <p class="mx-3">{{`Contato: ${feira.contato}`}}</p>
         </v-card-text>

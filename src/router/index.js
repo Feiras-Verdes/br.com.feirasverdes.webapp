@@ -8,20 +8,23 @@ import EditarUsuario from '../components/EditarUsuario.vue'
 import Login from '../components/Login.vue'
 import Feira from '../components/Feira.vue'
 import Estande from '../components/Estande.vue'
+import GerenciarFeiras from '../components/GerenciarFeiras.vue'
+import EditarFeira from '../components/EditarFeira.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
 export const router = new VueRouter({
-  mode: 'hash',
-  base: __dirname,
-  routes: [
-    {
-      path: "/",
+	mode: 'hash',
+	base: __dirname,
+	routes: [
+		{
+			path: "/",
 			component: Dashboard,
 			props: true,
 			children: [
 				{
-					path:"/",
+					path: "/",
 					component: Home
 				},
 				{
@@ -29,7 +32,7 @@ export const router = new VueRouter({
 					component: Cadastro
 				},
 				{
-					path: "editarPerfil",
+					path: "editar-perfil",
 					component: EditarUsuario
 				},
 				{
@@ -38,10 +41,9 @@ export const router = new VueRouter({
 					beforeEnter: (to, from, next) => {
 						if (localStorage.getItem("token-usuario")) {
 							next("/");
-						} else{
+						} else {
 							next();
 						}
-						
 					}
 				},
 				{
@@ -51,10 +53,27 @@ export const router = new VueRouter({
 				{
 					path: "estandes/:id",
 					component: Estande
+				},
+				{
+					path: "gerenciar-feiras",
+					component: GerenciarFeiras,
+					beforeEnter: (to, from, next) => {
+						if (store.state.Usuarios.usuario && (store.state.Usuarios.usuario.tipoUsuario.descricao == 'ORGANIZADOR')) {
+							next();
+						} else {
+							next("/");
+						}
+					},
+					children: [
+						{
+							path: ":id",
+							component: EditarFeira
+						}
+					]
 				}
 			]
-    }
-  ]
+		}
+	]
 })
 
 // beforeEach()

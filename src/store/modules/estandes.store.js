@@ -1,7 +1,6 @@
 import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande } from "@/api/estandes.api"
 
 const state = {
-    ultimasNoticias: {},
     estande: {},
     produtos: {},
     noticias: {},
@@ -9,10 +8,6 @@ const state = {
 }
 
 const mutations = {
-    SET_ULTIMAS_NOTICIAS(state, ultimasNoticias) {
-        state.ultimasNoticias = ultimasNoticias;
-    },
-
     SET_ESTANDE(state, estande) {
         state.estande = estande;
     },
@@ -34,7 +29,7 @@ const actions = {
     async getUltimasNoticias({ commit }) {
         try {
             const res = await fetchUltimasNoticias();
-            commit("SET_ULTIMAS_NOTICIAS", res.data.noticias)
+            commit("SET_NOTICIAS", res.data.noticias)
         } catch (error) {
             console.log(error)
         }
