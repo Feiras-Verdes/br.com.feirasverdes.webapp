@@ -19,7 +19,7 @@ const melhoresFeiras = { "feiras": [
       "nome": "Feira do Lucas",
       "avaliacao": 5.0,
       "endereco": {
-          "rua": "Rua",
+          "logradouro": "Rua",
           "numero": 12,
           "bairro": "Bairro",
           "cidade": "Cidade",
@@ -32,7 +32,7 @@ const melhoresFeiras = { "feiras": [
 					"nome": "Estande 1",
 					"avaliacao": 3.5,
 					"endereco": {
-						"rua": "Rua",
+						"logradouro": "Rua",
 						"numero": 12,
 						"bairro": "Bairro",
 						"cidade": "Cidade",
@@ -112,7 +112,7 @@ const melhoresFeiras = { "feiras": [
       "nome": "Feira da Natália",
       "avaliacao": 4.5,
        "endereco": {
-          "rua": "Rua",
+          "logradouro": "Rua",
           "numero": 12,
           "bairro": "Bairro",
           "cidade": "Cidade",
@@ -125,7 +125,7 @@ const melhoresFeiras = { "feiras": [
         "nome": "Feira da Jhully",
         "avaliacao": 4.0,
         "endereco": {
-            "rua": "Rua",
+            "logradouro": "Rua",
             "numero": 12,
             "bairro": "Bairro",
             "cidade": "Cidade",
@@ -138,7 +138,7 @@ const melhoresFeiras = { "feiras": [
       "nome": "Feira da Laís",
       "avaliacao": 3.5,
        "endereco": {
-          "rua": "Rua",
+          "logradouro": "Rua",
           "numero": 12,
           "bairro": "Bairro",
           "cidade": "Cidade",

@@ -82,8 +82,19 @@
           exact
         >
           <v-avatar class="tab-icon" left>
-            <v-icon left>mdi-home</v-icon>
+            <v-icon left>mdi-home-group</v-icon>
           </v-avatar>Minhas Feiras
+        </v-tab>
+
+        <v-tab
+          v-if="usuario && (usuario.tipoUsuario.descricao == 'FEIRANTE' || usuario.tipoUsuario.descricao == 'ORGANIZADOR')"
+          to="/gerenciar-estantes"
+          class="aba"
+          exact
+        >
+          <v-avatar class="tab-icon" left>
+            <v-icon left>mdi-storefront-outline</v-icon>
+          </v-avatar>Meus Estandes
         </v-tab>
         <v-tabs-slider></v-tabs-slider>
       </v-tabs>

@@ -18,7 +18,6 @@
                 <v-icon left size="120" v-else color="light-green darken-3">mdi-account-circle</v-icon>
               </v-avatar>
             </v-col>
-            <!-- <v-btn @click="salvarImagem">Salvar Imagem</v-btn> -->
           </v-row>
           <v-row>
             <v-col cols="10">
@@ -143,9 +142,6 @@
                 :rules="[regras.obrigatorio]"
                 v-mask="'(##) #####-####'"
               ></v-text-field>
-            </v-col>
-            <v-col cols="1">
-              <v-icon small color="red darken-3 obrigatorio" class=".d-inline-flex">mdi-asterisk</v-icon>
             </v-col>
           </v-row>
           <v-row>

@@ -44,9 +44,11 @@ const actions = {
 
     async fetchDetalhesDoUsuario({ state, commit }) {
         try {
-            const res = await fetchDetalhesDoUsuario();
-            commit("SET_USUARIO", res.data);
-            commit("SET_IMAGEM", converterBytesParaDataUrl(state.usuario.imagem))
+            if (localStorage.getItem("token-usuario")) {
+                const res = await fetchDetalhesDoUsuario();
+                commit("SET_USUARIO", res.data);
+                commit("SET_IMAGEM", converterBytesParaDataUrl(state.usuario.imagem))
+            }
         } catch (error) {
             console.log(error);
             localStorage.removeItem("token-usuario");

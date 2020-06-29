@@ -22,7 +22,7 @@
         </v-card-subtitle>
 
         <v-card-text class="d-flex d-md-inline-flex justify-space-around">
-            <p class="mx-3">{{`Endereço: ${estande.endereco.rua}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}`}}</p>
+            <p class="mx-3">{{`Endereço: ${estande.endereco.logradouro}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}`}}</p>
             <p class="d-none d-sm-block"> - </p>
             <p class="mx-3">{{`Contato: ${estande.contato}`}}</p>
         </v-card-text>

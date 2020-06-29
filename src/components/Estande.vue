@@ -33,7 +33,7 @@
             <div
               v-if="estande.endereco"
               class="endereco pa-2"
-            >{{ `${estande.endereco.rua}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}` }}</div>
+            >{{ `${estande.endereco.logradouro}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}` }}</div>
           </div>
         </v-row>
       </v-col>

@@ -15,13 +15,13 @@
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Notícias</div>
         <v-divider class="divisor"></v-divider>
-        <CardNoticia v-for="noticia in ultimasNoticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
+        <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
       </v-col>
       
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Feiras</div>
         <v-divider class="divisor"></v-divider>
-        <CardFeira v-for="feira in melhoresFeiras" :key="feira.id" :feira="feira" @abrir-imagem-dialog="abrirDialogImagem"/>
+        <CardFeira v-for="feira in feiras" :key="feira.id" :feira="feira" @abrir-imagem-dialog="abrirDialogImagem"/>
       </v-col>
     </v-row>
   </v-container>
@@ -58,7 +58,7 @@ export default {
   },
 
   computed: {
-    ...mapState("Feiras", ["melhoresFeiras", "ultimasNoticias"])
+    ...mapState("Feiras", ["feiras", "noticias"])
   },
 
   async created() {
