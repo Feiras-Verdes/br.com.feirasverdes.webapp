@@ -10,6 +10,7 @@ import Feira from '../components/Feira.vue'
 import Estande from '../components/Estande.vue'
 import GerenciarFeiras from '../components/GerenciarFeiras.vue'
 import EditarFeira from '../components/EditarFeira.vue'
+import Busca from '../components/Busca.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -70,7 +71,11 @@ export const router = new VueRouter({
 							component: EditarFeira
 						}
 					]
-				}
+				},
+				{
+					path: "busca",
+					component: Busca
+				},
 			]
 		}
 	]

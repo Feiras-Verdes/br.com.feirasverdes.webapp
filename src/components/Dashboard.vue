@@ -185,6 +185,12 @@ export default {
           nome: "Home",
           icone: "mdi-home",
           rota: "/"
+        },
+        {
+          id: 2,
+          nome: "Busca",
+          icone: "mdi-magnify",
+          rota: "/busca"
         }
       ],
       busca: "",

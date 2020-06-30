@@ -52,26 +52,6 @@
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
               <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
-              <!-- <v-card
-                class="ma-3 flex-grow-1"
-                outlined
-                v-for="noticia in noticias"
-                :key="noticia.id"
-              >
-                <v-img
-                  v-if="noticia.imagem"
-                  height="150px"
-                  :src="noticia.imagem"
-                  @click="abrirDialogImagem(noticia.imagem)"
-                ></v-img>
-                <div class="d-flex flex-no-wrap justify-space-between">
-                  <div>
-                    <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
-                    <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
-                    <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
-                  </div>
-                </div>
-              </v-card> -->
             </div>
           </v-tab-item>
 
