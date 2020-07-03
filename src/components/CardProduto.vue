@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-3 flex-sm-grow-1">
+  <v-card class="ma-3 flex-sm-grow-1" @click="irParaEstande">
     <div class="d-flex flex-no-wrap justify-space-between">
       <div>
         <v-card-title v-text="produto.nome"></v-card-title>
@@ -33,6 +33,9 @@ export default {
   methods: {
     abrirDialogImagem(imagem) {
       this.$emit("abrir-imagem-dialog", imagem);
+    },
+    irParaEstande(){
+      this.$router.push({path:`/estandes/${this.produto.estande.id}`})
     }
   }
 };

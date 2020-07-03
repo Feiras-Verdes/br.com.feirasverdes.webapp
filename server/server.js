@@ -181,6 +181,18 @@ api.get("/usuarios/:id/detalhes", (req, res) => {
     else res.send(null)
 })
 
+api.get("/busca/estandes", (req, res) => {
+     res.send(melhoresFeiras.feiras[0].estandes)
+})
+
+api.get("/busca/feiras", (req, res) => {
+    res.send(melhoresFeiras.feiras)
+})
+
+api.get("/busca/produtos", (req, res) => {
+    res.send(melhoresFeiras.feiras[0].produtos)
+})
+
 api.post("/usuarios/cadastrar", (req, res) => {
         usuario = req.body;
         usuario.id = 1;

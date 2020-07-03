@@ -1,6 +1,8 @@
 <template>
   <v-card class="ma-3" @click="irParaEstande">
     <div class="d-flex flex-wrap">
+      <div>
+        <div class="d-inline-flex justify-space-between">
       <v-avatar size="120">
         <v-img v-if="estande.imagem" :src="estande.imagem" @click.stop="abrirDialogImagem(estande.imagem)"></v-img>
         <v-img v-else src="../assets/icone-feira.png"></v-img>
@@ -20,7 +22,8 @@
             dense
           ></v-rating>
         </v-card-subtitle>
-
+ </div>
+  </div>
         <v-card-text class="d-flex d-md-inline-flex justify-space-around">
             <p class="mx-3">{{`Endereço: ${estande.endereco.logradouro}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}`}}</p>
             <p class="d-none d-sm-block"> - </p>
