@@ -102,7 +102,7 @@
     <v-app-bar color="white" app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="light-green darken-3"></v-app-bar-nav-icon>
 
-      <v-toolbar-title color="light-green darken-3" class="titulo d-none d-md-block">Feiras Verdes</v-toolbar-title>
+      <v-toolbar-title color="light-green darken-3" class="titulo d-none d-md-block" @click="irHome">Feiras Verdes</v-toolbar-title>
 
       <v-spacer class="d-none d-md-block"></v-spacer>
 
@@ -241,9 +241,11 @@ export default {
     },
 
     buscar() {
-      console.log(this.busca);
+       this.$router.push({path:`/busca/`})
     },
-
+    irHome(){
+this.$router.push({path:"/"})
+    },
     abrirDialogImagem(imagem) {
       this.imagemDialogSrc = imagem;
       this.imagemDialog = true;
@@ -257,6 +259,7 @@ export default {
   color: #558b2f;
   font-size: 2em;
   font-family: "Roboto", sans-serif;
+  cursor: pointer;
 }
 
 .botao {

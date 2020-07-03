@@ -1,8 +1,10 @@
 <template>
   <v-container fluid height="100%" class="pa-3">
     <v-row>
-      <div>
-      </div>
+        <v-row>
+          <div class="d-none d-sm-block busca pa-2">Buscando por</div>
+          <div class="d-none d-sm-block nomeBusca py-2">beterraba</div>
+        </v-row>
       <div>
         <v-chip class="ma-2" @click="mostrarPopupOrdenacaoProdutos = true">Ordenar por {{ordenacao}}</v-chip>
         <v-chip class="ma-2" v-if="tipoOrdenacao == 'asc'" @click="alterarTipoOrdenacao">
@@ -89,4 +91,17 @@ export default {
 </script>
 
 <style scoped>
+.busca {
+  font-size: 1.5em;
+  font-family: "Roboto", sans-serif;
+  margin-left: 50px;
+  width: fit-content;
+}
+
+.nomeBusca {
+  color: #558b2f;
+  font-size: 1.5em;
+  font-family: "Roboto", sans-serif;
+  width: fit-content;
+}
 </style>

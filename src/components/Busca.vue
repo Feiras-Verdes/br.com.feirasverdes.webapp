@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid height="100%" class="pa-0">
+  <v-container fluid height="100%"  class="pa-0">
     <v-tabs background-color="light-green darken-3" v-model="abaSelecionada" dark centered grow>
       <v-tab v-for="aba in abas" :key="aba.id">{{ aba.nome }}</v-tab>
     </v-tabs>

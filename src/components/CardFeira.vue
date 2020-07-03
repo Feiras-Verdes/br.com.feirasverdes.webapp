@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-3" @click="irParaFeira">
+  <v-card class="ma-3" @click="irParaFeira" width="355px">
     <div class="d-flex flex-wrap">
       <div>
         <div class="d-inline-flex justify-space-between">
@@ -27,15 +27,12 @@
                 dense
               ></v-rating>
             </v-card-subtitle>
+            <v-card-text class="d-flex d-md-inline-flex justify-space-around">
+              <v-icon color="black">mdi-map-marker</v-icon>
+              <div>{{`${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</div>
+            </v-card-text>
           </div>
         </div>
-        <v-card-text class="d-flex d-md-inline-flex justify-space-around">
-          <p
-            class="mx-3"
-          >{{`Endereço: ${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</p>
-          <p class="d-none d-sm-block">-</p>
-          <p class="mx-3">{{`Contato: ${feira.contato}`}}</p>
-        </v-card-text>
       </div>
     </div>
   </v-card>
@@ -65,4 +62,7 @@ export default {
 </script>
 
 <style scoped>
+.endereco {
+  padding-top: 5px;
+}
 </style>

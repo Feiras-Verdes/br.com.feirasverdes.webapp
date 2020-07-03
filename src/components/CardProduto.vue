@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-3 flex-sm-grow-1" @click="irParaEstande">
+  <v-card class="ma-3 flex-sm-grow-1"  width="355px" @click="irParaEstande">
     <div class="d-flex flex-no-wrap justify-space-between">
       <div>
         <v-card-title v-text="produto.nome"></v-card-title>

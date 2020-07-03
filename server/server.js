@@ -112,7 +112,7 @@ const melhoresFeiras = { "feiras": [
       "nome": "Feira da Natália",
       "avaliacao": 4.5,
        "endereco": {
-          "logradouro": "Rua",
+          "logradouro": "Rua lalala lalalalla lalalallalala llalala",
           "numero": 12,
           "bairro": "Bairro",
           "cidade": "Cidade",
