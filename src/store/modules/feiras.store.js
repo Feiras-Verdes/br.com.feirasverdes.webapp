@@ -1,10 +1,11 @@
-import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchNoticiasDeFeira, fetchFeira, avaliarFeira, cadastrarFeira, excluirFeira, fetchFeirasDoOrganizador, salvarFeiraEditada } from "@/api/feiras.api"
+import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchNoticiasDeFeira, fetchFeira, avaliarFeira, cadastrarFeira, excluirFeira, salvarFeiraEditada, removerEstandeDeFeira } from "@/api/feiras.api"
+import { fetchFeirasDoOrganizador } from "@/api/usuarios.api"
 
 const state = {
     feira: {},
-    noticias: {},
+    noticias: [],
     avaliacaoDoUsuario: -1,
-    estandes: {},
+    estandes: [],
     feiras: []
 }
 
@@ -130,6 +131,15 @@ const actions = {
         try {
             const res = await fetchFeirasDoOrganizador(idUsuario);
             commit("SET_FEIRAS", res.data)
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    async removerEstandeDeFeira({ state, dispatch }, idEstande) {
+        try {
+            const res = await this.removerEstandeDeFeira(idEstande);
+            dispatch("getEstandesDeFeira", state.feira.id);
         } catch (error) {
             console.log(error);
         }

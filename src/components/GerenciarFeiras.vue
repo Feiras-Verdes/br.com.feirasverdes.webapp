@@ -6,7 +6,7 @@
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-tab>
     </v-tabs>
-    <router-view @feira-excluida="getFeirasDoOrganizador(usuario.id)"></router-view>
+    <router-view @feira-excluida="onFeiraExcluida"></router-view>
   </v-container>
 </template>
 
@@ -46,6 +46,10 @@ export default {
       await this.getFeirasDoOrganizador(this.usuario.id);
       
       // this.$router.push(`/gerenciar-feira/${this.feiras[this.feiras.length].id}`);
+    },
+
+    async onFeiraExcluida() {
+      await this.getFeirasDoOrganizador(usuario.id);
     }
   }
 };

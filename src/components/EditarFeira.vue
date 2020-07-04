@@ -293,7 +293,7 @@
                 </v-row>
               </v-form>
               <v-card-actions>
-                <a class="subtitle-1 link-excluir" @click="confirmarExcluisao = true">Excluir Feira</a>
+                <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Feira</a>
                 <v-spacer></v-spacer>
                 <v-btn
                   class="white--text"
@@ -311,12 +311,12 @@
           </v-tab-item>
 
           <v-tab-item>
-            <GerenciarNoticiasDeFeira :idFeira="id"></GerenciarNoticiasDeFeira>
+            <GerenciarNoticiasDaFeira :idFeira="id"></GerenciarNoticiasDaFeira>
           </v-tab-item>
         </v-container>
       </v-tabs-items>
     </v-tabs>
-    <v-dialog v-model="confirmarExcluisao" width="500">
+    <v-dialog v-model="confirmarExclusao" width="500">
       <v-card>
         <v-card-title>Deseja realmente excluir esta feira?</v-card-title>
         <v-card-actions>
@@ -325,7 +325,7 @@
             class="white--text"
             outlined
             color="light-green darken-3"
-            @click="confirmarExcluisao = false"
+            @click="confirmarExclusao = false"
           >Cancelar</v-btn>
           <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Feira</v-btn>
         </v-card-actions>
@@ -340,6 +340,7 @@ import { mask } from "vue-the-mask";
 import { buscarEnderecoPorCep } from "@/api/endereco.api";
 
 import GerenciarEstandesDeFeira from "./GerenciarEstandesDeFeira";
+import GerenciarNoticiasDaFeira from "./GerenciarNoticiasDaFeira";
 
 export default {
   name: "EditarFeira",
@@ -347,7 +348,8 @@ export default {
   directives: { mask },
 
   components: {
-    GerenciarEstandesDeFeira
+    GerenciarEstandesDeFeira,
+    GerenciarNoticiasDaFeira
   },
 
   data() {
@@ -460,7 +462,7 @@ export default {
       imagemUrl: "",
       imagem: null,
       carregandoEndereco: false,
-      confirmarExcluisao: false
+      confirmarExclusao: false
     };
   },
 
@@ -472,6 +474,8 @@ export default {
 
   computed: {
     ...mapState("Feiras", ["feira"]),
+
+    ...mapState("Usuarios", ["usuario"]),
 
     id() {
       return this.$route.params.id;
@@ -491,6 +495,7 @@ export default {
       formData.append("frequencia", this.frequencia);
       formData.append("horaInicio", this.horaInicio);
       formData.append("horaFim", this.horaFim);
+      formData.append("idUsuario", this.usuario.id);
 
       formData.append("cep", this.endereco.cep);
       formData.append("estado", this.endereco.estadoSelecionado);
@@ -507,11 +512,12 @@ export default {
     },
 
     async excluir() {
-      this.confirmarExcluisao = false;
+      this.confirmarExclusao = false;
       await this.deletarFeira(this.feira.id);
 
-      this.$emit("feira-excluida");
-      this.$$route.replace("/gerenciar-feiras");
+      this.$destroy();
+      // this.$emit("feira-excluida");
+      
     },
 
     cancelar() {

@@ -12,10 +12,16 @@ const salvarUsuarioAtualizado = (idUsuario, formData) => httpClient.put(`${endpo
 
 const excluirUsuario = (idUsuario) =>  httpClient.put(`${endpointUsuarios}/${idUsuario}/excluir`);
 
+const fetchEstandesDoFeirante = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/estandes`);
+
+const fetchFeirasDoOrganizador = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/feiras`);
+
 export {
     fazerLogin,
     fetchDetalhesDoUsuario,
     cadastrarUsuarioApi,
     salvarUsuarioAtualizado,
-    excluirUsuario
+    excluirUsuario,
+    fetchEstandesDoFeirante,
+    fetchFeirasDoOrganizador
 };
