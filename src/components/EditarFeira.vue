@@ -149,7 +149,7 @@
 
                 <v-row justify="center">
                   <v-col cols="10">
-                    <div class="d-lg-flex">
+                    <!-- <div class="d-lg-flex">
                       <div class="pb-2 px-3">Dias:</div>
                       <div class="pb-12">
                         <v-btn
@@ -164,25 +164,23 @@
                           @click="ativarDiaDaSemana(dia.id)"
                         >{{ dia.nome }}</v-btn>
                       </div>
-                      <div class="d-inline-flex">
-                        <v-combobox
+                      <div class="d-inline-flex"> -->
+                        <!-- <v-combobox
                           v-model="frequencia"
                           :items="frequenciaArray"
                           hide-selected
                           outlined
                           color="light-green darken-3"
-                        ></v-combobox>
+                        ></v-combobox> -->
                         <v-text-field
-                          v-if="frequencia === 'A cada'"
                           label="A cada"
                           color="light-green darken-3"
                           v-model="frequencia"
                           outlined
-                          min="0"
-                          type="number"
+                          prepend-icon="mdi-calendar"
                         ></v-text-field>
-                      </div>
-                    </div>
+                      <!-- </div>
+                    </div> -->
                   </v-col>
                 </v-row>
 
