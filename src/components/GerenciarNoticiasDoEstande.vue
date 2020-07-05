@@ -1,84 +1,81 @@
 <template>
-  <v-container fluid>
-    <v-row>
-      <v-col cols="12" class="card-nova-noticia">
-        <v-card>
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <v-card-text>
-              <div class="d-sm-inline-flex imagem">
-                <div class="mb-3">
-                  <v-img v-if="imagemUrl" :src="imagemUrl" height="120" width="120"></v-img>
-                  <v-icon left size="120" v-else color="light-green darken-3">mdi-image</v-icon>
-                </div>
-                <div class="flex-grow-1 align-self-end">
-                  <template>
-                    <v-file-input
-                      accept="image/*"
-                      placeholder="Selecione sua imagem"
-                      prepend-icon="mdi-image"
-                      label="Imagem"
-                      outlined
-                      v-model="imagem"
-                      color="light-green darken-3"
-                      @change="mostrarImagem"
-                      @click:clear="imagemUrl = null"
-                    >
-                      <template v-slot:selection="{ text }">
-                        <v-chip
-                          small
-                          label
-                          color="light-green darken-3"
-                          text-color="white"
-                        >{{ text }}</v-chip>
-                      </template>
-                    </v-file-input>
-                  </template>
-                </div>
-              </div>
-              <v-text-field
-                label="Título"
-                outlined
-                color="light-green darken-3"
-                prepend-icon="mdi-format-title"
-                v-model="titulo"
-                :rules="[regras.obrigatorio]"
-              ></v-text-field>
-              <v-text-field
-                label="Notícia"
-                prepend-icon="mdi-newspaper"
-                outlined
-                color="light-green darken-3"
-                v-model="descricao"
-                :rules="[regras.obrigatorio]"
-              ></v-text-field>
-            </v-card-text>
+  <v-container>
+    <v-card>
+      <v-img v-if="imagemUrl" height="150px" :src="imagemUrl" @click="abrirDialogImagem(imagem)"></v-img>
+      <template>
+        <v-file-input
+          accept="image/*"
+          placeholder="Selecione sua imagem"
+          prepend-icon="mdi-image"
+          label="Imagem"
+          outlined
+          v-model="imagem"
+          color="light-green darken-3"
+          @change="mostrarImagem"
+          @click:clear="imagemUrl = null"
+          class="pt-3 px-4"
+        >
+          <template v-slot:selection="{ text }">
+            <v-chip small label color="light-green darken-3" text-color="white">{{ text }}</v-chip>
+          </template>
+        </v-file-input>
+      </template>
+      <div class="d-flex flex-no-wrap justify-space-between">
+        <v-card-text>
+          <div class="d-sm-inline-flex imagem">
+            <div class="flex-grow-1 align-self-end"></div>
           </div>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn class="white--text" outlined color="light-green darken-3" @click="limpar">Limpar</v-btn>
-            <v-btn class="white--text" color="light-green darken-3" @click="salvar">Salvar</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
+          <v-text-field
+            label="Título"
+            outlined
+            color="light-green darken-3"
+            prepend-icon="mdi-format-title"
+            v-model="titulo"
+            :rules="[regras.obrigatorio]"
+          ></v-text-field>
+          <v-text-field
+            label="Notícia"
+            prepend-icon="mdi-newspaper"
+            outlined
+            color="light-green darken-3"
+            v-model="descricao"
+            :rules="[regras.obrigatorio]"
+          ></v-text-field>
+        </v-card-text>
+      </div>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn class="white--text" outlined color="light-green darken-3" @click="limpar">Limpar</v-btn>
+        <v-btn
+          class="white--text"
+          color="light-green darken-3"
+          :loading="carregando"
+          @click="salvar"
+        >Salvar</v-btn>
+      </v-card-actions>
+    </v-card>
     <v-row>
-      <v-card>
-        <CardNoticia
-          v-for="noticia in noticias"
-          :key="noticia.id"
-          :noticia="noticia"
-          @abrir-imagem-dialog="abrirDialogImagem"
-        />
-      </v-card>
+      <CardNoticia
+        v-for="noticia in noticias"
+        :key="noticia.id"
+        :noticia="noticia"
+        :podeEditar="true"
+      />
     </v-row>
   </v-container>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import CardNoticia from "./CardNoticia";
 
 export default {
   name: "GerenciarNoticiasDoEstande",
+
+  components: {
+    CardNoticia
+  },
+
   data() {
     return {
       imagemUrl: null,
@@ -87,13 +84,13 @@ export default {
       descricao: "",
       regras: {
         obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório"
-      }
+      },
+      carregando: false
     };
   },
 
   props: {
     idEstande: {
-      type: Number,
       required: false
     }
   },
@@ -108,8 +105,8 @@ export default {
 
   methods: {
     ...mapActions("Estandes", [
-      "getNoticiasDeFeira",
-      "cadastarNoticia",
+      "getNoticiasDeEstande",
+      "cadastrarNoticia",
       "excluirNoticia",
       "salvarNoticia"
     ]),
@@ -118,9 +115,27 @@ export default {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);
     },
 
-    salvar() {},
+    async salvar() {
+      this.carregando = true;
+      formData = new FormData();
 
-    limpar() {}
+      if (this.imagem) {
+        formData.append("imagem", this.imagem);
+      }
+      formData.append("titulo", this.titulo);
+      formData.append("descricao", this.descricao);
+
+      this.cadastrarNoticia(formData, this.idFeira);
+
+      this.carregando = false;
+    },
+
+    limpar() {
+      this.imagemUrl = null;
+      this.imagem = null;
+      this.titulo = "";
+      this.descricao = "";
+    }
   }
 };
 </script>

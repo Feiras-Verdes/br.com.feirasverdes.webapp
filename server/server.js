@@ -59,6 +59,7 @@ const melhoresFeiras = {
                             "usuario": {
                                 "nome": "Lucas"
                             },
+                            "dataPublicacao": "24/05/2020",
                             "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                             "titulo": "Chegaram os produtos!",
                             "descricao": "Chegaram couves e abóboras!",
@@ -68,6 +69,7 @@ const melhoresFeiras = {
                             "usuario": {
                                 "nome": "Lucas"
                             },
+                            "dataPublicacao": "24/05/2020",
                             "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                             "titulo": "Chegaram os produtos!",
                             "descricao": "Chegaram couves e abóboras!",
@@ -115,6 +117,7 @@ const melhoresFeiras = {
                             "usuario": {
                                 "nome": "Lucas"
                             },
+                            "dataPublicacao": "24/05/2020",
                             "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                             "titulo": "Chegaram os produtos!",
                             "descricao": "Chegaram couves e abóboras!",
@@ -124,6 +127,7 @@ const melhoresFeiras = {
                             "usuario": {
                                 "nome": "Lucas"
                             },
+                            "dataPublicacao": "24/05/2020",
                             "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                             "titulo": "Chegaram os produtos!",
                             "descricao": "Chegaram couves e abóboras!",
@@ -155,6 +159,7 @@ const melhoresFeiras = {
                         "nome": "Lucas",
                         "id": 1
                     },
+                    "dataPublicacao": "24/05/2020",
                     "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                     "titulo": "Acabaram os produtos!",
                     "descricao": "Acabaram as couves e abóboras!",
@@ -165,6 +170,7 @@ const melhoresFeiras = {
                         "nome": "Lucas",
                         "id": 1
                     },
+                    "dataPublicacao": "24/05/2020",
                     "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                     "titulo": "Chegaram os produtos!",
                     "descricao": "Chegaram couves e abóboras!",
@@ -236,6 +242,7 @@ const ultimasNoticias = {
             "usuario": {
                 "nome": "Lucas"
             },
+            "dataPublicacao": "24/05/2020",
             "imagem": "https://images.unsplash.com/photo-1557844352-761f2565b576?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
             "titulo": "Chegaram os produtos!",
             "descricao": "Chegaram couves e abóboras!"
@@ -245,6 +252,7 @@ const ultimasNoticias = {
             "usuario": {
                 "nome": "Natália"
             },
+            "dataPublicacao": "24/05/2020",
             "imagem": "",
             "titulo": "Não abrirei hoje",
             "descricao": "Por motivos de coronga, não poderem atender hoje."

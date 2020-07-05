@@ -31,7 +31,6 @@
         </template>
       </v-file-input>
     </template>
-    <!-- <v-img v-if="editar" :src="imagemUrl" height="120" width="120"></v-img> -->
     <div class="d-flex flex-no-wrap justify-space-between">
       <div>
         <v-card-title class="headline">
@@ -47,7 +46,7 @@
           ></v-text-field>
         </v-card-title>
         <v-card-subtitle class="autor-noticia">
-          <div v-if="!editar">{{ noticia.usuario.nome }}</div>
+          <div v-if="!editar">{{ `${noticia.dataPublicacao} - ${noticia.usuario.nome}` }}</div>
         </v-card-subtitle>
         <v-card-text class="descricao-noticia">
           <div v-if="!editar">{{ noticia.descricao }}</div>

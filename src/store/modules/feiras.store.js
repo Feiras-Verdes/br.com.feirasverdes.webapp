@@ -1,4 +1,4 @@
-import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchNoticiasDeFeira, fetchFeira, avaliarFeira, cadastrarFeira, excluirFeira, salvarFeiraEditada, removerEstandeDeFeira } from "@/api/feiras.api"
+import { fetchEstandesDeFeira, fetchMelhoresFeiras, fetchUltimasNoticias, fetchNoticiasDeFeira, fetchFeira, avaliarFeira, cadastrarFeira, excluirFeira, salvarFeiraEditada, removerEstandeDeFeira, cadastrarNoticiaEmFeira } from "@/api/feiras.api"
 import { fetchFeirasDoOrganizador } from "@/api/usuarios.api"
 
 const state = {
@@ -138,10 +138,21 @@ const actions = {
 
     async removerEstandeDeFeira({ state, dispatch }, idEstande) {
         try {
-            const res = await this.removerEstandeDeFeira(idEstande);
+            const res = await removerEstandeDeFeira(idEstande);
             dispatch("getEstandesDeFeira", state.feira.id);
         } catch (error) {
             console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao excluir notícia.", tipo: "error"});
+        }
+    },
+
+    async cadastrarNoticia({ state, dispatch }, noticia) {
+        try {
+            const res = await cadastrarNoticiaEmFeira(state.feira.id, noticia);
+            dispatch("getNoticiasDeFeira", state.feira.id);
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao cadastrar nova notícia.", tipo: "error"});
         }
     }
 }

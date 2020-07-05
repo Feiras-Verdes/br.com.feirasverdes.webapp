@@ -149,38 +149,13 @@
 
                 <v-row justify="center">
                   <v-col cols="10">
-                    <!-- <div class="d-lg-flex">
-                      <div class="pb-2 px-3">Dias:</div>
-                      <div class="pb-12">
-                        <v-btn
-                          v-for="dia in diasDaSemana"
-                          :key="dia.id"
-                          :color="dia.ativo ? 'light-green darken-3' : 'white'"
-                          :depressed="dia.ativo"
-                          :dark="dia.ativo"
-                          rounded
-                          class="botao-dia"
-                          small
-                          @click="ativarDiaDaSemana(dia.id)"
-                        >{{ dia.nome }}</v-btn>
-                      </div>
-                      <div class="d-inline-flex"> -->
-                        <!-- <v-combobox
-                          v-model="frequencia"
-                          :items="frequenciaArray"
-                          hide-selected
-                          outlined
-                          color="light-green darken-3"
-                        ></v-combobox> -->
-                        <v-text-field
-                          label="A cada"
-                          color="light-green darken-3"
-                          v-model="frequencia"
-                          outlined
-                          prepend-icon="mdi-calendar"
-                        ></v-text-field>
-                      <!-- </div>
-                    </div> -->
+                    <v-text-field
+                      label="A cada"
+                      color="light-green darken-3"
+                      v-model="frequencia"
+                      outlined
+                      prepend-icon="mdi-calendar"
+                    ></v-text-field>
                   </v-col>
                 </v-row>
 
@@ -412,51 +387,6 @@ export default {
         "SE",
         "TO"
       ],
-      diasDaSemana: [
-        {
-          id: 0,
-          nome: "D",
-          cor: "light-green lighten-3",
-          ativo: false
-        },
-        {
-          id: 1,
-          nome: "S",
-          cor: "#F0F0F0",
-          ativo: false
-        },
-        {
-          id: 2,
-          nome: "T",
-          cor: "#F0F0F0",
-          ativo: false
-        },
-        {
-          id: 3,
-          nome: "Q",
-          cor: "#F0F0F0",
-          ativo: false
-        },
-        {
-          id: 4,
-          nome: "Q",
-          cor: "#F0F0F0",
-          ativo: false
-        },
-        {
-          id: 5,
-          nome: "S",
-          cor: "#F0F0F0",
-          ativo: false
-        },
-        {
-          id: 6,
-          nome: "S",
-          cor: "#F0F0F0",
-          ativo: false
-        }
-      ],
-      frequenciaArray: ["Semanalmente", "Mensalmente", "A cada"],
       imagemUrl: "",
       imagem: null,
       carregandoEndereco: false,
@@ -501,7 +431,7 @@ export default {
       formData.append("bairro", this.endereco.bairro);
       formData.append("logradouro", this.endereco.logradouro);
       formData.append("numero", parseInt(this.endereco.numero));
-      formData.append("complemento", this.endereco.complemento)
+      formData.append("complemento", this.endereco.complemento);
 
       await this.editarFeira({
         id: this.feira.id,
@@ -515,7 +445,6 @@ export default {
 
       this.$destroy();
       // this.$emit("feira-excluida");
-      
     },
 
     cancelar() {

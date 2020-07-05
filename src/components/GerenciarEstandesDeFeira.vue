@@ -61,20 +61,20 @@ export default {
   },
 
   computed: {
-      ...mapState("Feiras", ["estandes"])
+    ...mapState("Feiras", ["estandes"])
   },
 
   async created() {
     await this.getEstandesDeFeira(this.idFeira);
-    this.loading = false;   
+    this.loading = false;
   },
 
   methods: {
-      ...mapActions("Feiras", ["getEstandesDeFeira", "removerEstandeDeFeira"]),
+    ...mapActions("Feiras", ["getEstandesDeFeira", "removerEstandeDeFeira"]),
 
-      async removerEstande(estande) {
-          await this.removerEstandeDeFeira(this.idFeira, estande.id);
-      }
+    async removerEstande(estande) {
+      await this.removerEstandeDeFeira(this.idFeira, estande.id);
+    }
   }
 };
 </script>
