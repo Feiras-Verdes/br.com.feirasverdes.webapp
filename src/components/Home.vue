@@ -1,36 +1,58 @@
 <template>
   <v-container fluid>
     <v-row class="row-carrossel" justify="center">
-      <v-carousel height="300" interval="15000" cycle hide-delimiter-background show-arrows-on-hover class="carrossel">
+      <v-carousel
+        height="300"
+        interval="15000"
+        cycle
+        hide-delimiter-background
+        show-arrows-on-hover
+        class="carrossel"
+      >
         <v-carousel-item
           v-for="(itemCarrossel, i) in imagensCarrossel"
           :key="i"
           :src="itemCarrossel.src"
-        >
-        </v-carousel-item>
+        ></v-carousel-item>
       </v-carousel>
     </v-row>
-    
-    <v-row class="d-flex flex-no-wrap justify-space-around">
+
+    <v-row>
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Notícias</div>
         <v-divider class="divisor"></v-divider>
-        <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
+        <!-- <div class="sm-justify-center md-justify-start d-inline-flex flex-wrap"> -->
+          <CardNoticia
+            v-for="noticia in noticias"
+            :key="noticia.id"
+            :noticia="noticia"
+            @abrir-imagem-dialog="abrirDialogImagem"
+            class="mx-auto" 
+          />
+        <!-- </div> -->
       </v-col>
-      
+
       <v-col sm="12" md="6" lg="6">
         <div class="titulo">Feiras</div>
         <v-divider class="divisor"></v-divider>
-        <CardFeira v-for="feira in feiras" :key="feira.id" :feira="feira" @abrir-imagem-dialog="abrirDialogImagem"/>
+        <!-- <div class="d-flex justify-center flex-column"> -->
+          <CardFeira
+            v-for="feira in feiras"
+            :key="feira.id"
+            :feira="feira"
+            @abrir-imagem-dialog="abrirDialogImagem"
+            class="mx-auto"
+          />
+        <!-- </div> -->
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import CardFeira from './CardFeira';
-import CardNoticia from './CardNoticia';
+import { mapActions, mapState } from "vuex";
+import CardFeira from "./CardFeira";
+import CardNoticia from "./CardNoticia";
 
 export default {
   name: "Home",
@@ -66,9 +88,7 @@ export default {
     await this.getUltimasNoticias();
   },
 
-  async mounted() {
-    
-  },
+  async mounted() {},
 
   methods: {
     ...mapActions("Feiras", ["getMelhoresFeiras", "getUltimasNoticias"]),
@@ -76,11 +96,11 @@ export default {
     ...mapActions("Imagem", ["setImagemDialog", "setImagemDialogSrc"]),
 
     abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem)
+      this.$emit("abrir-imagem-dialog", imagem);
     },
 
     irParaFeira(id) {
-      this.$router.push({ path: `/feiras/${id}`})
+      this.$router.push({ path: `/feiras/${id}` });
     }
   }
 };
@@ -104,7 +124,7 @@ export default {
 .titulo {
   font-size: 2em;
   color: #558b2f;
-  text-align: center; 
+  text-align: center;
   font-family: "Roboto", sans-serif;
 }
 /* 

@@ -139,7 +139,6 @@
                 prepend-icon="mdi-phone"
                 color="light-green darken-3"
                 v-model="telefone"
-                :rules="[regras.obrigatorio]"
                 v-mask="'(##) #####-####'"
               ></v-text-field>
             </v-col>

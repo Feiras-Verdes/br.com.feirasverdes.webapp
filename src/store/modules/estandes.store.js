@@ -1,7 +1,9 @@
 import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande } from "@/api/estandes.api"
+import { fetchEstandesDoFeirante } from "@/api/usuarios.api"
 
 const state = {
     estande: {},
+    estandes: [],
     produtos: {},
     noticias: {},
     avaliacaoDoUsuario: -1
@@ -10,6 +12,10 @@ const state = {
 const mutations = {
     SET_ESTANDE(state, estande) {
         state.estande = estande;
+    },
+
+    SET_ESTANDES(state, estandes) {
+        state.estandes = estandes;
     },
 
     SET_PRODUTOS(state, produtos) {
@@ -76,6 +82,15 @@ const actions = {
             const res = await avaliarEstande(payload.idUsuario, payload.idEstande, payload.nota);
         } catch (error) {
             console.log(error)
+        }
+    },
+
+    async getEstandesDoFeirante({ commit }, idFeirante) {
+        try {
+            const res = await fetchEstandesDoFeirante(idFeirante);
+            commit("SET_ESTANDES", res.data)
+        } catch (error) {
+            console.log(error);
         }
     }
 }

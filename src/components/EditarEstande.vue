@@ -17,7 +17,7 @@
                   <v-col cols="8" class="d-flex justify-center">
                     <v-avatar class="avatar-usuario" size="120">
                       <img v-if="imagemUrl" :src="imagemUrl" />
-                      <img v-else-if="feira.imagem" :src="feira.imagem" />
+                      <img v-else-if="estande.imagem" :src="estande.imagem" />
                       <v-img v-else src="../assets/icone-feira.png"></v-img>
                     </v-avatar>
                   </v-col>
@@ -50,7 +50,7 @@
                 <v-row justify="center">
                   <v-col cols="10">
                     <v-text-field
-                      label="Nome da feira"
+                      label="Nome do Estande"
                       color="light-green darken-3"
                       v-model="nome"
                       prepend-icon="mdi-alphabetical-variant"
@@ -266,7 +266,7 @@
                 </v-row>
               </v-form>
               <v-card-actions>
-                <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Feira</a>
+                <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Estande</a>
                 <v-spacer></v-spacer>
                 <v-btn
                   class="white--text"
@@ -280,18 +280,18 @@
           </v-tab-item>
 
           <v-tab-item>
-            <GerenciarEstandesDeFeira :idFeira="id"></GerenciarEstandesDeFeira>
+            <GerenciarProdutosDoEstande :idEstande="id"></GerenciarProdutosDoEstande>
           </v-tab-item>
 
           <v-tab-item>
-            <GerenciarNoticiasDaFeira :idFeira="id"></GerenciarNoticiasDaFeira>
+            <GerenciarNoticiasDoEstande :idEstande="id"></GerenciarNoticiasDoEstande>
           </v-tab-item>
         </v-container>
       </v-tabs-items>
     </v-tabs>
     <v-dialog v-model="confirmarExclusao" width="500">
       <v-card>
-        <v-card-title>Deseja realmente excluir esta feira?</v-card-title>
+        <v-card-title>Deseja realmente excluir este estande?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -300,7 +300,7 @@
             color="light-green darken-3"
             @click="confirmarExclusao = false"
           >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Feira</v-btn>
+          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Estande</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -312,17 +312,21 @@ import { mapActions, mapState } from "vuex";
 import { mask } from "vue-the-mask";
 import { buscarEnderecoPorCep } from "@/api/endereco.api";
 
-import GerenciarEstandesDeFeira from "./GerenciarEstandesDeFeira";
-import GerenciarNoticiasDaFeira from "./GerenciarNoticiasDaFeira";
+import GerenciarProdutosDoEstande from "./GerenciarProdutosDoEstande";
+import GerenciarNoticiasDoEstande from "./GerenciarNoticiasDoEstande";
 
 export default {
-  name: "EditarFeira",
+  name: "EditarEstande",
 
   directives: { mask },
 
   components: {
-    GerenciarEstandesDeFeira,
-    GerenciarNoticiasDaFeira
+    GerenciarProdutosDoEstande,
+    GerenciarNoticiasDoEstande
+  },
+
+  watch: {
+    $route: "fetchEstande"
   },
 
   data() {
@@ -330,11 +334,11 @@ export default {
       abas: [
         {
           id: 1,
-          nome: "Feira"
+          nome: "Estande"
         },
         {
           id: 2,
-          nome: "Estandes"
+          nome: "Produtos"
         },
         {
           id: 3,
@@ -394,12 +398,12 @@ export default {
     };
   },
 
-  async created() {
-    this.fetchFeira();
+  created() {
+    this.fetchEstande();
   },
 
   computed: {
-    ...mapState("Feiras", ["feira"]),
+    ...mapState("Estandes", ["estande"]),
 
     ...mapState("Usuarios", ["usuario"]),
 
@@ -408,12 +412,18 @@ export default {
     }
   },
 
-  watch: {
-    $route: "fetchFeira"
-  },
-
   methods: {
-    ...mapActions("Feiras", ["getFeira", "editarFeira", "deletarFeira"]),
+    ...mapActions("Estandes", [
+      "getEstande",
+      "editarEstande",
+      "deletarEstande"
+    ]),
+
+    async fetchEstande() {
+      await this.getEstande(this.id);
+
+      this.setEstande();
+    },
 
     async salvar() {
       let formData = new FormData();
@@ -435,33 +445,32 @@ export default {
       formData.append("numero", parseInt(this.endereco.numero));
       formData.append("complemento", this.endereco.complemento);
 
-      await this.editarFeira({
-        id: this.feira.id,
+      await this.editarEstande({
+        id: this.estande.id,
         formData: formData
       });
     },
 
     async excluir() {
       this.confirmarExclusao = false;
-      await this.deletarFeira(this.feira.id);
+      await this.deletarEstande(this.estande.id);
 
       this.$destroy();
-      // this.$emit("feira-excluida");
     },
 
     cancelar() {
-      this.setFeira();
+      this.setEstande();
     },
 
-    setFeira() {
-      this.nome = this.feira.nome;
-      this.horaInicio = this.feira.horaInicio;
-      this.horaFim = this.feira.horaFim;
-      this.frequencia = this.feira.frequencia;
-      this.telefone = this.feira.telefone;
+    setEstande() {
+      this.nome = this.estande.nome;
+      this.horaInicio = this.estande.horaInicio;
+      this.horaFim = this.estande.horaFim;
+      this.frequencia = this.estande.frequencia;
+      this.telefone = this.estande.telefone;
 
-      if (this.feira.endereco) {
-        this.endereco = this.feira.endereco;
+      if (this.estande.endereco) {
+        this.endereco = this.estande.endereco;
       } else {
         this.endereco = {
           cep: "",
@@ -475,33 +484,17 @@ export default {
       }
     },
 
-    async fetchFeira() {
-      await this.getFeira(this.id);
-
-      this.setFeira();
-    },
-
-    ativarDiaDaSemana(id) {
-      this.diasDaSemana[id].ativo = !this.diasDaSemana[id].ativo;
-
-      if (this.diasDaSemana[id].ativo) {
-        this.diasDaSemana[id].cor = "light-green darken-3";
-      } else {
-        this.diasDaSemana[id].cor = "light-green darken-4";
-      }
-    },
-
     mostrarImagem() {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);
     },
 
     async pesquisarCep() {
-      // TODO implementar consulta em API de CEP
       this.carregandoEndereco = true;
 
       const res = await buscarEnderecoPorCep(
         this.endereco.cep.replace(/\-/g, "")
       );
+
       this.endereco = res.data;
       this.endereco.estadoSelecionado = res.data.uf;
       this.endereco.cidade = res.data.localidade;

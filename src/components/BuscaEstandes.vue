@@ -3,7 +3,7 @@
     <v-row>
       <v-row>
         <div class="d-none d-sm-block busca pa-2">Buscando por</div>
-        <div class="d-none d-sm-block nomeBusca py-2">beterraba</div>
+        <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
       </v-row>
       <div>
         <v-chip class="ma-2" @click="mostrarPopupOrdenacaoEstandes = true">Ordenar por {{ordenacao}}</v-chip>
@@ -17,7 +17,7 @@
     </v-row>
     <v-row>
       <div class="d-sm-flex d-md-inline-flex flex-wrap justify-space-between">
-        <div class="justify-space-around d-sm-flex d-md-inline-flex flex-wrap">
+        <div class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap">
           <CardEstande
             v-for="estande in estandes"
             :key="estande.id"
@@ -55,9 +55,12 @@ export default {
     return {
       mostrarPopupOrdenacaoEstandes: false,
       ordenacao: "",
-      tipoOrdenacao: "asc"
+      tipoOrdenacao: "asc",
+      pagina: 0,
+      limite: 10
     };
   },
+
   components: {
     CardEstande
   },
@@ -69,15 +72,25 @@ export default {
       return this.$route.params.id;
     }
   },
+
+  props: {
+    busca: {
+      required: true
+    }
+  },
+
   created() {
     this.getEstandes();
   },
+
   methods: {
     ...mapActions("Busca", ["getEstandes", "setOrdenacao", "setTipoOrdenacao"]),
+
     ordenar() {
       this.setOrdenacao(this.ordenacao),
         (this.mostrarPopupOrdenacaoEstandes = false);
     },
+
     alterarTipoOrdenacao() {
       if (this.tipoOrdenacao == "asc") {
         this.tipoOrdenacao = "desc";
@@ -85,6 +98,18 @@ export default {
         this.tipoOrdenacao = "asc";
       }
       this.setTipoOrdenacao(this.tipoOrdenacao);
+    },
+
+    rolarPagina() {
+      window.onscroll = () => {
+        let bottomOfWindow =
+          document.documentElement.scrollTop + window.innerHeight ===
+          document.documentElement.offsetHeight;
+
+        if (bottomOfWindow) {
+          // TODO buscar
+        } 
+      };
     }
   }
 };

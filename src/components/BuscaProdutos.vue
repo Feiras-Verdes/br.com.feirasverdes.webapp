@@ -1,10 +1,10 @@
 <template>
   <v-container fluid height="100%" class="pa-3">
     <v-row>
-        <v-row>
-          <div class="d-none d-sm-block busca pa-2">Buscando por</div>
-          <div class="d-none d-sm-block nomeBusca py-2">beterraba</div>
-        </v-row>
+      <v-row>
+        <div class="d-none d-sm-block busca pa-2">Buscando por</div>
+        <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
+      </v-row>
       <div>
         <v-chip class="ma-2" @click="mostrarPopupOrdenacaoProdutos = true">Ordenar por {{ordenacao}}</v-chip>
         <v-chip class="ma-2" v-if="tipoOrdenacao == 'asc'" @click="alterarTipoOrdenacao">
@@ -17,7 +17,7 @@
     </v-row>
     <v-row>
       <div class="d-sm-flex d-md-inline-flex flex-wrap justify-space-between">
-        <div class="justify-space-around d-sm-flex d-md-inline-flex flex-wrap">
+        <div class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap">
           <CardProduto
             v-for="produto in produtos"
             :key="produto.id"
@@ -60,6 +60,12 @@ export default {
   },
   components: {
     CardProduto
+  },
+
+  props: {
+    busca: {
+      required: true
+    }
   },
 
   computed: {

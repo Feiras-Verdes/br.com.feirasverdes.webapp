@@ -5,13 +5,13 @@
     </v-tabs>
     <v-tabs-items v-model="abaSelecionada">
       <v-tab-item>
-        <BuscaFeiras/>
+        <BuscaFeiras :busca="busca"/>
       </v-tab-item>
       <v-tab-item>
-        <BuscaEstandes/>
+        <BuscaEstandes :busca="busca"/>
       </v-tab-item>
       <v-tab-item>
-        <BuscaProdutos/>
+        <BuscaProdutos :busca="busca"/>
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -46,6 +46,7 @@ export default {
       tipoOrdenacao: "asc"
     };
   },
+
   components: {
     BuscaProdutos,
     BuscaFeiras,
@@ -57,6 +58,10 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+
+    busca() {
+      return this.$route.query.busca;
     }
   }
 };
