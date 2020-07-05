@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app color="white" elevation="1">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="light-green darken-3"></v-app-bar-nav-icon>
 
       <v-toolbar-title color="light-green darken-3" class="titulo d-none d-md-block">Feiras Verdes</v-toolbar-title>
@@ -63,8 +63,8 @@
     </v-app-bar>
 
     <v-main>
-      <v-navigation-drawer v-model="drawer" absolute>
-        <template v-slot:prepend>
+      <v-navigation-drawer v-model="drawer" fixed clipped class="mt-16">
+        <template>
           <v-list class="list-menu">
             <v-list-item v-if="usuario">
               <v-list-item-avatar size="60" class="avatar-align">
@@ -166,8 +166,6 @@
       <router-view @abrir-imagem-dialog="abrirDialogImagem"></router-view>
     </v-main>
 
-    <!-- <v-footer></v-footer> -->
-
     <v-dialog v-model="imagemDialog">
       <v-img max-height="900" :src="imagemDialogSrc"></v-img>
     </v-dialog>
@@ -245,8 +243,8 @@ export default {
     },
 
     abrirDialogImagem(imagem) {
-      this.imagemDialogSrc = imagem;
-      this.imagemDialog = true;
+      // this.imagemDialogSrc = imagem;
+      // this.imagemDialog = true;
     }
   }
 };

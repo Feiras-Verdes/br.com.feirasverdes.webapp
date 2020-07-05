@@ -151,10 +151,10 @@
                   <v-col cols="10">
                     <v-text-field
                       label="A cada"
+                      prepend-icon="mdi-calendar-range"
                       color="light-green darken-3"
                       v-model="frequencia"
                       outlined
-                      prepend-icon="mdi-calendar"
                     ></v-text-field>
                   </v-col>
                 </v-row>

@@ -151,6 +151,7 @@
                   <v-col cols="10">
                     <v-text-field
                       label="A cada"
+                      prepend-icon="mdi-calendar-range"
                       color="light-green darken-3"
                       v-model="frequencia"
                       outlined
@@ -311,7 +312,7 @@ import { mapActions, mapState } from "vuex";
 import { mask } from "vue-the-mask";
 import { buscarEnderecoPorCep } from "@/api/endereco.api";
 
-import GerenciarProtutosDoEstande from "./GerenciarProtutosDoEstande";
+import GerenciarProdutosDoEstande from "./GerenciarProdutosDoEstande";
 import GerenciarNoticiasDoEstande from "./GerenciarNoticiasDoEstande";
 
 export default {
@@ -320,7 +321,7 @@ export default {
   directives: { mask },
 
   components: {
-    GerenciarProtutosDoEstande,
+    GerenciarProdutosDoEstande,
     GerenciarNoticiasDoEstande
   },
 

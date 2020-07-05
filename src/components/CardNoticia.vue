@@ -7,7 +7,7 @@
       @click="abrirDialogImagem(noticia.imagem)"
     ></v-img>
     <v-img
-      v-if="editar &&   imagemUrl"
+      v-if="editar && imagemUrl"
       height="150px"
       :src="imagemUrl"
       @click="abrirDialogImagem(imagem)"

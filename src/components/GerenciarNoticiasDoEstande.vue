@@ -125,7 +125,7 @@ export default {
       formData.append("titulo", this.titulo);
       formData.append("descricao", this.descricao);
 
-      this.cadastrarNoticia(formData, this.idFeira);
+      this.cadastrarNoticia(formData, this.idEstande);
 
       this.carregando = false;
     },
