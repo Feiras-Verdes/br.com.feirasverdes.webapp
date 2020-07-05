@@ -59,7 +59,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn class="white--text" outlined large color="light-green darken-3" @click="cancelar">Cancelar</v-btn>
-                    <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Entrar</v-btn>
+                    <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Salvar</v-btn>
                 </v-card-actions>
             </v-form>
         </v-card>
