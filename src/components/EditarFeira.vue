@@ -395,9 +395,7 @@ export default {
   },
 
   async created() {
-    await this.getFeira(this.id);
-
-    this.setFeira();
+    this.fetchFeira();
   },
 
   computed: {
@@ -408,6 +406,10 @@ export default {
     id() {
       return this.$route.params.id;
     }
+  },
+
+  watch: {
+    $route: "fetchFeira"
   },
 
   methods: {
@@ -471,6 +473,12 @@ export default {
           complemento: ""
         };
       }
+    },
+
+    async fetchFeira() {
+      await this.getFeira(this.id);
+
+      this.setFeira();
     },
 
     ativarDiaDaSemana(id) {

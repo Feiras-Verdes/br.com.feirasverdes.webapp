@@ -325,6 +325,10 @@ export default {
     GerenciarNoticiasDoEstande
   },
 
+  watch: {
+    $route: "fetchEstande"
+  },
+
   data() {
     return {
       abas: [
@@ -394,10 +398,8 @@ export default {
     };
   },
 
-  async created() {
-    await this.getEstande(this.id);
-
-    this.setEstande();
+  created() {
+    this.fetchEstande();
   },
 
   computed: {
@@ -411,7 +413,17 @@ export default {
   },
 
   methods: {
-    ...mapActions("Estandes", ["getEstande", "editarEstande", "deletarEstande"]),
+    ...mapActions("Estandes", [
+      "getEstande",
+      "editarEstande",
+      "deletarEstande"
+    ]),
+
+    async fetchEstande() {
+      await this.getEstande(this.id);
+
+      this.setEstande();
+    },
 
     async salvar() {
       let formData = new FormData();
