@@ -2,14 +2,16 @@ import httpClient from "./httpClient.js";
 
 const endpointEstandes = process.env.VUE_APP_ENDPOINT_ESTANDES
 
+//CRUD ESTANDE
 const cadastrarEstande = (estande) => httpClient.post(`${endpointEstandes}`, feira);
 
-const salvarEstandeEditada = (id, formData) => httpClient.put(`${endpointEstandes}/${id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+const atualizarEstande = (id, formData) => httpClient.put(`${endpointEstandes}/${id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
 const excluirEstande = (id) => httpClient.delete(`${endpointEstandes}/${id}`);
 
 const fetchEstande = (id) => httpClient.get(`${endpointEstandes}/${id}`);
 
+// NOTICIAS
 const fetchUltimasNoticias = () => httpClient.get(`${endpointEstandes}/ultimas-noticias`);
 
 const fetchProdutosDeEstande = (id) => httpClient.get(`${endpointEstandes}/${id}/produtos`)
@@ -25,6 +27,6 @@ export {
     fetchNoticiasDeEstande,
     avaliarEstande,
     cadastrarEstande,
-    salvarEstandeEditada,
+    atualizarEstande,
     excluirEstande
 };

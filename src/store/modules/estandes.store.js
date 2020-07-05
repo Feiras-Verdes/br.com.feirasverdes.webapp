@@ -1,4 +1,4 @@
-import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande, cadastrarEstande } from "@/api/estandes.api"
+import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande, cadastrarEstande, atualizarEstande } from "@/api/estandes.api"
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api"
 
 const state = {
@@ -99,6 +99,17 @@ const actions = {
             const res = await cadastrarEstande(estande);
         } catch (error) {
             console.log(error);
+        }
+    },
+
+    async editarEstande({ commit }, payload) {
+        try {
+            const res = await atualizarEstande(payload.id, payload.formData);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Estande atualizado com sucesso!", tipo: "success"});
+            dispatch("getFeira", payload.id);
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
         }
     }
 }
