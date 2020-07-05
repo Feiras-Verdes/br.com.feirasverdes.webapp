@@ -27,12 +27,13 @@
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field
+                <v-combobox
                   label="Unidade"
+                  :items="listaUnidades"
                   outlined
                   color="light-green darken-3"
                   v-model="unidade"
-                ></v-text-field>
+                ></v-combobox>
               </v-col>
             </v-row>
             <v-text-field
@@ -63,11 +64,7 @@
         </div>
 
         <v-avatar v-if="imagemUrl" size="120" tile>
-          <v-img
-            height="150px"
-            :src="imagemUrl"
-            @click="abrirDialogImagem(imagem)"
-          ></v-img>
+          <v-img height="150px" :src="imagemUrl" @click="abrirDialogImagem(imagem)"></v-img>
         </v-avatar>
       </div>
       <v-card-actions>
@@ -81,7 +78,7 @@
         >Salvar</v-btn>
       </v-card-actions>
     </v-card>
-    <div class="d-inline-flex flex-wrap sm-justify-center md-justify-start">
+    <div class="d-flex flex-wrap sm-justify-center md-justify-start">
       <CardProduto
         v-for="produto in produtos"
         :key="produto.id"
@@ -110,11 +107,12 @@ export default {
       nome: "",
       descricao: "",
       preco: "",
-      unidade: "",
+      unidade: "unidade",
       regras: {
         obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório"
       },
-      carregando: false
+      carregando: false,
+      listaUnidades: ["unidade", "kg", "100g", "litro", "100ml"]
     };
   },
 

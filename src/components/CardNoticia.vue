@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-3" width="350">
+  <v-card class="ma-3" width="355px">
     <v-img
       v-if="editar == false && noticia.imagem"
       height="150px"

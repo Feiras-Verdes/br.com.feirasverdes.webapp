@@ -39,7 +39,7 @@ const actions = {
     async getMelhoresFeiras({ commit }) {
         try {
             const res = await fetchMelhoresFeiras();
-            commit("SET_FEIRAS", res.data.feiras)
+            commit("SET_FEIRAS", res.data)
         } catch (error) {
             console.log(error)
         }

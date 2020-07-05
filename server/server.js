@@ -267,11 +267,23 @@ api.get("/endpoint", (requisição, resposta) => {
     resposta.send(obetoDeclaradoAcima)  
 })
 */
-api.get("/usuarios/detalhes", (req, res) => {
+api.get("/usuarios", (req, res) => {
     if (req.headers.authorization) {
         res.send(usuario)
     }
     else res.send(null)
+})
+
+api.get("/busca/estandes", (req, res) => {
+     res.send(melhoresFeiras.feiras[0].estandes)
+})
+
+api.get("/busca/feiras", (req, res) => {
+    res.send(melhoresFeiras.feiras)
+})
+
+api.get("/busca/produtos", (req, res) => {
+    res.send(melhoresFeiras.feiras[0].produtos)
 })
 
 api.post("/usuarios/cadastrar", (req, res) => {
@@ -317,8 +329,8 @@ api.get("/feiras/listar-por-organizador/:id", (req, res) => {
     res.send(melhoresFeiras.feiras);
 })
 
-api.get("/feiras/melhores-feiras", (req, res) => {
-    res.send(melhoresFeiras);
+api.get("/feiras/pesquisar-melhores-feiras", (req, res) => {
+    res.send(melhoresFeiras.feiras);
 })
 
 api.get("/feiras/ultimas-noticias", (req, res) => {

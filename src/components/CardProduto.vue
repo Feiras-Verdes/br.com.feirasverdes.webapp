@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-3" width="350px">
+  <v-card class="ma-3" width="355px" @click="irParaEstande">
     <div class="d-flex flex-no-wrap justify-space-between">
       <div>
         <v-card-title>
@@ -33,12 +33,7 @@
               ></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
-              <v-text-field
-                label="Unidade"
-                outlined
-                color="light-green darken-3"
-                v-model="unidade"
-              ></v-text-field>
+              <v-text-field label="Unidade" outlined color="light-green darken-3" v-model="unidade"></v-text-field>
             </v-col>
           </v-row>
         </v-card-subtitle>
@@ -186,6 +181,10 @@ export default {
 
     mostrarImagem() {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);
+    },
+
+    irParaEstande() {
+      this.$router.push({ path: `/estandes/${this.produto.estande.id}` });
     }
   }
 };
