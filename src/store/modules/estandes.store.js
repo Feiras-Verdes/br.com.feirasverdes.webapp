@@ -1,4 +1,4 @@
-import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande } from "@/api/estandes.api"
+import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande, cadastrarEstande } from "@/api/estandes.api"
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api"
 
 const state = {
@@ -89,6 +89,14 @@ const actions = {
         try {
             const res = await fetchEstandesDoFeirante(idFeirante);
             commit("SET_ESTANDES", res.data)
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    async cadastrarEstande({ commit }, estande) {
+        try {
+            const res = await cadastrarEstande(estande);
         } catch (error) {
             console.log(error);
         }
