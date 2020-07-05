@@ -27,7 +27,7 @@
               ></v-rating>
             </v-card-subtitle>
 
-            <v-card-text class="d-flex d-md-inline-flex justify-space-around">
+            <v-card-text v-if="estande.endereco" class="d-flex d-md-inline-flex justify-space-around">
               <v-icon color="black">mdi-map-marker</v-icon>
               <div class="endereco">{{`${estande.endereco.logradouro}, nº${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}`}}</div>
             </v-card-text>

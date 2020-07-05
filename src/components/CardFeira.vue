@@ -27,7 +27,7 @@
                 dense
               ></v-rating>
             </v-card-subtitle>
-            <v-card-text class="d-flex d-md-inline-flex justify-space-around">
+            <v-card-text v-if="feira.endereco" class="d-flex d-md-inline-flex justify-space-around">
               <v-icon color="black">mdi-map-marker</v-icon>
               <div>{{`${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</div>
             </v-card-text>
