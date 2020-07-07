@@ -27,13 +27,13 @@ const melhoresFeiras = {
             "id": 1,
             "nome": "Feira do Lucas",
             "avaliacao": 5.0,
-            "endereco": {
-                "logradouro": "Rua",
-                "numero": 12,
-                "bairro": "Bairro",
-                "cidade": "Cidade",
-                "estado": "ES"
-            },
+            // "endereco": {
+            //     "logradouro": "Rua",
+            //     "numero": 12,
+            //     "bairro": "Bairro",
+            //     "cidade": "Cidade",
+            //     "estado": "ES"
+            // },
             "contato": "(48)99999-9999",
             "estandes": [
                 {
