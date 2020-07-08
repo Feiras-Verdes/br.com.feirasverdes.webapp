@@ -462,6 +462,7 @@ export default {
 
       if (this.feira.endereco) {
         this.endereco = this.feira.endereco;
+        this.endereco.estadoSelecionado = this.feira.endereco.estado;
       } else {
         this.endereco = {
           cep: "",
@@ -496,7 +497,6 @@ export default {
     },
 
     async pesquisarCep() {
-      // TODO implementar consulta em API de CEP
       this.carregandoEndereco = true;
 
       const res = await buscarEnderecoPorCep(

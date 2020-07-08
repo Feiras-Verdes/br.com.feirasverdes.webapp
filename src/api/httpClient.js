@@ -36,8 +36,6 @@ const errorInterceptor = error => {
 
 	default:
 		console.error(error.response.status, error.message);
-		alert("Server Error");
-
 	}
 	return Promise.reject(error);
 };

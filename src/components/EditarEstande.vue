@@ -264,6 +264,20 @@
                     ></v-text-field>
                   </v-col>
                 </v-row>
+
+                <v-row justify="center">
+                  <v-col cols="10">
+                    <v-combobox
+                      v-model="feiraSelecionada"
+                      :items="cbFeiras"
+                      label="Selecione uma feira"
+                      outlined
+                      color="primary"
+                      :search-input.sync="buscaFeira"
+                      @update:search-input="pesquisarFeiras"
+                    ></v-combobox>
+                  </v-col>
+                </v-row>
               </v-form>
               <v-card-actions>
                 <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Estande</a>
@@ -394,7 +408,10 @@ export default {
       imagemUrl: "",
       imagem: null,
       carregandoEndereco: false,
-      confirmarExclusao: false
+      confirmarExclusao: false,
+      feiraSelecionada: "",
+      cbFeiras: [],
+      buscaFeira: ""
     };
   },
 
@@ -404,6 +421,8 @@ export default {
 
   computed: {
     ...mapState("Estandes", ["estande"]),
+
+    ...mapState("Busca", ["feiras"]),
 
     ...mapState("Usuarios", ["usuario"]),
 
@@ -417,6 +436,10 @@ export default {
       "getEstande",
       "editarEstande",
       "deletarEstande"
+    ]),
+
+     ...mapActions("Busca", [
+      "getFeiras2"
     ]),
 
     async fetchEstande() {
@@ -499,6 +522,23 @@ export default {
       this.endereco.estadoSelecionado = res.data.uf;
       this.endereco.cidade = res.data.localidade;
       this.carregandoEndereco = false;
+    },
+
+    pesquisarFeiras() {
+      const ref = this;
+      this.getFeiras2(this.buscaFeira).then(() => {
+        ref.cbFeiras = [];
+  
+        for (let i = 0; i < ref.feiras.length; i++) {
+          const f = {
+            text: ref.feiras[i].nome,
+            value: ref.feiras[i].id
+          };
+  
+          ref.cbFeiras.push(f);
+        }
+      })
+
     }
   }
 };

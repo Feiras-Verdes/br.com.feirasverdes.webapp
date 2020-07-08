@@ -81,6 +81,7 @@ export default {
   },
   methods: {
     ...mapActions("Busca", ["getFeiras", "setOrdenacao", "setTipoOrdenacao"]),
+    
     ordenar() {
       this.setOrdenacao(this.ordenacao),
         (this.mostrarPopupOrdenacaoFeiras = false);

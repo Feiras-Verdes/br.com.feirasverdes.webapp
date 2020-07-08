@@ -57,6 +57,17 @@ const actions = {
             this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao buscar feiras", tipo: "error"});
         }
     },
+
+    async getFeiras2({state,commit}, nome){
+        try{
+            const res = await fetchBuscaFeira(nome, state.limite, state.pagina, state.ordenacao, state.tipoOrdenacao)
+            commit("SET_FEIRA", res.data)
+        }catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao buscar feiras", tipo: "error"});
+        }
+    },
+
     async getProdutos({state,commit}){
         try{
             const res = await fetchBuscaProduto(state.nome, state.limite, state.pagina, state.ordenacao, state.tipoOrdenacao)

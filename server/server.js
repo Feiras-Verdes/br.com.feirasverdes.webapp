@@ -393,5 +393,13 @@ api.get("/estandes/:idEstande/produtos/:idNoticia", (req, res) => {
 api.get("/estandes/:idEstande/avaliar", (req, res) => {
     res.send(true);
 })
+
+
+api.get("/busca/feiras", (req, res) => {
+    console.log(req.query.nome);
+    res.send(melhoresFeiras.feiras.filter((feira) => {
+        return feira.nome.includes(req.query.nome);
+    }))
+})
 // escutar na porta definida
 api.listen(porta);
