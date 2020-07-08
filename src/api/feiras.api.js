@@ -15,13 +15,9 @@ const fetchMelhoresFeiras = () => httpClient.get(`${endpointFeiras}/pesquisar-me
 
 const fetchUltimasNoticias = () => httpClient.get(`${endpointFeiras}/ultimas-noticias`);
 
-const cadastrarNoticiaEmFeira = (idFeira, noticia) => httpClient.post(`${endpointFeiras}/${idFeira}/noticias`, noticia, { headers: { 'Content-Type': 'multipart/form-data' } });
-
 const fetchNoticiasDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/noticias`);
 
 const fetchEstandesDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/estandes`);
-
-const cadastrarNoticiaEmFeira = (noticia) => httpClient.post("/noticias/cadastrar", noticia, { headers: { 'Content-Type': 'multipart/form-data' } });
 
 const removerEstandeDeFeira = (idFeira, idEstande) => httpClient.delete(`${endpointFeiras}/${idFeira}/estandes/${idEstande}`);
 
@@ -37,6 +33,5 @@ export {
     cadastrarFeira,
     excluirFeira,
     salvarFeiraEditada,
-    cadastrarNoticiaEmFeira,
     removerEstandeDeFeira
 };

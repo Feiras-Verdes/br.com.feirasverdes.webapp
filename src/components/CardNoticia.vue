@@ -46,7 +46,7 @@
           ></v-text-field>
         </v-card-title>
         <v-card-subtitle class="autor-noticia">
-          <div v-if="!editar">{{ `${noticia.dataPublicacao} - ${noticia.usuario.nome}` }}</div>
+          <div v-if="!editar">{{ `${noticia.dataPublicacao} - ${autor}` }}</div>
         </v-card-subtitle>
         <v-card-text class="descricao-noticia">
           <div v-if="!editar">{{ noticia.descricao }}</div>
@@ -94,7 +94,7 @@
             color="light-green darken-3"
             @click="confirmarExclusao = false"
           >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Feira</v-btn>
+          <v-btn class="white--text" color="light-green darken-3" :loading="carregando" @click="excluir">Excluir Feira</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "CardNoticia",
 
@@ -115,7 +117,8 @@ export default {
       regras: {
         obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório"
       },
-      confirmarExclusao: false
+      confirmarExclusao: false,
+      carregando: false
     };
   },
 
@@ -131,6 +134,12 @@ export default {
     }
   },
 
+  computed: {
+    autor() {
+      return this.noticia.feira ? this.noticia.feira.nome : this.noticia.estande ? this.noticia.estande.nome : "";
+    }
+  },
+
   created() {
     this.titulo = this.noticia.titulo;
     this.descricao = this.noticia.descricao;
@@ -138,17 +147,31 @@ export default {
   },
 
   methods: {
+    ...mapActions("Feiras", ["atualizarNoticia", "excluirNoticia"]),
+
     abrirDialogImagem(imagem) {
       this.$emit("abrir-imagem-dialog", imagem);
     },
 
     async salvar() {
-      // TODO
+      this.carregando = true;
+
+      const formData = new FormData();
+      if (this.imagem) {
+        formData.append("imagem", this.imagem);
+      }
+      formData.append("titulo", this.titulo);
+      formData.append("descricao", this.descricao);
+      formData.append("idFeira", this.idFeira);
+      await this.atualizarNoticia(formData)
     },
 
     async excluir() {
+      this.carregando = true;
+      await this.excluirNoticia(this.noticia.id);
+
+      this.carregando = false;
       this.confirmarExclusao = false;
-      // TODO
     },
 
     cancelar() {

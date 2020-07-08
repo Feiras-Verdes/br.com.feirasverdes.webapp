@@ -37,7 +37,7 @@ const errorInterceptor = error => {
 	default:
 		console.error(error.response.status, error.message);
 	}
-	return Promise.reject(error);
+	throw new Error(error.response.data.errors[0].defaultMessage);
 };
 
 // Interceptor for responses

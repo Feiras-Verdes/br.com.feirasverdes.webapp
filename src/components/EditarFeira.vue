@@ -291,6 +291,7 @@
                   class="white--text"
                   color="light-green darken-3"
                   @click="salvar"
+                  :loading="loading"
                   >Salvar</v-btn
                 >
               </v-card-actions>
@@ -323,6 +324,7 @@
             class="white--text"
             color="light-green darken-3"
             @click="excluir"
+            :loading="loading"
             >Excluir Feira</v-btn
           >
         </v-card-actions>
@@ -415,6 +417,7 @@ export default {
       imagem: null,
       carregandoEndereco: false,
       confirmarExclusao: false,
+      loading: false
     };
   },
 
@@ -440,6 +443,8 @@ export default {
     ...mapActions("Feiras", ["getFeira", "editarFeira", "deletarFeira"]),
 
     async salvar() {
+      this.loading = true;
+
       let formData = new FormData();
       if (this.imagem) {
         formData.append("imagem", this.imagem);
@@ -463,14 +468,19 @@ export default {
         id: this.feira.id,
         formData: formData,
       });
+
+      this.loading = false;
+      
+      this.$emit("redesenhar");
     },
 
     async excluir() {
-      this.confirmarExclusao = false;
+      this.loading = true;
       await this.deletarFeira(this.feira.id);
+      this.confirmarExclusao = false;
+      this.loading = true;
 
-      this.$destroy();
-      // this.$emit("feira-excluida");
+      this.$emit("redesenhar");
     },
 
     cancelar() {
@@ -506,15 +516,15 @@ export default {
       this.setFeira();
     },
 
-    ativarDiaDaSemana(id) {
-      this.diasDaSemana[id].ativo = !this.diasDaSemana[id].ativo;
+    // ativarDiaDaSemana(id) {
+    //   this.diasDaSemana[id].ativo = !this.diasDaSemana[id].ativo;
 
-      if (this.diasDaSemana[id].ativo) {
-        this.diasDaSemana[id].cor = "light-green darken-3";
-      } else {
-        this.diasDaSemana[id].cor = "light-green darken-4";
-      }
-    },
+    //   if (this.diasDaSemana[id].ativo) {
+    //     this.diasDaSemana[id].cor = "light-green darken-3";
+    //   } else {
+    //     this.diasDaSemana[id].cor = "light-green darken-4";
+    //   }
+    // },
 
     mostrarImagem() {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);

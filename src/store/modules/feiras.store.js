@@ -8,9 +8,9 @@ import {
   cadastrarFeira,
   excluirFeira,
   salvarFeiraEditada,
-  removerEstandeDeFeira,
-  cadastrarNoticiaEmFeira,
+  removerEstandeDeFeira
 } from "@/api/feiras.api";
+import { cadastrarNoticia, atualizarNoticia, excluirNoticia } from "@/api/noticias.api";
 import { fetchFeirasDoOrganizador } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
 
@@ -196,12 +196,38 @@ const actions = {
 
   async cadastrarNoticia({ state, dispatch }, noticia) {
     try {
-      const res = await cadastrarNoticiaEmFeira(state.feira.id, noticia);
+      const res = await cadastrarNoticia(noticia);
       dispatch("getNoticiasDeFeira", state.feira.id);
     } catch (error) {
       console.log(error);
       this.dispatch("Mensagens/mostrarMensagem", {
         mensagem: "Erro ao cadastrar nova notícia.",
+        tipo: "error",
+      });
+    }
+  },
+
+  async atualizarNoticia({ state, dispatch }, noticia) {
+    try {
+      const res = await atualizarNoticia(noticia);
+      dispatch("getNoticiasDeFeira", state.feira.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao atualizar notícia.",
+        tipo: "error",
+      });
+    }
+  },
+
+  async excluirNoticia({ state, dispatch }, idNoticia) {
+    try {
+      const res = await excluirNoticia(idNoticia);
+      dispatch("getNoticiasDeFeira", state.feira.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao excluir notícia.",
         tipo: "error",
       });
     }

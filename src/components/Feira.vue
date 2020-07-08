@@ -21,7 +21,7 @@
               full-icon="mdi-star"
               half-icon="mdi-star-half"
               empty-icon="mdi-star-outline"
-              :readonly="!usuario"
+              :readonly="podeAvaliar"
               hover
               half-increments
               dense
@@ -91,6 +91,10 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+    
+    podeAvaliar() {
+      return this.usuario == null || this.usuario.tipoUsuario.descricao != "CONSUMIDOR";
     }
   },
 

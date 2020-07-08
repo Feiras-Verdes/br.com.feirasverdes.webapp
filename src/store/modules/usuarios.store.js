@@ -62,7 +62,7 @@ const actions = {
             router.push("/login");
         } catch (error) {
             console.log(error);
-            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Cadastro inválido. Verifique seus dados.", tipo: "error"});
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: error.message, tipo: "error"});
         }
     },
 

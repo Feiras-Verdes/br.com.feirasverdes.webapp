@@ -1,12 +1,12 @@
 <template>
-  <v-container fluid height="100%" class="pa-0 editar-feira">
+  <v-container fluid height="100%" class="pa-0 editar-feira" :key="chaveComponente">
     <v-tabs background-color="light-green darken-3" dark>
       <v-tab v-for="feira in feiras" :key="feira.id" :to="`/gerenciar-feiras/${feira.id}`" exact>{{ feira.nome }}</v-tab>
       <v-tab @click="adicionarFeira">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-tab>
     </v-tabs>
-    <router-view @feira-excluida="onFeiraExcluida"></router-view>
+    <router-view @redesenhar="redesenhar"></router-view>
   </v-container>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   name: "GerenciarFeiras",
   data() {
     return {
+      chaveComponente: 0
     };
   },
 
@@ -32,6 +33,12 @@ export default {
 
   methods: {
     ...mapActions("Feiras", ["cadastrarFeira", "getFeirasDoOrganizador"]),
+
+    async redesenhar() {
+      await this.getFeirasDoOrganizador(this.usuario.id);
+
+      this.chaveComponente += 1;
+    },
 
     async adicionarFeira() {
       const feira = {
@@ -50,6 +57,7 @@ export default {
 
     async onFeiraExcluida() {
       await this.getFeirasDoOrganizador(usuario.id);
+      this.redesenhar();
     }
   }
 };
