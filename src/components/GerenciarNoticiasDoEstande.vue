@@ -117,15 +117,16 @@ export default {
 
     async salvar() {
       this.carregando = true;
-      formData = new FormData();
+      let formData = new FormData();
 
       if (this.imagem) {
         formData.append("imagem", this.imagem);
       }
       formData.append("titulo", this.titulo);
       formData.append("descricao", this.descricao);
+      formData.append("idEstande", this.idEstande);
 
-      this.cadastrarNoticia(formData, this.idEstande);
+      this.cadastrarNoticia({formData: formData});
 
       this.carregando = false;
     },

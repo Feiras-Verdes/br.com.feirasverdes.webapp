@@ -62,8 +62,8 @@
       </v-snackbar>
     </v-app-bar>
 
-    <v-main>
-      <v-navigation-drawer v-model="drawer" fixed clipped class="mt-16">
+    <v-main >
+      <v-navigation-drawer v-model="drawer" absolute temporary>
         <template>
           <v-list class="list-menu">
             <v-list-item v-if="usuario">
@@ -245,7 +245,7 @@ export default {
     },
 
     buscar() {
-       this.$router.push({path:`/busca/`, query: { busca: this.busca }})
+       this.$router.push({path:`/busca/`, query: { busca: this.busca}})
     },
     
     irHome(){

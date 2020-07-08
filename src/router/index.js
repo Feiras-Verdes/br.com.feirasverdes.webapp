@@ -13,6 +13,7 @@ import EditarFeira from '../components/EditarFeira.vue'
 import GerenciarEstandes from '../components/GerenciarEstandes'
 import EditarEstande from '../components/EditarEstande.vue'
 import Busca from '../components/Busca.vue'
+import NovaSenha from '../components/NovaSenha.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -94,6 +95,10 @@ export const router = new VueRouter({
 				{
 					path: "busca",
 					component: Busca
+				},
+				{
+					path: "novaSenha",
+					component: NovaSenha
 				},
 			]
 		}

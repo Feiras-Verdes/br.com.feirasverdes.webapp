@@ -7,6 +7,7 @@ import {
   cadastrarEstande,
   atualizarEstande,
   excluirEstande,
+  cadastrarNoticiaEmEstande
 } from "@/api/estandes.api";
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
@@ -164,6 +165,16 @@ const actions = {
       });
     }
   },
+
+  async cadastrarNoticia({ state, dispatch }, noticia) {
+    try {
+      const res = await cadastrarNoticiaEmEstande(noticia.formData);
+      dispatch("getNoticiasDeEstande", state.estande.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao cadastrar nova notícia.", tipo: "error" });
+    }
+  }
 };
 
 export default {

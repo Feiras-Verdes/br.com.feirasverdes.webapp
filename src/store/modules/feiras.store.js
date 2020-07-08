@@ -205,8 +205,8 @@ const actions = {
         tipo: "error",
       });
     }
-  },
-};
+  }
+}
 
 export default {
   namespaced: true,
