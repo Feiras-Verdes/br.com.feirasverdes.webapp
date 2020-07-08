@@ -15,7 +15,9 @@
               <v-avatar class="avatar-usuario" size="120">
                 <img v-if="fotoUrl" :src="fotoUrl" />
                 <img v-else-if="usuario.imagem" :src="usuario.imagem" />
-                <v-icon left size="120" v-else color="light-green darken-3">mdi-account-circle</v-icon>
+                <v-icon left size="120" v-else color="light-green darken-3"
+                  >mdi-account-circle</v-icon
+                >
               </v-avatar>
             </v-col>
           </v-row>
@@ -33,7 +35,13 @@
                   @change="mostrarFoto"
                 >
                   <template v-slot:selection="{ text }">
-                    <v-chip small label color="light-green darken-3" text-color="white">{{ text }}</v-chip>
+                    <v-chip
+                      small
+                      label
+                      color="light-green darken-3"
+                      text-color="white"
+                      >{{ text }}</v-chip
+                    >
                   </template>
                 </v-file-input>
               </template>
@@ -51,7 +59,9 @@
               ></v-text-field>
             </v-col>
             <v-col cols="1">
-              <v-icon small color="red darken-3 obrigatorio">mdi-asterisk</v-icon>
+              <v-icon small color="red darken-3 obrigatorio"
+                >mdi-asterisk</v-icon
+              >
             </v-col>
           </v-row>
           <v-row>
@@ -91,8 +101,16 @@
           <v-row>
             <div class="d-sm-inline-flex">
               <v-radio-group class="pl-3" v-model="cpfOuCpnj" row>
-                <v-radio label="CPF" value="CPF" color="light-green darken-3"></v-radio>
-                <v-radio label="CNPJ" value="CNPJ" color="light-green darken-3"></v-radio>
+                <v-radio
+                  label="CPF"
+                  value="CPF"
+                  color="light-green darken-3"
+                ></v-radio>
+                <v-radio
+                  label="CNPJ"
+                  value="CNPJ"
+                  color="light-green darken-3"
+                ></v-radio>
               </v-radio-group>
 
               <div class="d-flex">
@@ -125,7 +143,8 @@
                       small
                       color="red darken-3 obrigatorio"
                       class=".d-inline-flex"
-                    >mdi-asterisk</v-icon>
+                      >mdi-asterisk</v-icon
+                    >
                   </v-col>
                 </v-row>
               </div>
@@ -155,7 +174,9 @@
               ></v-text-field>
             </v-col>
             <v-col cols="1">
-              <v-icon small color="red darken-3 obrigatorio">mdi-asterisk</v-icon>
+              <v-icon small color="red darken-3 obrigatorio"
+                >mdi-asterisk</v-icon
+              >
             </v-col>
           </v-row>
         </v-card-text>
@@ -166,13 +187,15 @@
             outlined
             color="light-green darken-3"
             @click="cancelar"
-          >Cancelar</v-btn>
+            >Cancelar</v-btn
+          >
           <v-btn
             class="white--text"
             :disabled="!formularioValido"
             color="light-green darken-3"
             @click="salvar"
-          >Salvar</v-btn>
+            >Salvar</v-btn
+          >
         </v-card-actions>
       </v-form>
     </v-card>
@@ -202,16 +225,16 @@ export default {
       fotoUrl: "",
       datePicker: false,
       regras: {
-        obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório",
+        obrigatorio: (valor) => (valor && !!valor.trim()) || "Obrigatório",
         senhaConfirmada: () =>
           this.senha == this.confirmacaoSenha ||
           "Senha e confirmação de senha devem ser idênticas",
-        cpfOuCpnj: valor =>
+        cpfOuCpnj: (valor) =>
           this.cpf.trim() != "" ||
           this.cnpj.trim() != "" ||
-          "CPF ou CNPJ devem ser preenchidos!"
+          "CPF ou CNPJ devem ser preenchidos!",
       },
-      formularioValido: false
+      formularioValido: false,
     };
   },
 
@@ -225,6 +248,7 @@ export default {
     this.telefone = this.usuario.telefone;
     this.email = this.usuario.email;
     this.foto = this.usuario.foto;
+    this.cpfOuCpnj = this.cnpj ? "CNPJ" : "CPF";
   },
 
   computed: {
@@ -232,20 +256,20 @@ export default {
 
     dataNascimentoFormatada() {
       return this.formatarData(this.dataNascimento);
-    }
+    },
   },
 
   watch: {
     datePicker(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+    },
   },
 
   methods: {
     ...mapActions("Usuarios", [
       "atualizarUsuario",
       "fetchDetalhesDoUsuario",
-      "enviarImagem"
+      "enviarImagem",
     ]),
 
     formatarData(data) {
@@ -265,8 +289,12 @@ export default {
         formData.append("imagem", this.foto);
       }
       formData.append("nome", this.nome);
-      formData.append("cpf", this.cpf);
-      formData.append("cnpj", this.cnpj);
+      if (this.cpf) {
+        formData.append("cpf", this.cpf);
+      }
+      if (this.cnpj) {
+        formData.append("cnpj", this.cnpj);
+      }
       formData.append("telefone", this.telefone);
       formData.append("email", this.email);
       if (this.dataNascimentoFormatada) {
@@ -276,7 +304,7 @@ export default {
       if (this.formularioValido) {
         await this.atualizarUsuario({
           id: this.usuario.id,
-          formData: formData
+          formData: formData,
         });
       }
     },
@@ -286,17 +314,17 @@ export default {
       console.log(this.foto);
       const payload = {
         id: this.usuario.id,
-        foto: this.foto
+        foto: this.foto,
       };
       await this.enviarImagem(payload);
     },
 
-    toBase64: file =>
+    toBase64: (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+        reader.onerror = (error) => reject(error);
       }),
 
     validarFormulario() {
@@ -309,10 +337,9 @@ export default {
 
     mostrarFoto() {
       this.fotoUrl = window.URL.createObjectURL(this.foto);
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

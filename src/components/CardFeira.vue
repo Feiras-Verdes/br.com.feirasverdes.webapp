@@ -4,12 +4,8 @@
       <div>
         <div class="d-inline-flex justify-space-between">
           <v-avatar size="120">
-            <v-img
-              v-if="feira.imagem"
-              :src="feira.imagem"
-              @click.stop="abrirDialogImagem(feira.imagem)"
-            ></v-img>
-            <v-img v-else src="../assets/icone-feira.png"></v-img>
+            <img v-if="feira.imagem" :src="feira.imagem"></img>
+            <img v-else src="../assets/icone-feira.png"></img>
           </v-avatar>
           <v-spacer></v-spacer>
           <div>
@@ -27,9 +23,16 @@
                 dense
               ></v-rating>
             </v-card-subtitle>
-            <v-card-text v-if="feira.endereco" class="d-flex d-md-inline-flex justify-space-around">
+            <v-card-text
+              v-if="feira.endereco"
+              class="d-flex d-md-inline-flex justify-space-around"
+            >
               <v-icon color="black">mdi-map-marker</v-icon>
-              <div>{{`${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`}}</div>
+              <div>
+                {{
+                  `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`
+                }}
+              </div>
             </v-card-text>
           </div>
         </div>
@@ -45,8 +48,8 @@ export default {
   props: {
     feira: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
@@ -56,8 +59,8 @@ export default {
 
     irParaFeira() {
       this.$router.push({ path: `/feiras/${this.feira.id}` });
-    }
-  }
+    },
+  },
 };
 </script>
 
