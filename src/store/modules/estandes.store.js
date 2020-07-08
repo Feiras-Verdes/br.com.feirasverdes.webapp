@@ -6,6 +6,7 @@ import {
   avaliarEstande,
   cadastrarEstande,
   atualizarEstande,
+  excluirEstande,
 } from "@/api/estandes.api";
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
@@ -131,14 +132,30 @@ const actions = {
     }
   },
 
-  async editarEstande({ commit }, payload) {
+  async deletarEstande({ dispatch }, idEstande) {
+    try {
+      await excluirEstande(idEstande);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Estande excluído com sucesso",
+        tipo: "success",
+      });
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao excluir estande.",
+        tipo: "error",
+      });
+    }
+  },
+
+  async editarEstande({ dispatch }, payload) {
     try {
       const res = await atualizarEstande(payload.id, payload.formData);
       this.dispatch("Mensagens/mostrarMensagem", {
         mensagem: "Estande atualizado com sucesso!",
         tipo: "success",
       });
-      dispatch("getFeira", payload.id);
+      dispatch("getEstande", payload.id);
     } catch (error) {
       console.log(error);
       this.dispatch("Mensagens/mostrarMensagem", {
