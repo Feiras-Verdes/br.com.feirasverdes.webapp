@@ -1,11 +1,9 @@
 const converterBytesParaDataUrl = (imagem) => {
-    if (!imagem) return "";
+  if (!imagem) return "";
 
-    if (!imagem.tipo) return imagem;
+  if (!imagem.tipo) return imagem;
 
-    return `data:${state.usuario.imagem.tipo};base64,${state.usuario.imagem.bytesImagem}`;
-}
+  return `data:${imagem.tipo};base64,${imagem.bytesImagem}`;
+};
 
-export {
-    converterBytesParaDataUrl
-}
+export { converterBytesParaDataUrl };

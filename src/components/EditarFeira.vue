@@ -2,7 +2,9 @@
   <v-card flat height="100%" class="pa-0" rounded="0">
     <v-tabs
       v-model="abaAtiva"
-      :vertical="$vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'"
+      :vertical="
+        $vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'
+      "
       background-color="light-green darken-3"
       dark
       class="abas"
@@ -41,7 +43,8 @@
                             label
                             color="light-green darken-3"
                             text-color="white"
-                          >{{ text }}</v-chip>
+                            >{{ text }}</v-chip
+                          >
                         </template>
                       </v-file-input>
                     </template>
@@ -93,12 +96,14 @@
                           text
                           color="light-green darken-3"
                           @click="dialogHorarioInicio = false"
-                        >Cancelar</v-btn>
+                          >Cancelar</v-btn
+                        >
                         <v-btn
                           text
                           color="light-green darken-3"
                           @click="$refs.dialogInicio.save(horaInicio)"
-                        >Ok</v-btn>
+                          >Ok</v-btn
+                        >
                       </v-time-picker>
                     </v-dialog>
                   </v-col>
@@ -136,12 +141,14 @@
                           text
                           color="light-green darken-3"
                           @click="dialogHorarioFim = false"
-                        >Cancelar</v-btn>
+                          >Cancelar</v-btn
+                        >
                         <v-btn
                           text
                           color="light-green darken-3"
                           @click="$refs.dialogFim.save(horaFim)"
-                        >Ok</v-btn>
+                          >Ok</v-btn
+                        >
                       </v-time-picker>
                     </v-dialog>
                   </v-col>
@@ -150,10 +157,11 @@
                 <v-row justify="center">
                   <v-col cols="10">
                     <v-text-field
-                      label="A cada"
+                      label="Frequência (Dias de funcionamento)"
                       prepend-icon="mdi-calendar-range"
                       color="light-green darken-3"
                       v-model="frequencia"
+                      placeholder="Ex.: Segunda a sexta"
                       outlined
                     ></v-text-field>
                   </v-col>
@@ -266,15 +274,25 @@
                 </v-row>
               </v-form>
               <v-card-actions>
-                <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Feira</a>
+                <a
+                  class="subtitle-1 link-excluir"
+                  @click="confirmarExclusao = true"
+                  >Excluir Feira</a
+                >
                 <v-spacer></v-spacer>
                 <v-btn
                   class="white--text"
                   outlined
                   color="light-green darken-3"
                   @click="cancelar"
-                >Cancelar</v-btn>
-                <v-btn class="white--text" color="light-green darken-3" @click="salvar">Salvar</v-btn>
+                  >Cancelar</v-btn
+                >
+                <v-btn
+                  class="white--text"
+                  color="light-green darken-3"
+                  @click="salvar"
+                  >Salvar</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-tab-item>
@@ -299,8 +317,14 @@
             outlined
             color="light-green darken-3"
             @click="confirmarExclusao = false"
-          >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Feira</v-btn>
+            >Cancelar</v-btn
+          >
+          <v-btn
+            class="white--text"
+            color="light-green darken-3"
+            @click="excluir"
+            >Excluir Feira</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -322,7 +346,7 @@ export default {
 
   components: {
     GerenciarEstandesDeFeira,
-    GerenciarNoticiasDaFeira
+    GerenciarNoticiasDaFeira,
   },
 
   data() {
@@ -330,16 +354,16 @@ export default {
       abas: [
         {
           id: 1,
-          nome: "Feira"
+          nome: "Feira",
         },
         {
           id: 2,
-          nome: "Estandes"
+          nome: "Estandes",
         },
         {
           id: 3,
-          nome: "Notícias"
-        }
+          nome: "Notícias",
+        },
       ],
       abaAtiva: 0,
       nome: "",
@@ -356,7 +380,7 @@ export default {
         numero: "",
         bairro: "",
         cidade: "",
-        complemento: ""
+        complemento: "",
       },
       estados: [
         "AC",
@@ -385,12 +409,12 @@ export default {
         "SC",
         "SP",
         "SE",
-        "TO"
+        "TO",
       ],
       imagemUrl: "",
       imagem: null,
       carregandoEndereco: false,
-      confirmarExclusao: false
+      confirmarExclusao: false,
     };
   },
 
@@ -405,11 +429,11 @@ export default {
 
     id() {
       return this.$route.params.id;
-    }
+    },
   },
 
   watch: {
-    $route: "fetchFeira"
+    $route: "fetchFeira",
   },
 
   methods: {
@@ -437,7 +461,7 @@ export default {
 
       await this.editarFeira({
         id: this.feira.id,
-        formData: formData
+        formData: formData,
       });
     },
 
@@ -471,7 +495,7 @@ export default {
           numero: "",
           bairro: "",
           cidade: "",
-          complemento: ""
+          complemento: "",
         };
       }
     },
@@ -506,8 +530,8 @@ export default {
       this.endereco.estadoSelecionado = res.data.uf;
       this.endereco.cidade = res.data.localidade;
       this.carregandoEndereco = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
