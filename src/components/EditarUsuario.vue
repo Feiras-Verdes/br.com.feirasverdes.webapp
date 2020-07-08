@@ -158,6 +158,16 @@
               <v-icon small color="red darken-3 obrigatorio">mdi-asterisk</v-icon>
             </v-col>
           </v-row>
+          <v-row>
+            <v-spacer></v-spacer>
+          <v-btn 
+            class="white--text"
+            color="light-green darken-3"
+            outlined
+            @click="novaSenha"
+          >Nova Senha</v-btn>
+          <v-spacer></v-spacer>
+          </v-row>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -305,6 +315,10 @@ export default {
 
     cancelar() {
       this.$router.push("/");
+    },
+
+    novaSenha() {
+      this.$router.push("/novaSenha");
     },
 
     mostrarFoto() {

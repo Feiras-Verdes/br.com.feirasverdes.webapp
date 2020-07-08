@@ -1,6 +1,7 @@
 import httpClient from "./httpClient.js";
 
 const endpointEstandes = process.env.VUE_APP_ENDPOINT_ESTANDES;
+const endpointNoticias = process.env.VUE_APP_ENDPOINT_NOTICIAS;
 
 //CRUD ESTANDE
 const cadastrarEstande = (estande) =>
@@ -31,6 +32,9 @@ const avaliarEstande = (idUsuario, idEstande, nota) =>
     nota,
   });
 
+  const cadastrarNoticiaEmEstande = (noticia) => httpClient.post("/noticias/cadastrar", noticia, { headers: { 'Content-Type': 'multipart/form-data' } });
+
+
 export {
   fetchUltimasNoticias,
   fetchEstande,
@@ -40,4 +44,5 @@ export {
   cadastrarEstande,
   atualizarEstande,
   excluirEstande,
+  cadastrarNoticiaEmEstande,
 };

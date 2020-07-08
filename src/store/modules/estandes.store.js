@@ -1,4 +1,4 @@
-import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande, cadastrarEstande, atualizarEstande } from "@/api/estandes.api"
+import { fetchUltimasNoticias, fetchProdutosDeEstande, fetchNoticiasDeEstande, fetchEstande, avaliarEstande, cadastrarEstande, atualizarEstande, cadastrarNoticiaEmEstande} from "@/api/estandes.api"
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api"
 
 const state = {
@@ -110,6 +110,16 @@ const actions = {
         } catch (error) {
             console.log(error);
             this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
+        }
+    },
+
+    async cadastrarNoticia({ state, dispatch }, noticia) {
+        try {
+            const res = await cadastrarNoticiaEmEstande(noticia.formData);
+            dispatch("getNoticiasDeEstande", state.estande.id);
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao cadastrar nova notícia.", tipo: "error"});
         }
     }
 }

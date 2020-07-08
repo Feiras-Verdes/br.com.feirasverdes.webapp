@@ -148,7 +148,7 @@ const actions = {
 
     async cadastrarNoticia({ state, dispatch }, noticia) {
         try {
-            const res = await cadastrarNoticiaEmFeira(state.feira.id, noticia);
+            const res = await cadastrarNoticiaEmFeira(noticia.formData);
             dispatch("getNoticiasDeFeira", state.feira.id);
         } catch (error) {
             console.log(error);

@@ -20,7 +20,7 @@ const avaliarFeira = (idUsuario, idFeira, nota) => httpClient.post(`${endpointFe
 
 const fetchEstandesDeFeira = (id) => httpClient.get(`${endpointFeiras}/${id}/estandes`);
 
-const cadastrarNoticiaEmFeira = (idFeira, noticia) => httpClient.post(`${endpointFeiras}/${idFeira}/noticias`, noticia, { headers: { 'Content-Type': 'multipart/form-data' } });
+const cadastrarNoticiaEmFeira = (noticia) => httpClient.post("/noticias/cadastrar", noticia, { headers: { 'Content-Type': 'multipart/form-data' } });
 
 const removerEstandeDeFeira = (idFeira, idEstande) => httpClient.delete(`${endpointFeiras}/${idFeira}/estandes/${idEstande}`);
 

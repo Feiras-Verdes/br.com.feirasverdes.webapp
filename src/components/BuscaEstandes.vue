@@ -33,7 +33,7 @@
         <v-card-text>
           <v-radio-group class="pl-3" v-model="ordenacao">
             <v-radio label="Nome" value="nome" color="light-green darken-3"></v-radio>
-            <v-radio label="Avaliação" value="avaliacao" color="light-green darken-3"></v-radio>
+            <v-radio label="Avaliação" value="a.nota" color="light-green darken-3"></v-radio>
           </v-radio-group>
         </v-card-text>
         <v-card-actions>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       mostrarPopupOrdenacaoEstandes: false,
-      ordenacao: "",
+      ordenacao: "nome",
       tipoOrdenacao: "asc",
       pagina: 0,
       limite: 10
