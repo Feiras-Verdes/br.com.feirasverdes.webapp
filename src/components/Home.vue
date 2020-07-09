@@ -22,13 +22,13 @@
         <div class="titulo">Notícias</div>
         <v-divider class="divisor"></v-divider>
         <!-- <div class="sm-justify-center md-justify-start d-inline-flex flex-wrap"> -->
-          <CardNoticia
-            v-for="noticia in noticias"
-            :key="noticia.id"
-            :noticia="noticia"
-            @abrir-imagem-dialog="abrirDialogImagem"
-            class="mx-auto" 
-          />
+        <CardNoticia
+          v-for="noticia in noticias"
+          :key="noticia.id"
+          :noticia="noticia"
+          @abrir-imagem-dialog="abrirDialogImagem"
+          class="mx-auto"
+        />
         <!-- </div> -->
       </v-col>
 
@@ -36,13 +36,13 @@
         <div class="titulo">Feiras</div>
         <v-divider class="divisor"></v-divider>
         <!-- <div class="d-flex justify-center flex-column"> -->
-          <CardFeira
-            v-for="feira in feiras"
-            :key="feira.id"
-            :feira="feira"
-            @abrir-imagem-dialog="abrirDialogImagem"
-            class="mx-auto"
-          />
+        <CardFeira
+          v-for="feira in feiras"
+          :key="feira.id"
+          :feira="feira"
+          @abrir-imagem-dialog="abrirDialogImagem"
+          class="mx-auto"
+        />
         <!-- </div> -->
       </v-col>
     </v-row>
@@ -59,7 +59,7 @@ export default {
 
   components: {
     CardFeira,
-    CardNoticia
+    CardNoticia,
   },
 
   data() {
@@ -67,20 +67,20 @@ export default {
       imagensCarrossel: [
         {
           src: require("@/assets/banner-feira.jpg"),
-          ação: ""
+          ação: "",
         },
         {
           src: require("@/assets/banner-feira2.jpg"),
-          ação: ""
-        }
+          ação: "",
+        },
       ],
       imagemDialog: false,
-      imagemDialogSrc: ""
+      imagemDialogSrc: "",
     };
   },
 
   computed: {
-    ...mapState("Feiras", ["feiras", "noticias"])
+    ...mapState("Feiras", ["feiras", "noticias"]),
   },
 
   async created() {
@@ -101,8 +101,8 @@ export default {
 
     irParaFeira(id) {
       this.$router.push({ path: `/feiras/${id}` });
-    }
-  }
+    },
+  },
 };
 </script>
 

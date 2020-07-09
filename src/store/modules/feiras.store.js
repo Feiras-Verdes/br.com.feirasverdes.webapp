@@ -8,9 +8,13 @@ import {
   cadastrarFeira,
   excluirFeira,
   salvarFeiraEditada,
-  removerEstandeDeFeira
+  removerEstandeDeFeira,
 } from "@/api/feiras.api";
-import { cadastrarNoticia, atualizarNoticia, excluirNoticia } from "@/api/noticias.api";
+import {
+  cadastrarNoticia,
+  atualizarNoticia,
+  excluirNoticia,
+} from "@/api/noticias.api";
 import { fetchFeirasDoOrganizador } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
 
@@ -231,8 +235,8 @@ const actions = {
         tipo: "error",
       });
     }
-  }
-}
+  },
+};
 
 export default {
   namespaced: true,

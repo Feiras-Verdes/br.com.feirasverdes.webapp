@@ -6,23 +6,34 @@
         <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
       </v-row>
       <div>
-        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoEstandes = true">Ordenar por {{ordenacao}}</v-chip>
-        <v-chip class="ma-2" v-if="tipoOrdenacao == 'asc'" @click="alterarTipoOrdenacao">
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoEstandes = true"
+          >Ordenar por {{ ordenacao }}</v-chip
+        >
+        <v-chip
+          class="ma-2"
+          v-if="tipoOrdenacao == 'asc'"
+          @click="alterarTipoOrdenacao"
+        >
           <v-icon>mdi-sort-ascending</v-icon>
         </v-chip>
-        <v-chip class="ma-2" v-if="tipoOrdenacao == 'desc'" @click="alterarTipoOrdenacao">
+        <v-chip
+          class="ma-2"
+          v-if="tipoOrdenacao == 'desc'"
+          @click="alterarTipoOrdenacao"
+        >
           <v-icon>mdi-sort-descending</v-icon>
         </v-chip>
       </div>
     </v-row>
     <v-row>
       <div class="d-sm-flex d-md-inline-flex flex-wrap justify-space-between">
-        <div class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap">
+        <div
+          class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap"
+        >
           <CardEstande
             v-for="estande in estandes"
             :key="estande.id"
             :estande="estande"
-            @abrir-imagem-dialog="abrirDialogImagem"
           />
         </div>
       </div>
@@ -32,8 +43,16 @@
         <v-card-title>Ordenação</v-card-title>
         <v-card-text>
           <v-radio-group class="pl-3" v-model="ordenacao">
-            <v-radio label="Nome" value="nome" color="light-green darken-3"></v-radio>
-            <v-radio label="Avaliação" value="a.nota" color="light-green darken-3"></v-radio>
+            <v-radio
+              label="Nome"
+              value="nome"
+              color="light-green darken-3"
+            ></v-radio>
+            <v-radio
+              label="Avaliação"
+              value="a.nota"
+              color="light-green darken-3"
+            ></v-radio>
           </v-radio-group>
         </v-card-text>
         <v-card-actions>
@@ -57,12 +76,12 @@ export default {
       ordenacao: "nome",
       tipoOrdenacao: "asc",
       pagina: 0,
-      limite: 10
+      limite: 10,
     };
   },
 
   components: {
-    CardEstande
+    CardEstande,
   },
 
   computed: {
@@ -70,13 +89,13 @@ export default {
 
     id() {
       return this.$route.params.id;
-    }
+    },
   },
 
   props: {
     busca: {
-      required: true
-    }
+      required: true,
+    },
   },
 
   created() {
@@ -108,10 +127,10 @@ export default {
 
         if (bottomOfWindow) {
           // TODO buscar
-        } 
+        }
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

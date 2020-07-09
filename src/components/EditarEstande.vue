@@ -2,7 +2,9 @@
   <v-card flat height="100%" class="pa-0" rounded="0">
     <v-tabs
       v-model="abaAtiva"
-      :vertical="$vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'"
+      :vertical="
+        $vuetify.breakpoint.name != 'xs' && $vuetify.breakpoint.name != 'sm'
+      "
       background-color="light-green darken-3"
       dark
       class="abas"
@@ -41,7 +43,8 @@
                             label
                             color="light-green darken-3"
                             text-color="white"
-                          >{{ text }}</v-chip>
+                            >{{ text }}</v-chip
+                          >
                         </template>
                       </v-file-input>
                     </template>
@@ -93,12 +96,14 @@
                           text
                           color="light-green darken-3"
                           @click="dialogHorarioInicio = false"
-                        >Cancelar</v-btn>
+                          >Cancelar</v-btn
+                        >
                         <v-btn
                           text
                           color="light-green darken-3"
                           @click="$refs.dialogInicio.save(horaInicio)"
-                        >Ok</v-btn>
+                          >Ok</v-btn
+                        >
                       </v-time-picker>
                     </v-dialog>
                   </v-col>
@@ -136,12 +141,14 @@
                           text
                           color="light-green darken-3"
                           @click="dialogHorarioFim = false"
-                        >Cancelar</v-btn>
+                          >Cancelar</v-btn
+                        >
                         <v-btn
                           text
                           color="light-green darken-3"
                           @click="$refs.dialogFim.save(horaFim)"
-                        >Ok</v-btn>
+                          >Ok</v-btn
+                        >
                       </v-time-picker>
                     </v-dialog>
                   </v-col>
@@ -280,7 +287,11 @@
                 </v-row>
               </v-form>
               <v-card-actions>
-                <a class="subtitle-1 link-excluir" @click="confirmarExclusao = true">Excluir Estande</a>
+                <a
+                  class="subtitle-1 link-excluir"
+                  @click="confirmarExclusao = true"
+                  >Excluir Estande</a
+                >
                 <v-spacer></v-spacer>
                 <v-btn
                   class="white--text"
@@ -294,11 +305,15 @@
           </v-tab-item>
 
           <v-tab-item>
-            <GerenciarProdutosDoEstande :idEstande="id"></GerenciarProdutosDoEstande>
+            <GerenciarProdutosDoEstande
+              :idEstande="id"
+            ></GerenciarProdutosDoEstande>
           </v-tab-item>
 
           <v-tab-item>
-            <GerenciarNoticiasDoEstande :idEstande="id"></GerenciarNoticiasDoEstande>
+            <GerenciarNoticiasDoEstande
+              :idEstande="id"
+            ></GerenciarNoticiasDoEstande>
           </v-tab-item>
         </v-container>
       </v-tabs-items>
@@ -336,11 +351,11 @@ export default {
 
   components: {
     GerenciarProdutosDoEstande,
-    GerenciarNoticiasDoEstande
+    GerenciarNoticiasDoEstande,
   },
 
   watch: {
-    $route: "fetchEstande"
+    $route: "fetchEstande",
   },
 
   data() {
@@ -348,16 +363,16 @@ export default {
       abas: [
         {
           id: 1,
-          nome: "Estande"
+          nome: "Estande",
         },
         {
           id: 2,
-          nome: "Produtos"
+          nome: "Produtos",
         },
         {
           id: 3,
-          nome: "Notícias"
-        }
+          nome: "Notícias",
+        },
       ],
       abaAtiva: 0,
       nome: "",
@@ -374,7 +389,7 @@ export default {
         numero: "",
         bairro: "",
         cidade: "",
-        complemento: ""
+        complemento: "",
       },
       estados: [
         "AC",
@@ -403,7 +418,7 @@ export default {
         "SC",
         "SP",
         "SE",
-        "TO"
+        "TO",
       ],
       imagemUrl: "",
       imagem: null,
@@ -429,19 +444,17 @@ export default {
 
     id() {
       return this.$route.params.id;
-    }
+    },
   },
 
   methods: {
     ...mapActions("Estandes", [
       "getEstande",
       "editarEstande",
-      "deletarEstande"
+      "deletarEstande",
     ]),
 
-     ...mapActions("Busca", [
-      "getFeiras2"
-    ]),
+    ...mapActions("Busca", ["getFeiras2"]),
 
     async fetchEstande() {
       await this.getEstande(this.id);
@@ -469,10 +482,14 @@ export default {
       formData.append("logradouro", this.endereco.logradouro);
       formData.append("numero", parseInt(this.endereco.numero));
       formData.append("complemento", this.endereco.complemento);
+      let feira = await this.feiraSelecionada;
+      if (feira && feira.value) {
+        formData.append("idFeira", feira.value);
+      }
 
       await this.editarEstande({
         id: this.estande.id,
-        formData: formData
+        formData: formData,
       });
 
       this.loading = false;
@@ -498,9 +515,18 @@ export default {
       this.horaFim = this.estande.horaFim;
       this.frequencia = this.estande.frequencia;
       this.telefone = this.estande.telefone;
+      if (this.estande.feira) {
+        this.feiraSelecionada = {
+          text: this.estande.feira.nome,
+          value: this.estande.feira.id,
+        };
+      } else {
+        this.feiraSelecionada = "";
+      }
 
       if (this.estande.endereco) {
         this.endereco = this.estande.endereco;
+        this.endereco.estadoSelecionado = this.estande.endereco.estado;
       } else {
         this.endereco = {
           cep: "",
@@ -509,7 +535,7 @@ export default {
           numero: "",
           bairro: "",
           cidade: "",
-          complemento: ""
+          complemento: "",
         };
       }
     },
@@ -535,19 +561,18 @@ export default {
       const ref = this;
       this.getFeiras2(this.buscaFeira).then(() => {
         ref.cbFeiras = [];
-  
+
         for (let i = 0; i < ref.feiras.length; i++) {
           const f = {
             text: ref.feiras[i].nome,
-            value: ref.feiras[i].id
+            value: ref.feiras[i].id,
           };
-  
+
           ref.cbFeiras.push(f);
         }
-      })
-
-    }
-  }
+      });
+    },
+  },
 };
 </script>
 
