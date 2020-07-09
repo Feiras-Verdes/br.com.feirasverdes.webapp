@@ -1,9 +1,9 @@
 import router from "@/router";
-import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado } from "@/api/usuarios.api"
+import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado, atualizarSenha } from "@/api/usuarios.api"
 import { converterBytesParaDataUrl } from "@/utils/utils.js"
 
 const state = {
-    usuario: null
+    usuario: null,
 }
 
 const mutations = {
@@ -13,6 +13,10 @@ const mutations = {
 
     SET_IMAGEM(state, imagem) {
         state.usuario.imagem = imagem;
+    },
+
+    SET_NOVA_SENHA(state, senha) {
+        state.usuario.senha = senha;
     }
 }
 
@@ -70,6 +74,17 @@ const actions = {
         try {
             const res = await salvarUsuarioAtualizado(payload.id, payload.formData);
             this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Usuário atualizado com sucesso!", tipo: "success"});
+            dispatch("fetchDetalhesDoUsuario");
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
+        }
+    },
+
+    async atualizarSenha({ dispatch }, payload) {
+        try {
+            const res = await atualizarSenha(payload.senha);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Senha atualizada com sucesso!", tipo: "success"});
             dispatch("fetchDetalhesDoUsuario");
         } catch (error) {
             console.log(error);

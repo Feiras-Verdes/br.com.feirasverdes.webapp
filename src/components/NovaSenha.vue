@@ -10,20 +10,6 @@
       </v-toolbar>
       <v-form ref="form" v-model="formularioValido">
         <v-card-text class="form">
-          <v-row justify="center">
-            <v-col>
-              <v-text-field
-                label="Senha Atual"
-                color="light-green darken-3"
-                v-model="senhaAtual"
-                outlined
-                @click:append="mostrarSenhaAtual = !mostrarSenhaAtual"
-                :append-icon="mostrarSenhaAtual ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[regras.obrigatorio]"
-                :type="mostrarSenhaAtual ? 'text' : 'password'"
-              ></v-text-field>
-            </v-col>
-          </v-row>
           <v-row>
             <v-col>
               <v-text-field
@@ -67,7 +53,7 @@
             :disabled="!formularioValido"
             large
             color="light-green darken-3"
-            @click="atualizarSenha"
+            @click="novaSenha"
           >Salvar</v-btn>
         </v-card-actions>
       </v-form>
@@ -82,7 +68,6 @@ export default {
   name: "NovaSenha",
   data() {
     return {
-      senhaAtual: "",
       senhaNova: "",
       senhaConfirmacao: "",
       mostrarSenhaAtual: false,
@@ -99,12 +84,12 @@ export default {
   },
 
   methods: {
-    ...mapActions("Usuarios", ["novaSenha"]),
+    ...mapActions("Usuarios", ["atualizarSenha"]),
 
-    async atualizarSenha() {
+    async novaSenha() {
       this.validarFormulario;
       if (this.formularioValido) {
-        await this.novaSenha({ senha: this.senha });
+        await this.atualizarSenha({senha: this.senhaNova});
       }
     },
 

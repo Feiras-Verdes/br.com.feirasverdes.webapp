@@ -16,6 +16,8 @@ const fetchEstandesDoFeirante = (idUsuario) => httpClient.get(`${endpointUsuario
 
 const fetchFeirasDoOrganizador = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/feiras`);
 
+const atualizarSenha = (senha) => httpClient.put(`${endpointUsuarios}/senha`,  {senha});
+
 export {
     fazerLogin,
     fetchDetalhesDoUsuario,
@@ -23,5 +25,6 @@ export {
     salvarUsuarioAtualizado,
     excluirUsuario,
     fetchEstandesDoFeirante,
-    fetchFeirasDoOrganizador
+    fetchFeirasDoOrganizador,
+    atualizarSenha
 };
