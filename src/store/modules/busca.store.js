@@ -91,14 +91,14 @@ const actions = {
     }
   },
 
-  async getFeiras2({ state, commit }, payload) {
+  async getFeiras2({ state, commit }, nome) {
     try {
       const res = await fetchBuscaFeira(
-        payload.nome,
+        nome,
         state.limite,
         state.pagina,
-        payload.ordenacao,
-        payload.tipoOrdenacao
+        state.ordenacao,
+        state.tipoOrdenacao
       );
       for (let i = 0; i < res.data.content.length; i++) {
         res.data.content[i].imagem = converterBytesParaDataUrl(
