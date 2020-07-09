@@ -525,6 +525,8 @@ export default {
           text: this.estande.feira.nome,
           value: this.estande.feira.id,
         };
+      } else {
+        this.feiraSelecionada = "";
       }
 
       if (this.estande.endereco) {
