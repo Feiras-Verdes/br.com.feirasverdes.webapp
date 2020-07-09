@@ -39,23 +39,17 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
-                        <v-row>
-                            <v-col>
-                                <div class="texto">
-                                    Você é um feirante? <a>Clique aqui</a>
-                                </div>
-                            </v-col>
-                        </v-row>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions> 
+                    <a
+                  class="subtitle-1 link-excluir"
+                  @click="esqueciSenha"
+                  >Esqueci minha Senha</a>
                     <v-spacer></v-spacer>
                     <v-btn class="white--text" outlined large color="light-green darken-3" @click="cancelar">Cancelar</v-btn>
                     <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Entrar</v-btn>
                 </v-card-actions>
             </v-form>
-            <v-snackbar :value="loginInvalido" multi-line :timeout=5000 color="error">
-                Usuário ou senha inválidos.
-            </v-snackbar>
         </v-card>
     </v-container>
 </template>
@@ -77,10 +71,6 @@ export default {
         }
     },
 
-    computed: {
-        ...mapState("Usuarios", ["loginInvalido"]),
-    },
-
     methods: {
         ...mapActions("Usuarios", ["login"]),
 
@@ -93,6 +83,10 @@ export default {
 
         validarFormulario() {
             this.$refs.form.validate();
+        },
+
+        esqueciSenha() {
+          this.$router.push("/esqueciSenha");
         },
 
         cancelar() {

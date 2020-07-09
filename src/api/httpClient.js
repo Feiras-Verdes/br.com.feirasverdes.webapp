@@ -28,20 +28,16 @@ const errorInterceptor = error => {
 	switch(error.response.status) {
 	case 400:
 		console.error(error.response.status, error.message);
-		alert("Nothing to display","Data Not Found");
 		break;
 
 	case 401:
-		localStorage.removeItem("token");
-		// router.push("/login");
+		localStorage.removeItem("token-usuario");
 		break;
 
 	default:
 		console.error(error.response.status, error.message);
-		alert("Server Error");
-
 	}
-	return Promise.reject(error);
+	throw new Error(error.response.data.errors[0].defaultMessage);
 };
 
 // Interceptor for responses

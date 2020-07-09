@@ -5,7 +5,7 @@
         <v-row justify="center">
           <v-col sm="6" md="6" lg="6">
             <v-avatar class="avatar-estande" size="140">
-              <v-img v-if="estande.imagem" :src="estande.imagem" @click.stop="abrirDialogImagem(estande.imagem)"></v-img>
+              <v-img v-if="estande.imagem" :src="estande.imagem" ></v-img>
               <v-img v-else src="../assets/icone-feira.png"></v-img>
             </v-avatar>
           </v-col>
@@ -21,7 +21,7 @@
               full-icon="mdi-star"
               half-icon="mdi-star-half"
               empty-icon="mdi-star-outline"
-              :readonly="!usuario"
+              :readonly="podeAvaliar"
               hover
               half-increments
               dense
@@ -33,7 +33,7 @@
             <div
               v-if="estande.endereco"
               class="endereco pa-2"
-            >{{ `${estande.endereco.rua}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}` }}</div>
+            >{{ `${estande.endereco.logradouro}, nº ${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}` }}</div>
           </div>
         </v-row>
       </v-col>
@@ -51,7 +51,7 @@
         <v-tabs-items v-model="aba">
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
+              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" />
             </div>
           </v-tab-item>
 
@@ -59,8 +59,7 @@
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
               <CardProduto v-for="produto in produtos" 
 							:key="produto.id" 
-							:produto="produto" 
-							@abrir-imagem-dialog="abrirDialogImagem"/>
+							:produto="produto" />
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -94,6 +93,10 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+
+    podeAvaliar() {
+      return this.usuario == null || this.usuario.tipoUsuario.descricao != "CONSUMIDOR";
     }
   },
 
@@ -122,10 +125,6 @@ export default {
         nota
       });
     },
-
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    }
   }
 };
 </script>

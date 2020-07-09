@@ -8,20 +8,21 @@
           <v-spacer></v-spacer>
         </v-row>
       </v-toolbar>
-      <v-form ref="form" v-model="formularioValido">
+      <v-form ref="form" v-model="formularioValido" lazy-validation>
         <v-card-text class="form">
           <v-row justify="center">
             <v-col cols="8" class="d-flex justify-center">
               <v-avatar class="avatar-usuario" size="120">
                 <img v-if="fotoUrl" :src="fotoUrl" />
                 <img v-else-if="usuario.imagem" :src="usuario.imagem" />
-                <v-icon left size="120" v-else color="light-green darken-3">mdi-account-circle</v-icon>
+                <v-icon left size="120" v-else color="light-green darken-3"
+                  >mdi-account-circle</v-icon
+                >
               </v-avatar>
             </v-col>
-            <!-- <v-btn @click="salvarImagem">Salvar Imagem</v-btn> -->
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <template>
                 <v-file-input
                   accept="image/*"
@@ -34,14 +35,20 @@
                   @change="mostrarFoto"
                 >
                   <template v-slot:selection="{ text }">
-                    <v-chip small label color="light-green darken-3" text-color="white">{{ text }}</v-chip>
+                    <v-chip
+                      small
+                      label
+                      color="light-green darken-3"
+                      text-color="white"
+                      >{{ text }}</v-chip
+                    >
                   </template>
                 </v-file-input>
               </template>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Nome"
                 prepend-icon="mdi-account"
@@ -51,9 +58,14 @@
                 :rules="[regras.obrigatorio]"
               ></v-text-field>
             </v-col>
+            <v-col cols="1">
+              <v-icon small color="red darken-3 obrigatorio"
+                >mdi-asterisk</v-icon
+              >
+            </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-menu
                 ref="datePicker"
                 v-model="datePicker"
@@ -72,7 +84,6 @@
                     v-on="on"
                     outlined
                     color="light-green darken-3"
-                    :rules="[regras.obrigatorio]"
                   ></v-text-field>
                 </template>
                 <v-date-picker
@@ -87,34 +98,72 @@
               </v-menu>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
-              <v-text-field
-                label="CPF"
-                prepend-icon="mdi-card-account-details"
-                outlined
-                color="light-green darken-3"
-                v-model="cpf"
-                :rules="[regras.obrigatorio]"
-                v-mask="'###.###.###-##'"
-              ></v-text-field>
-            </v-col>
+          <v-row>
+            <div class="d-sm-inline-flex">
+              <v-radio-group class="pl-3" v-model="cpfOuCpnj" row>
+                <v-radio
+                  label="CPF"
+                  value="CPF"
+                  color="light-green darken-3"
+                ></v-radio>
+                <v-radio
+                  label="CNPJ"
+                  value="CNPJ"
+                  color="light-green darken-3"
+                ></v-radio>
+              </v-radio-group>
+
+              <div class="d-flex">
+                <v-row justify="center" class="flex-grow-1">
+                  <v-col cols="10" class="flex-grow-1">
+                    <v-text-field
+                      v-if="cpfOuCpnj == 'CPF'"
+                      label="Digite seu CPF"
+                      outlined
+                      color="light-green darken-3"
+                      v-model="cpf"
+                      v-mask="'###.###.###-##'"
+                      :rules="[regras.cpfOuCpnj]"
+                      validate-on-blur
+                    ></v-text-field>
+
+                    <v-text-field
+                      label="Digite seu CNPJ"
+                      v-if="cpfOuCpnj == 'CNPJ'"
+                      outlined
+                      color="light-green darken-3"
+                      v-model="cnpj"
+                      v-mask="'##.###.###/####-##'"
+                      :rules="[regras.cpfOuCpnj]"
+                      validate-on-blur
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="1">
+                    <v-icon
+                      small
+                      color="red darken-3 obrigatorio"
+                      class=".d-inline-flex"
+                      >mdi-asterisk</v-icon
+                    >
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Telefone"
                 outlined
                 prepend-icon="mdi-phone"
                 color="light-green darken-3"
                 v-model="telefone"
-                :rules="[regras.obrigatorio]"
                 v-mask="'(##) #####-####'"
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-row justify="center">
-            <v-col>
+          <v-row>
+            <v-col cols="10">
               <v-text-field
                 label="Email"
                 outlined
@@ -124,6 +173,21 @@
                 :rules="[regras.obrigatorio]"
               ></v-text-field>
             </v-col>
+            <v-col cols="1">
+              <v-icon small color="red darken-3 obrigatorio"
+                >mdi-asterisk</v-icon
+              >
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-spacer></v-spacer>
+          <v-btn 
+            class="white--text"
+            color="light-green darken-3"
+            outlined
+            @click="novaSenha"
+          >Nova Senha</v-btn>
+          <v-spacer></v-spacer>
           </v-row>
         </v-card-text>
         <v-card-actions>
@@ -133,21 +197,17 @@
             outlined
             color="light-green darken-3"
             @click="cancelar"
-          >Cancelar</v-btn>
+            >Cancelar</v-btn
+          >
           <v-btn
             class="white--text"
             :disabled="!formularioValido"
             color="light-green darken-3"
             @click="salvar"
-          >Salvar</v-btn>
+            >Salvar</v-btn
+          >
         </v-card-actions>
       </v-form>
-      <v-snackbar
-        :value="atualizarUsuarioInvalido"
-        top
-        :timeout="5000"
-        color="error"
-      >Erro ao atualizar dados. Revise seus dados e tente novamente.</v-snackbar>
     </v-card>
   </v-container>
 </template>
@@ -166,6 +226,8 @@ export default {
       nome: "",
       dataNascimento: "",
       cpf: "",
+      cnpj: "",
+      cpfOuCpnj: "CPF",
       telefone: "",
       email: "",
       //   senha: this.usuario.senha,
@@ -173,10 +235,14 @@ export default {
       fotoUrl: "",
       datePicker: false,
       regras: {
-        obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório",
+        obrigatorio: (valor) => (valor && !!valor.trim()) || "Obrigatório",
         senhaConfirmada: () =>
           this.senha == this.confirmacaoSenha ||
-          "Senha e confirmação de senha devem ser idênticas"
+          "Senha e confirmação de senha devem ser idênticas",
+        cpfOuCpnj: (valor) =>
+          this.cpf.trim() != "" ||
+          this.cnpj.trim() != "" ||
+          "CPF ou CNPJ devem ser preenchidos!",
       },
       formularioValido: false
     };
@@ -188,30 +254,32 @@ export default {
     this.nome = this.usuario.nome;
     this.dataNascimento = this.usuario.dataNascimento;
     this.cpf = this.usuario.cpf;
+    this.cnpj = this.usuario.cnpj;
     this.telefone = this.usuario.telefone;
     this.email = this.usuario.email;
     this.foto = this.usuario.foto;
+    this.cpfOuCpnj = this.cnpj ? "CNPJ" : "CPF";
   },
 
   computed: {
-    ...mapState("Usuarios", ["usuario", "atualizarUsuarioInvalido"]),
+    ...mapState("Usuarios", ["usuario"]),
 
     dataNascimentoFormatada() {
       return this.formatarData(this.dataNascimento);
-    }
+    },
   },
 
   watch: {
     datePicker(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+    },
   },
 
   methods: {
     ...mapActions("Usuarios", [
       "atualizarUsuario",
       "fetchDetalhesDoUsuario",
-      "enviarImagem"
+      "enviarImagem",
     ]),
 
     formatarData(data) {
@@ -227,44 +295,46 @@ export default {
       this.validarFormulario;
 
       let formData = new FormData();
-      formData.append("imagem", this.foto);
-      formData.append("usuario", {
-        nome: this.nome,
-        cpf: this.cpf,
-        telefone: this.telefone,
-        email: this.email,
-        dataNascimento: this.dataNascimento
-      })
+      if (this.foto) {
+        formData.append("imagem", this.foto);
+      }
       formData.append("nome", this.nome);
-      formData.append("cpf", this.cpf);
+      if (this.cpf) {
+        formData.append("cpf", this.cpf);
+      }
+      if (this.cnpj) {
+        formData.append("cnpj", this.cnpj);
+      }
       formData.append("telefone", this.telefone);
       formData.append("email", this.email);
-      formData.append("dataNascimento", this.dataNascimentoFormatada);
+      if (this.dataNascimentoFormatada) {
+        formData.append("dataNascimento", this.dataNascimentoFormatada);
+      }
 
       if (this.formularioValido) {
         await this.atualizarUsuario({
           id: this.usuario.id,
-          formData: formData
+          formData: formData,
         });
       }
     },
 
     async salvarImagem() {
-        // const fotoBase64 = await this.toBase64(this.foto);
-        console.log(this.foto)
-        const payload = {
-            id: this.usuario.id,
-            foto: this.foto
-        }
-        await this.enviarImagem(payload);
+      // const fotoBase64 = await this.toBase64(this.foto);
+      console.log(this.foto);
+      const payload = {
+        id: this.usuario.id,
+        foto: this.foto,
+      };
+      await this.enviarImagem(payload);
     },
 
-    toBase64: file =>
+    toBase64: (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
+        reader.onerror = (error) => reject(error);
       }),
 
     validarFormulario() {
@@ -275,12 +345,15 @@ export default {
       this.$router.push("/");
     },
 
+    novaSenha() {
+      this.$router.push("/novaSenha");
+    },
+
     mostrarFoto() {
       this.fotoUrl = window.URL.createObjectURL(this.foto);
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

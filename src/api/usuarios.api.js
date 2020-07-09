@@ -4,18 +4,30 @@ const endpointUsuarios = process.env.VUE_APP_ENDPOINT_USUARIOS
 
 const fazerLogin = (email, senha) => httpClient.post(`${endpointUsuarios}/login`, { email, senha });
 
-const fetchDetalhesDoUsuario = () => httpClient.get(`${endpointUsuarios}/detalhes`);
+const fetchDetalhesDoUsuario = () => httpClient.get(`${endpointUsuarios}`);
 
-const cadastrarUsuarioApi = (usuario) => httpClient.post(`${endpointUsuarios}/cadastrar`, usuario);
+const cadastrarUsuarioApi = (usuario) => httpClient.post(`${endpointUsuarios}`, usuario);
 
-const salvarUsuarioAtualizado = (idUsuario, formData) => httpClient.put(`${endpointUsuarios}/${idUsuario}/atualizar`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+const salvarUsuarioAtualizado = (idUsuario, formData) => httpClient.put(`${endpointUsuarios}/${idUsuario}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 
-const excluirUsuario = (idUsuario) =>  httpClient.put(`${endpointUsuarios}/${idUsuario}/excluir`);
+const excluirUsuario = (idUsuario) =>  httpClient.delete(`${endpointUsuarios}/${idUsuario}`);
+
+const fetchEstandesDoFeirante = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/estandes`);
+
+const fetchFeirasDoOrganizador = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/feiras`);
+
+const atualizarSenhaAntiga = (senha) => httpClient.put(`${endpointUsuarios}/senha`,  {senha});
+
+const recuperarSenhaEmail = (email) => httpClient.post(`/nova-senha`,  {email});
 
 export {
     fazerLogin,
     fetchDetalhesDoUsuario,
     cadastrarUsuarioApi,
     salvarUsuarioAtualizado,
-    excluirUsuario
+    excluirUsuario,
+    fetchEstandesDoFeirante,
+    fetchFeirasDoOrganizador,
+    atualizarSenhaAntiga,
+    recuperarSenhaEmail
 };

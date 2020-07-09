@@ -5,7 +5,7 @@
         <v-row justify="center">
           <v-col sm="6" md="6" lg="6">
             <v-avatar class="avatar-feira" size="140">
-              <v-img v-if="feira.imagem" :src="feira.imagem" @click.stop="abrirDialogImagem(feira.imagem)"></v-img>
+              <v-img v-if="feira.imagem" :src="feira.imagem" ></v-img>
               <v-img v-else src="../assets/icone-feira.png"></v-img>
             </v-avatar>
           </v-col>
@@ -21,7 +21,7 @@
               full-icon="mdi-star"
               half-icon="mdi-star-half"
               empty-icon="mdi-star-outline"
-              :readonly="!usuario"
+              :readonly="podeAvaliar"
               hover
               half-increments
               dense
@@ -33,7 +33,7 @@
             <div
               v-if="feira.endereco"
               class="endereco pa-2"
-            >{{ `${feira.endereco.rua}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}` }}</div>
+            >{{ `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}` }}</div>
           </div>
         </v-row>
       </v-col>
@@ -51,33 +51,13 @@
         <v-tabs-items v-model="aba">
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
-              <!-- <v-card
-                class="ma-3 flex-grow-1"
-                outlined
-                v-for="noticia in noticias"
-                :key="noticia.id"
-              >
-                <v-img
-                  v-if="noticia.imagem"
-                  height="150px"
-                  :src="noticia.imagem"
-                  @click="abrirDialogImagem(noticia.imagem)"
-                ></v-img>
-                <div class="d-flex flex-no-wrap justify-space-between">
-                  <div>
-                    <v-card-title class="headline" v-text=" noticia.titulo"></v-card-title>
-                    <v-card-subtitle class="autor-noticia" v-text="noticia.autor"></v-card-subtitle>
-                    <v-card-text class="descricao-noticia">{{ noticia.descricao }}</v-card-text>
-                  </div>
-                </div>
-              </v-card> -->
+              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" />
             </div>
           </v-tab-item>
 
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-							<CardEstande v-for="estande in estandes" :key="estande.id" :estande="estande" @abrir-imagem-dialog="abrirDialogImagem"/>
+							<CardEstande v-for="estande in estandes" :key="estande.id" :estande="estande"/>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -111,6 +91,10 @@ export default {
 
     id() {
       return this.$route.params.id;
+    },
+    
+    podeAvaliar() {
+      return this.usuario == null || this.usuario.tipoUsuario.descricao != "CONSUMIDOR";
     }
   },
 
@@ -140,9 +124,6 @@ export default {
       });
     },
 
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    }
   }
 };
 </script>
