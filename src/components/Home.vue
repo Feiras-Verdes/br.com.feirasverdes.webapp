@@ -26,7 +26,6 @@
           v-for="noticia in noticias"
           :key="noticia.id"
           :noticia="noticia"
-          @abrir-imagem-dialog="abrirDialogImagem"
           class="mx-auto"
         />
         <!-- </div> -->
@@ -40,7 +39,6 @@
           v-for="feira in feiras"
           :key="feira.id"
           :feira="feira"
-          @abrir-imagem-dialog="abrirDialogImagem"
           class="mx-auto"
         />
         <!-- </div> -->
@@ -95,9 +93,6 @@ export default {
 
     ...mapActions("Imagem", ["setImagemDialog", "setImagemDialogSrc"]),
 
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     irParaFeira(id) {
       this.$router.push({ path: `/feiras/${id}` });

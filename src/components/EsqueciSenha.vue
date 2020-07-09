@@ -4,7 +4,7 @@
       <v-toolbar dark color="light-green darken-3" height="45px">
         <v-row align="center" justify="center">
           <v-spacer></v-spacer>
-          <v-toolbar-title class="dialog-title">Nova Senha</v-toolbar-title>
+          <v-toolbar-title class="dialog-title">Esqueci minha Senha</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-row>
       </v-toolbar>
@@ -13,28 +13,12 @@
           <v-row>
             <v-col>
               <v-text-field
-                label="Nova Senha"
-                color="light-green darken-3"
-                v-model="senhaNova"
+                label="Email"
                 outlined
-                @click:append="mostrarSenhaNova = !mostrarSenhaNova"
-                :append-icon="mostrarSenhaNova ? 'mdi-eye' : 'mdi-eye-off'"
+                append-icon="mdi-email"
+                color="light-green darken-3"
+                v-model="email"
                 :rules="[regras.obrigatorio]"
-                :type="mostrarSenhaNova ? 'text' : 'password'"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                label="Confirmação Senha"
-                color="light-green darken-3"
-                v-model="senhaConfirmacao"
-                outlined
-                @click:append="mostrarSenhaConfirmacao = !mostrarSenhaConfirmacao"
-                :append-icon="mostrarSenhaConfirmacao ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[regras.obrigatorio, regras.senhaConfirmada]"
-                :type="mostrarSenhaConfirmacao ? 'text' : 'password'"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -53,8 +37,8 @@
             :disabled="!formularioValido"
             large
             color="light-green darken-3"
-            @click="novaSenha"
-          >Salvar</v-btn>
+            @click="enviar"
+          >Enviar nova senha para email</v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
@@ -65,31 +49,24 @@
 import { mapActions, mapState } from "vuex";
 
 export default {
-  name: "NovaSenha",
+  name: "EsqueciSenha",
   data() {
     return {
-      senhaNova: "",
-      senhaConfirmacao: "",
-      mostrarSenhaAtual: false,
-      mostrarSenhaNova: false,
-      mostrarSenhaConfirmacao: false,
+      email: "",
       regras: {
-        obrigatorio: valor => !!valor.trim() || "Obrigatório",
-        senhaConfirmada: () =>
-          this.senhaNova == this.senhaConfirmacao ||
-          "Senha nova e confirmação de senha devem ser idênticas"
-        },
+        obrigatorio: valor => !!valor.trim() || "Obrigatório"
+      },
       formularioValido: true
     };
   },
 
   methods: {
-    ...mapActions("Usuarios", ["atualizarSenha"]),
+    ...mapActions("Usuarios", ["recuperarSenha"]),
 
-    async novaSenha() {
+    async enviar() {
       this.validarFormulario;
       if (this.formularioValido) {
-        await this.atualizarSenha({senha: this.senhaNova});
+        await this.recuperarSenha({ email: this.email });
       }
     },
 

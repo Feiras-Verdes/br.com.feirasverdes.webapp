@@ -1,9 +1,10 @@
 import router from "@/router";
-import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado } from "@/api/usuarios.api"
+import { fetchDetalhesDoUsuario, fazerLogin, cadastrarUsuarioApi, salvarUsuarioAtualizado, atualizarSenhaAntiga, recuperarSenhaEmail } from "@/api/usuarios.api"
 import { converterBytesParaDataUrl } from "@/utils/utils.js"
+import { recuperarSenha } from "../../api/usuarios.api";
 
 const state = {
-    usuario: null
+    usuario: null,
 }
 
 const mutations = {
@@ -13,6 +14,10 @@ const mutations = {
 
     SET_IMAGEM(state, imagem) {
         state.usuario.imagem = imagem;
+    },
+
+    SET_NOVA_SENHA(state, senha) {
+        state.usuario.senha = senha;
     }
 }
 
@@ -75,7 +80,29 @@ const actions = {
             console.log(error);
             this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
         }
-    }
+    },
+
+    async atualizarSenha({ dispatch }, payload) {
+        try {
+            const res = await atualizarSenhaAntiga(payload.senha);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Senha atualizada com sucesso!", tipo: "success"});
+            dispatch("fetchDetalhesDoUsuario");
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Dados inválidos.", tipo: "error"});
+        }
+    },
+
+    async recuperarSenha({ commit }, payload) {
+        try {
+            const res = await recuperarSenhaEmail(payload.email);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Envio efetuado com sucesso!", tipo: "success"});
+            router.push("/login");
+        } catch (error) {
+            console.log(error);
+            this.dispatch("Mensagens/mostrarMensagem", { mensagem: error.message, tipo: "error"});
+        }
+    },
 
 }
 

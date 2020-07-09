@@ -30,7 +30,7 @@
               <v-icon color="black">mdi-map-marker</v-icon>
               <div>
                 {{
-                  `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`
+                  `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.bairro}`
                 }}
               </div>
             </v-card-text>
@@ -53,9 +53,6 @@ export default {
   },
 
   methods: {
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     irParaFeira() {
       this.$router.push({ path: `/feiras/${this.feira.id}` });

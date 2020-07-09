@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-img v-if="imagemUrl" height="150px" :src="imagemUrl" @click="abrirDialogImagem(imagem)"></v-img>
+      <v-img v-if="imagemUrl" height="150px" :src="imagemUrl"></v-img>
       <template>
         <v-file-input
           accept="image/*"

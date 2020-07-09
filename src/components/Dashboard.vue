@@ -163,7 +163,7 @@
         </v-tabs>
       </v-navigation-drawer>
 
-      <router-view @abrir-imagem-dialog="abrirDialogImagem"></router-view>
+      <router-view></router-view>
     </v-main>
 
     <v-dialog v-model="imagemDialog">
@@ -212,6 +212,10 @@ export default {
 
     ...mapState("Mensagens", ["mostrarMensagem", "mensagem", "tipo"]),
 
+    rotaAtual(){
+      return this.$router.name;
+    },
+
     mostrarImagemDialog() {
       return this.imagemDialog;
     },
@@ -236,6 +240,9 @@ export default {
       "setTipo"
     ]),
 
+    ...mapActions("Busca", ["setNome"]),
+
+
     cadastrar() {
       this.$router.push({ path: "/cadastro" });
     },
@@ -245,17 +252,16 @@ export default {
     },
 
     buscar() {
-       this.$router.push({path:`/busca`, query: { busca: this.busca}})
+      this.setNome(this.busca);
+      if(this.rotaAtual != 'busca'){
+       this.$router.push({path:`/busca/`})
+      }
     },
     
     irHome(){
       this.$router.push({path:"/"})
     },
 
-    abrirDialogImagem(imagem) {
-      // this.imagemDialogSrc = imagem;
-      // this.imagemDialog = true;
-    }
   }
 };
 </script>

@@ -3,7 +3,7 @@
     <v-row>
       <v-row>
         <div class="d-none d-sm-block busca pa-2">Buscando por</div>
-        <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
+        <div class="d-none d-sm-block nomeBusca py-2">{{ nome }}</div>
       </v-row>
       <div>
         <v-chip class="ma-2" @click="mostrarPopupOrdenacaoProdutos = true">Ordenar por {{ordenacao}}</v-chip>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       mostrarPopupOrdenacaoProdutos: false,
-      ordenacao: "",
+      ordenacao: "nome",
       tipoOrdenacao: "asc"
     };
   },
@@ -61,35 +61,35 @@ export default {
     CardProduto
   },
 
-  props: {
-    busca: {
-      required: true
+  watch: {
+    nome: function ()  {
+       this.getProdutos({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao });
     }
   },
 
   computed: {
-    ...mapState("Busca", ["produtos"]),
+    ...mapState("Busca", ["produtos", "nome"]),
 
     id() {
       return this.$route.params.id;
     }
   },
   created() {
-    this.getProdutos();
+    this.getProdutos({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
   },
   methods: {
     ...mapActions("Busca", ["getProdutos", "setOrdenacao", "setTipoOrdenacao"]),
     ordenar() {
-      this.setOrdenacao(this.ordenacao),
-        (this.mostrarPopupOrdenacaoProdutos = false);
+      this.setOrdenacao(this.ordenacao)
+      this.getProdutos({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
     },
     alterarTipoOrdenacao() {
       if (this.tipoOrdenacao == "asc") {
         this.tipoOrdenacao = "desc";
-      } else if (tipoOrdenacao == "desc") {
+      } else if (this.tipoOrdenacao == "desc") {
         this.tipoOrdenacao = "asc";
       }
-      this.setTipoOrdenacao(this.tipoOrdenacao);
+      this.getProdutos({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
     }
   }
 };

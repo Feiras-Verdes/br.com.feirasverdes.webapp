@@ -3,11 +3,14 @@
     <v-row>
       <v-row>
         <div class="d-none d-sm-block busca pa-2">Buscando por</div>
-        <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
+        <div class="d-none d-sm-block nomeBusca py-2">{{ nome }}</div>
       </v-row>
       <div>
-        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoEstandes = true"
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoEstandes = true" v-if="ordenacao == 'nome'"
           >Ordenar por {{ ordenacao }}</v-chip
+        >
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true" v-if="ordenacao == 'a.nota'"
+          >Ordenar por avaliação</v-chip
         >
         <v-chip
           class="ma-2"
@@ -84,8 +87,14 @@ export default {
     CardEstande,
   },
 
+  watch: {
+    nome: function ()  {
+       this.getEstandes({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao });
+    }
+  },
+
   computed: {
-    ...mapState("Busca", ["estandes"]),
+    ...mapState("Busca", ["estandes", "nome"]),
 
     id() {
       return this.$route.params.id;
@@ -99,24 +108,24 @@ export default {
   },
 
   created() {
-    this.getEstandes();
+    this.getEstandes({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
   },
 
   methods: {
     ...mapActions("Busca", ["getEstandes", "setOrdenacao", "setTipoOrdenacao"]),
 
     ordenar() {
-      this.setOrdenacao(this.ordenacao),
-        (this.mostrarPopupOrdenacaoEstandes = false);
+      this.setOrdenacao(this.ordenacao)
+      this.getEstandes({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
     },
 
     alterarTipoOrdenacao() {
       if (this.tipoOrdenacao == "asc") {
         this.tipoOrdenacao = "desc";
-      } else if (tipoOrdenacao == "desc") {
+      } else if (this.tipoOrdenacao == "desc") {
         this.tipoOrdenacao = "asc";
       }
-      this.setTipoOrdenacao(this.tipoOrdenacao);
+      this.getEstandes({nome: this.nome, ordenacao: this.ordenacao, tipoOrdenacao: this.tipoOrdenacao});
     },
 
     rolarPagina() {

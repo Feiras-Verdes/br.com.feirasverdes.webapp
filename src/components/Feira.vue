@@ -5,7 +5,7 @@
         <v-row justify="center">
           <v-col sm="6" md="6" lg="6">
             <v-avatar class="avatar-feira" size="140">
-              <v-img v-if="feira.imagem" :src="feira.imagem" @click.stop="abrirDialogImagem(feira.imagem)"></v-img>
+              <v-img v-if="feira.imagem" :src="feira.imagem" ></v-img>
               <v-img v-else src="../assets/icone-feira.png"></v-img>
             </v-avatar>
           </v-col>
@@ -51,13 +51,13 @@
         <v-tabs-items v-model="aba">
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" @abrir-imagem-dialog="abrirDialogImagem"/>
+              <CardNoticia v-for="noticia in noticias" :key="noticia.id" :noticia="noticia" />
             </div>
           </v-tab-item>
 
           <v-tab-item>
             <div class="d-sm-flex d-md-inline-flex flex-wrap">
-							<CardEstande v-for="estande in estandes" :key="estande.id" :estande="estande" @abrir-imagem-dialog="abrirDialogImagem"/>
+							<CardEstande v-for="estande in estandes" :key="estande.id" :estande="estande"/>
             </div>
           </v-tab-item>
         </v-tabs-items>
@@ -124,9 +124,6 @@ export default {
       });
     },
 
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    }
   }
 };
 </script>
