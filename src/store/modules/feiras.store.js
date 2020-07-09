@@ -8,9 +8,13 @@ import {
   cadastrarFeira,
   excluirFeira,
   salvarFeiraEditada,
-  removerEstandeDeFeira
+  removerEstandeDeFeira,
 } from "@/api/feiras.api";
-import { cadastrarNoticia, atualizarNoticia, excluirNoticia } from "@/api/noticias.api";
+import {
+  cadastrarNoticia,
+  atualizarNoticia,
+  excluirNoticia,
+} from "@/api/noticias.api";
 import { fetchFeirasDoOrganizador } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
 
@@ -79,7 +83,7 @@ const actions = {
       for (let i = 0; i < res.data.length; i++) {
         res.data[i].imagem = converterBytesParaDataUrl(res.data[i].imagem);
       }
-      commit("SET_NOTICIAS", res.data.noticias);
+      commit("SET_NOTICIAS", res.data);
     } catch (error) {
       console.log(error);
     }
@@ -231,8 +235,8 @@ const actions = {
         tipo: "error",
       });
     }
-  }
-}
+  },
+};
 
 export default {
   namespaced: true,

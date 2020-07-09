@@ -27,7 +27,9 @@
         class="mt-3 px-4"
       >
         <template v-slot:selection="{ text }">
-          <v-chip small label color="light-green darken-3" text-color="white">{{ text }}</v-chip>
+          <v-chip small label color="light-green darken-3" text-color="white">{{
+            text
+          }}</v-chip>
         </template>
       </v-file-input>
     </template>
@@ -46,7 +48,9 @@
           ></v-text-field>
         </v-card-title>
         <v-card-subtitle class="autor-noticia">
-          <div v-if="!editar">{{ `${noticia.dataPublicacao} - ${autor}` }}</div>
+          <div v-if="!editar">
+            {{ `${noticia.dataPublicacao} - ${autor}` }}
+          </div>
         </v-card-subtitle>
         <v-card-text class="descricao-noticia">
           <div v-if="!editar">{{ noticia.descricao }}</div>
@@ -69,7 +73,8 @@
         v-if="editar"
         class="subtitle-1 link-excluir"
         @click="confirmarExclusao = true"
-      >Excluir Notícia</a>
+        >Excluir Notícia</a
+      >
       <v-spacer></v-spacer>
       <v-icon v-if="!editar" @click="editar = true">mdi-pencil</v-icon>
 
@@ -79,8 +84,15 @@
         outlined
         color="light-green darken-3"
         @click="cancelar"
-      >Cancelar</v-btn>
-      <v-btn v-if="editar" class="white--text" color="light-green darken-3" @click="salvar">Salvar</v-btn>
+        >Cancelar</v-btn
+      >
+      <v-btn
+        v-if="editar"
+        class="white--text"
+        color="light-green darken-3"
+        @click="salvar"
+        >Salvar</v-btn
+      >
     </v-card-actions>
 
     <v-dialog v-model="confirmarExclusao" width="500">
@@ -93,8 +105,15 @@
             outlined
             color="light-green darken-3"
             @click="confirmarExclusao = false"
-          >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" :loading="carregando" @click="excluir">Excluir Feira</v-btn>
+            >Cancelar</v-btn
+          >
+          <v-btn
+            class="white--text"
+            color="light-green darken-3"
+            :loading="carregando"
+            @click="excluir"
+            >Excluir Feira</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -115,29 +134,33 @@ export default {
       imagem: null,
       imagemUrl: null,
       regras: {
-        obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório"
+        obrigatorio: (valor) => (valor && !!valor.trim()) || "Obrigatório",
       },
       confirmarExclusao: false,
-      carregando: false
+      carregando: false,
     };
   },
 
   props: {
     noticia: {
       type: Object,
-      required: true
+      required: true,
     },
 
     podeEditar: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   computed: {
     autor() {
-      return this.noticia.feira ? this.noticia.feira.nome : this.noticia.estande ? this.noticia.estande.nome : "";
-    }
+      return this.noticia.feira
+        ? this.noticia.feira.nome
+        : this.noticia.estande
+        ? this.noticia.estande.nome
+        : "";
+    },
   },
 
   created() {
@@ -163,7 +186,7 @@ export default {
       formData.append("titulo", this.titulo);
       formData.append("descricao", this.descricao);
       formData.append("idFeira", this.idFeira);
-      await this.atualizarNoticia(formData)
+      await this.atualizarNoticia(formData);
     },
 
     async excluir() {
@@ -180,8 +203,8 @@ export default {
 
     mostrarImagem() {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);
-    }
-  }
+    },
+  },
 };
 </script>
 

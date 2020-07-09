@@ -6,24 +6,31 @@
         <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
       </v-row>
       <div>
-        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true">Ordenar por {{ordenacao}}</v-chip>
-        <v-chip class="ma-2" v-if="tipoOrdenacao == 'asc'" @click="alterarTipoOrdenacao">
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true"
+          >Ordenar por {{ ordenacao }}</v-chip
+        >
+        <v-chip
+          class="ma-2"
+          v-if="tipoOrdenacao == 'asc'"
+          @click="alterarTipoOrdenacao"
+        >
           <v-icon>mdi-sort-ascending</v-icon>
         </v-chip>
-        <v-chip class="ma-2" v-if="tipoOrdenacao == 'desc'" @click="alterarTipoOrdenacao">
+        <v-chip
+          class="ma-2"
+          v-if="tipoOrdenacao == 'desc'"
+          @click="alterarTipoOrdenacao"
+        >
           <v-icon>mdi-sort-descending</v-icon>
         </v-chip>
       </div>
     </v-row>
     <v-row>
       <div class="d-sm-flex d-md-inline-flex flex-wrap justify-space-between">
-        <div class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap">
-          <CardFeira
-            v-for="feira in feiras"
-            :key="feira.id"
-            :feira="feira"
-            @abrir-imagem-dialog="abrirDialogImagem"
-          />
+        <div
+          class="sm-justify-center md-justify-start d-md-inline-flex flex-wrap"
+        >
+          <CardFeira v-for="feira in feiras" :key="feira.id" :feira="feira" />
         </div>
       </div>
     </v-row>
@@ -32,8 +39,16 @@
         <v-card-title>Ordenação</v-card-title>
         <v-card-text>
           <v-radio-group class="pl-3" v-model="ordenacao">
-            <v-radio label="Nome" value="nome" color="light-green darken-3"></v-radio>
-            <v-radio label="Avaliação" value="a.nota" color="light-green darken-3"></v-radio>
+            <v-radio
+              label="Nome"
+              value="nome"
+              color="light-green darken-3"
+            ></v-radio>
+            <v-radio
+              label="Avaliação"
+              value="a.nota"
+              color="light-green darken-3"
+            ></v-radio>
           </v-radio-group>
         </v-card-text>
         <v-card-actions>
@@ -55,11 +70,11 @@ export default {
     return {
       mostrarPopupOrdenacaoFeiras: false,
       ordenacao: "nome",
-      tipoOrdenacao: "asc"
+      tipoOrdenacao: "asc",
     };
   },
   components: {
-    CardFeira
+    CardFeira,
   },
 
   computed: {
@@ -67,13 +82,13 @@ export default {
 
     id() {
       return this.$route.params.id;
-    }
+    },
   },
-  
+
   props: {
     busca: {
-      required: true
-    }
+      required: true,
+    },
   },
 
   created() {
@@ -81,7 +96,7 @@ export default {
   },
   methods: {
     ...mapActions("Busca", ["getFeiras", "setOrdenacao", "setTipoOrdenacao"]),
-    
+
     ordenar() {
       this.setOrdenacao(this.ordenacao),
         (this.mostrarPopupOrdenacaoFeiras = false);
@@ -93,8 +108,8 @@ export default {
         this.tipoOrdenacao = "asc";
       }
       this.setTipoOrdenacao(this.tipoOrdenacao);
-    }
-  }
+    },
+  },
 };
 </script>
 
