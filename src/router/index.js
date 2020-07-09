@@ -14,6 +14,7 @@ import GerenciarEstandes from '../components/GerenciarEstandes'
 import EditarEstande from '../components/EditarEstande.vue'
 import Busca from '../components/Busca.vue'
 import NovaSenha from '../components/NovaSenha.vue'
+import EsqueciSenha from '../components/EsqueciSenha.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -100,6 +101,10 @@ export const router = new VueRouter({
 				{
 					path: "novaSenha",
 					component: NovaSenha
+				},
+				{
+					path: "esqueciSenha",
+					component: EsqueciSenha
 				},
 			]
 		}

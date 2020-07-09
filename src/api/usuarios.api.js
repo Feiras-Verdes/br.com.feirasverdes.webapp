@@ -16,7 +16,9 @@ const fetchEstandesDoFeirante = (idUsuario) => httpClient.get(`${endpointUsuario
 
 const fetchFeirasDoOrganizador = (idUsuario) => httpClient.get(`${endpointUsuarios}/${idUsuario}/feiras`);
 
-const atualizarSenha = (senha) => httpClient.put(`${endpointUsuarios}/senha`,  {senha});
+const atualizarSenhaAntiga = (senha) => httpClient.put(`${endpointUsuarios}/senha`,  {senha});
+
+const recuperarSenhaEmail = (email) => httpClient.post(`/nova-senha`,  {email});
 
 export {
     fazerLogin,
@@ -26,5 +28,6 @@ export {
     excluirUsuario,
     fetchEstandesDoFeirante,
     fetchFeirasDoOrganizador,
-    atualizarSenha
+    atualizarSenhaAntiga,
+    recuperarSenhaEmail
 };

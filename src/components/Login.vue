@@ -40,7 +40,11 @@
                             </v-col>
                         </v-row>
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions> 
+                    <a
+                  class="subtitle-1 link-excluir"
+                  @click="esqueciSenha"
+                  >Esqueci minha Senha</a>
                     <v-spacer></v-spacer>
                     <v-btn class="white--text" outlined large color="light-green darken-3" @click="cancelar">Cancelar</v-btn>
                     <v-btn class="white--text" :disabled="!formularioValido" large color="light-green darken-3" @click="fazerLogin">Entrar</v-btn>
@@ -79,6 +83,10 @@ export default {
 
         validarFormulario() {
             this.$refs.form.validate();
+        },
+
+        esqueciSenha() {
+          this.$router.push("/esqueciSenha");
         },
 
         cancelar() {
