@@ -93,7 +93,8 @@ export const router = new VueRouter({
 					]
 				},
 				{
-					path: "busca",
+					path: "busca", 
+					name: 'busca',
 					component: Busca
 				},
 				{

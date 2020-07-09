@@ -4,13 +4,11 @@
       v-if="editar == false && noticia.imagem"
       height="150px"
       :src="noticia.imagem"
-      @click="abrirDialogImagem(noticia.imagem)"
     ></v-img>
     <v-img
       v-if="editar && imagemUrl"
       height="150px"
       :src="imagemUrl"
-      @click="abrirDialogImagem(imagem)"
     ></v-img>
     <template>
       <v-file-input
@@ -171,10 +169,6 @@ export default {
 
   methods: {
     ...mapActions("Feiras", ["atualizarNoticia", "excluirNoticia"]),
-
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     async salvar() {
       this.carregando = true;

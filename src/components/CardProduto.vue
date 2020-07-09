@@ -75,12 +75,10 @@
         <v-img
           v-if="editar == false && produto.imagem"
           :src="produto.imagem"
-          @click="abrirDialogImagem(produto.imagem)"
         ></v-img>
         <v-img
           v-else-if="editar && imagemUrl"
           :src="imagemUrl"
-          @click="abrirDialogImagem(imagemUrl)"
         ></v-img>
         <v-img v-else src="../assets/icone-produto.png"></v-img>
       </v-avatar>
@@ -164,9 +162,6 @@ export default {
   },
 
   methods: {
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     async salvar() {},
 

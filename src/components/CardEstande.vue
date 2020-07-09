@@ -7,7 +7,6 @@
             <v-img
               v-if="estande.imagem"
               :src="estande.imagem"
-              @click.stop="abrirDialogImagem(estande.imagem)"
             ></v-img>
             <v-img v-else src="../assets/icone-feira.png"></v-img>
           </v-avatar>
@@ -29,7 +28,7 @@
 
             <v-card-text v-if="estande.endereco" class="d-flex d-md-inline-flex justify-space-around">
               <v-icon color="black">mdi-map-marker</v-icon>
-              <div class="endereco">{{`${estande.endereco.logradouro}, nº${estande.endereco.numero} - ${estande.endereco.cidade}, ${estande.endereco.estado}`}}</div>
+              <div class="endereco">{{`${estande.endereco.logradouro}, nº${estande.endereco.numero} - ${estande.endereco.bairro}`}}</div>
             </v-card-text>
           </div>
         </div>
@@ -50,9 +49,6 @@ export default {
   },
 
   methods: {
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     irParaEstande() {
       this.$router.push({ path: `/estandes/${this.estande.id}` });

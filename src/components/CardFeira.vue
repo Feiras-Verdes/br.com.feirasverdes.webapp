@@ -4,8 +4,8 @@
       <div>
         <div class="d-inline-flex justify-space-between">
           <v-avatar size="120">
-            <img v-if="feira.imagem" :src="feira.imagem"></img>
-            <img v-else src="../assets/icone-feira.png"></img>
+            <v-img v-if="feira.imagem" :src="feira.imagem"></v-img>
+            <v-img v-else src="../assets/icone-feira.png"></v-img>
           </v-avatar>
           <v-spacer></v-spacer>
           <div>
@@ -30,7 +30,7 @@
               <v-icon color="black">mdi-map-marker</v-icon>
               <div>
                 {{
-                  `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.cidade}, ${feira.endereco.estado}`
+                  `${feira.endereco.logradouro}, nº ${feira.endereco.numero} - ${feira.endereco.bairro}`
                 }}
               </div>
             </v-card-text>
@@ -53,9 +53,6 @@ export default {
   },
 
   methods: {
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
 
     irParaFeira() {
       this.$router.push({ path: `/feiras/${this.feira.id}` });

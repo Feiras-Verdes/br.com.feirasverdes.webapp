@@ -64,7 +64,7 @@
         </div>
 
         <v-avatar v-if="imagemUrl" size="120" tile>
-          <v-img height="150px" :src="imagemUrl" @click="abrirDialogImagem(imagem)"></v-img>
+          <v-img height="150px" :src="imagemUrl" ></v-img>
         </v-avatar>
       </div>
       <v-card-actions>

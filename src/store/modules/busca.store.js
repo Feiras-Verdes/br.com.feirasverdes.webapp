@@ -44,14 +44,14 @@ const mutations = {
 };
 
 const actions = {
-  async getEstandes({ state, commit }) {
+  async getEstandes({ state, commit }, payload) {
     try {
       const res = await fetchBuscaEstande(
-        state.nome,
+        payload.nome,
         state.limite,
         state.pagina,
-        state.ordenacao,
-        state.tipoOrdenacao
+        payload.ordenacao,
+        payload.tipoOrdenacao
       );
       for (let i = 0; i < res.data.content.length; i++) {
         res.data.content[i].imagem = converterBytesParaDataUrl(
@@ -67,14 +67,14 @@ const actions = {
       });
     }
   },
-  async getFeiras({ state, commit }) {
+  async getFeiras({ state, commit }, payload) {
     try {
       const res = await fetchBuscaFeira(
-        state.nome,
+        payload.nome,
         state.limite,
         state.pagina,
-        state.ordenacao,
-        state.tipoOrdenacao
+        payload.ordenacao,
+        payload.tipoOrdenacao
       );
       for (let i = 0; i < res.data.content.length; i++) {
         res.data.content[i].imagem = converterBytesParaDataUrl(
@@ -91,14 +91,14 @@ const actions = {
     }
   },
 
-  async getFeiras2({ state, commit }, nome) {
+  async getFeiras2({ state, commit }, payload) {
     try {
       const res = await fetchBuscaFeira(
-        nome,
+        payload.nome,
         state.limite,
         state.pagina,
-        state.ordenacao,
-        state.tipoOrdenacao
+        payload.ordenacao,
+        payload.tipoOrdenacao
       );
       for (let i = 0; i < res.data.content.length; i++) {
         res.data.content[i].imagem = converterBytesParaDataUrl(
@@ -115,14 +115,14 @@ const actions = {
     }
   },
 
-  async getProdutos({ state, commit }) {
+  async getProdutos({ state, commit }, payload) {
     try {
       const res = await fetchBuscaProduto(
-        state.nome,
+        payload.nome,
         state.limite,
         state.pagina,
-        state.ordenacao,
-        state.tipoOrdenacao
+        payload.ordenacao,
+        payload.tipoOrdenacao
       );
       for (let i = 0; i < res.data.content.length; i++) {
         res.data.content[i].imagem = converterBytesParaDataUrl(
@@ -143,6 +143,9 @@ const actions = {
   },
   setTipoOrdenacao({ commit }, tipoOrdenacao) {
     commit("SET_TIPO_ORDENACAO", tipoOrdenacao);
+  },
+  setNome({ commit }, nome) {
+    commit("SET_NOME", nome);
   },
 };
 

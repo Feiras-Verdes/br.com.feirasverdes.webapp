@@ -3,11 +3,14 @@
     <v-row>
       <v-row>
         <div class="d-none d-sm-block busca pa-2">Buscando por</div>
-        <div class="d-none d-sm-block nomeBusca py-2">{{ busca }}</div>
+        <div class="d-none d-sm-block nomeBusca py-2">{{ nome }}</div>
       </v-row>
       <div>
-        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true"
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true" v-if="ordenacao == 'nome'"
           >Ordenar por {{ ordenacao }}</v-chip
+        >
+        <v-chip class="ma-2" @click="mostrarPopupOrdenacaoFeiras = true" v-if="ordenacao == 'a.nota'"
+          >Ordenar por avaliação</v-chip
         >
         <v-chip
           class="ma-2"
@@ -78,36 +81,36 @@ export default {
   },
 
   computed: {
-    ...mapState("Busca", ["feiras"]),
+    ...mapState("Busca", ["feiras", "nome"]),
 
     id() {
       return this.$route.params.id;
     },
   },
 
-  props: {
-    busca: {
-      required: true,
-    },
+  watch: {
+    nome: function ()  {
+       this.getFeiras({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao });
+    }
   },
 
   created() {
-    this.getFeiras();
+    this.getFeiras({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao });
   },
   methods: {
     ...mapActions("Busca", ["getFeiras", "setOrdenacao", "setTipoOrdenacao"]),
 
     ordenar() {
-      this.setOrdenacao(this.ordenacao),
-        (this.mostrarPopupOrdenacaoFeiras = false);
+     this.getFeiras({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao })
+     this.mostrarPopupOrdenacaoFeiras = false;
     },
     alterarTipoOrdenacao() {
       if (this.tipoOrdenacao == "asc") {
         this.tipoOrdenacao = "desc";
-      } else if (tipoOrdenacao == "desc") {
+      } else if (this.tipoOrdenacao == "desc") {
         this.tipoOrdenacao = "asc";
       }
-      this.setTipoOrdenacao(this.tipoOrdenacao);
+      this.getFeiras({nome: this.nome, ordenacao: this.ordenacao,tipoOrdenacao: this.tipoOrdenacao });
     },
   },
 };
