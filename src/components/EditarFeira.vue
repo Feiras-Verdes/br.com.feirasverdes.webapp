@@ -470,7 +470,7 @@ export default {
       });
 
       this.loading = false;
-      
+
       this.$emit("redesenhar");
     },
 
@@ -540,7 +540,7 @@ export default {
       this.endereco.estadoSelecionado = res.data.uf;
       this.endereco.cidade = res.data.localidade;
       this.carregandoEndereco = false;
-    },
+    }
   },
 };
 </script>

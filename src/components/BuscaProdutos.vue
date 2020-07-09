@@ -22,7 +22,6 @@
             v-for="produto in produtos"
             :key="produto.id"
             :produto="produto"
-            @abrir-imagem-dialog="abrirDialogImagem"
           />
         </div>
       </div>

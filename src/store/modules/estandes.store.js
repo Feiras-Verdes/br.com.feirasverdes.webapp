@@ -6,9 +6,10 @@ import {
   avaliarEstande,
   cadastrarEstande,
   atualizarEstande,
-  excluirEstande
+  excluirEstande,
 } from "@/api/estandes.api";
 import { cadastrarNoticia, atualizarNoticia, excluirNoticia } from "@/api/noticias.api";
+import { cadastrarProduto, atualizarProduto, excluirProduto } from "@/api/produtos.api";
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
 
@@ -179,7 +180,7 @@ const actions = {
   async atualizarNoticia({ state, dispatch }, payload) {
     try {
       const res = await atualizarNoticia(payload.id, payload.formData);
-      dispatch("getNoticiasDeEstande", state.feira.id);
+      dispatch("getNoticiasDeEstande", state.estande.id);
     } catch (error) {
       console.log(error);
       this.dispatch("Mensagens/mostrarMensagem", {
@@ -192,7 +193,7 @@ const actions = {
   async excluirNoticia({ state, dispatch }, idNoticia) {
     try {
       const res = await excluirNoticia(idNoticia);
-      dispatch("getNoticiasDeEstande", state.feira.id);
+      dispatch("getNoticiasDeEstande", state.estande.id);
     } catch (error) {
       console.log(error);
       this.dispatch("Mensagens/mostrarMensagem", {
@@ -200,7 +201,43 @@ const actions = {
         tipo: "error",
       });
     }
-  }
+  },
+
+  async salvarProduto({ state, dispatch}, prduto) {
+    try {
+      const res = await cadastrarProduto(prduto);
+      dispatch("getProdutosDeEstande", state.estande.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao cadastrar produto.", tipo: "error" });
+    }
+  },
+
+  async atualizarProduto({ state, dispatch }, prduto) {
+    try {
+      const res = await atualizarProduto(prduto.id, prduto.formData);
+      dispatch("getProdutosDeEstande", state.estande.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao atualizar produto.",
+        tipo: "error",
+      });
+    }
+  },
+
+  async excluirProduto({ state, dispatch }, idProduto) {
+    try {
+      const res = await excluirProduto(idProduto);
+      dispatch("getProdutosDeEstande", state.estande.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao excluir produto.",
+        tipo: "error",
+      });
+    }
+  },
 };
 
 export default {

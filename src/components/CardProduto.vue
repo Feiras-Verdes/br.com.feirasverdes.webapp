@@ -61,7 +61,7 @@
               v-model="imagem"
               color="light-green darken-3"
               @change="mostrarImagem"
-              @click:clear="imagemUrl = null"
+              @click:clear.stop="imagemUrl = null"
             >
               <template v-slot:selection="{ text }">
                 <v-chip small label color="light-green darken-3" text-color="white">{{ text }}</v-chip>
@@ -75,12 +75,10 @@
         <v-img
           v-if="editar == false && produto.imagem"
           :src="produto.imagem"
-          @click="abrirDialogImagem(produto.imagem)"
         ></v-img>
         <v-img
           v-else-if="editar && imagemUrl"
           :src="imagemUrl"
-          @click="abrirDialogImagem(imagemUrl)"
         ></v-img>
         <v-img v-else src="../assets/icone-produto.png"></v-img>
       </v-avatar>
@@ -90,19 +88,25 @@
       <a
         v-if="editar"
         class="subtitle-1 link-excluir"
-        @click="confirmarExclusao = true"
+        @click.stop="confirmarExclusao = true"
       >Excluir Notícia</a>
       <v-spacer></v-spacer>
-      <v-icon v-if="!editar" @click="editar = true">mdi-pencil</v-icon>
+      <v-icon v-if="!editar" @click.stop="editar = true">mdi-pencil</v-icon>
 
       <v-btn
         v-if="editar"
         class="white--text"
         outlined
         color="light-green darken-3"
-        @click="cancelar"
+        @click.stop="cancelar"
       >Cancelar</v-btn>
-      <v-btn v-if="editar" class="white--text" color="light-green darken-3" @click="salvar">Salvar</v-btn>
+      <v-btn
+        v-if="editar"
+        :loading="carregando"
+        class="white--text"
+        color="light-green darken-3"
+        @click.stop="salvar"
+      >Salvar</v-btn>
     </v-card-actions>
 
     <v-dialog v-model="confirmarExclusao" width="500">
@@ -114,9 +118,14 @@
             class="white--text"
             outlined
             color="light-green darken-3"
-            @click="confirmarExclusao = false"
+            @click.stop="confirmarExclusao = false"
           >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Feira</v-btn>
+          <v-btn
+            class="white--text"
+            color="light-green darken-3"
+            :loading="carregando"
+            @click.stop="excluir"
+          >Excluir Feira</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -124,6 +133,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "CardProduto",
 
@@ -139,7 +149,8 @@ export default {
       imagemUrl: null,
       regras: {
         obrigatorio: valor => (valor && !!valor.trim()) || "Obrigatório"
-      }
+      },
+      carregando: false
     };
   },
 
@@ -164,15 +175,37 @@ export default {
   },
 
   methods: {
+    ...mapActions("Estandes", ["excluirProduto", "atualizarProduto"]),
+
     abrirDialogImagem(imagem) {
       this.$emit("abrir-imagem-dialog", imagem);
     },
 
-    async salvar() {},
+    async salvar() {
+      this.carregando = true;
+      let formData = new FormData();
+
+      if (this.imagem) {
+        formData.append("imagem", this.imagem);
+      }
+
+      formData.append("nome", this.nome);
+      formData.append("preco", this.preco);
+      formData.append("descricao", this.descricao);
+      formData.append("unidade", this.unidade);
+      formData.append("idEstande", this.produto.estande.id);
+
+      this.atualizarProduto({ formData });
+
+      this.carregando = false;
+    },
 
     async excluir() {
+      this.carregando = true;
+      await this.excluirProduto(this.noticia.id);
+
+      this.carregando = false;
       this.confirmarExclusao = false;
-      // TODO
     },
 
     cancelar() {
@@ -184,7 +217,9 @@ export default {
     },
 
     irParaEstande() {
-      this.$router.push({ path: `/estandes/${this.produto.estande.id}` });
+      if (!this.podeEditar) {
+        this.$router.push({ path: `/estandes/${this.produto.estande.id}` });
+      }
     }
   }
 };

@@ -7,7 +7,6 @@
             <v-img
               v-if="estande.imagem"
               :src="estande.imagem"
-              @click.stop="abrirDialogImagem(estande.imagem)"
             ></v-img>
             <v-img v-else src="../assets/icone-feira.png"></v-img>
           </v-avatar>
@@ -50,10 +49,6 @@ export default {
   },
 
   methods: {
-    abrirDialogImagem(imagem) {
-      this.$emit("abrir-imagem-dialog", imagem);
-    },
-
     irParaEstande() {
       this.$router.push({ path: `/estandes/${this.estande.id}` });
     }

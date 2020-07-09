@@ -245,7 +245,7 @@ export default {
     },
 
     buscar() {
-       this.$router.push({path:`/busca/`, query: { busca: this.busca}})
+       this.$router.push({path:`/busca`, query: { busca: this.busca}})
     },
     
     irHome(){

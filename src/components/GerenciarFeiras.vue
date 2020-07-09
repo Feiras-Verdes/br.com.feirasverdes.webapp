@@ -1,7 +1,7 @@
 <template>
   <v-container fluid height="100%" class="pa-0 editar-feira" :key="chaveComponente">
     <v-tabs background-color="light-green darken-3" dark>
-      <v-tab v-for="feira in feiras" :key="feira.id" :to="`/gerenciar-feiras/${feira.id}`" exact>{{ feira.nome }}</v-tab>
+      <v-tab @click="redesenhar" v-for="feira in feiras" :key="feira.id" :to="`/gerenciar-feiras/${feira.id}`" exact>{{ feira.nome }}</v-tab>
       <v-tab @click="adicionarFeira">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-tab>

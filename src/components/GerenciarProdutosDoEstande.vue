@@ -133,8 +133,6 @@ export default {
   methods: {
     ...mapActions("Estandes", [
       "getProdutosDeEstande",
-      "cadastrarProduto",
-      "excluirProduto",
       "salvarProduto"
     ]),
 
@@ -142,7 +140,24 @@ export default {
       this.imagemUrl = window.URL.createObjectURL(this.imagem);
     },
 
-    salvar() {},
+    salvar() {
+      this.carregando = true;
+      let formData = new FormData();
+
+      if (this.imagem) {
+        formData.append("imagem", this.imagem);
+      }
+
+      formData.append("nome", this.nome);
+      formData.append("preco", this.preco);
+      formData.append("descricao", this.descricao);
+      formData.append("unidade", this.unidade);
+      formData.append("idEstande", this.idEstande);
+
+      this.salvarProduto(formData);
+
+      this.carregando = false;
+    },
 
     limpar() {
       this.nome = "";

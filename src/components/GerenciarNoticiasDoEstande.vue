@@ -126,7 +126,7 @@ export default {
       formData.append("descricao", this.descricao);
       formData.append("idEstande", this.idEstande);
 
-      this.cadastrarNoticia({formData});
+      this.cadastrarNoticia(formData);
 
       this.carregando = false;
     },
