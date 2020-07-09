@@ -288,7 +288,7 @@
                   color="light-green darken-3"
                   @click="cancelar"
                 >Cancelar</v-btn>
-                <v-btn class="white--text" color="light-green darken-3" @click="salvar">Salvar</v-btn>
+                <v-btn class="white--text" color="light-green darken-3" :loading="loading" @click="salvar">Salvar</v-btn>
               </v-card-actions>
             </v-card>
           </v-tab-item>
@@ -314,7 +314,7 @@
             color="light-green darken-3"
             @click="confirmarExclusao = false"
           >Cancelar</v-btn>
-          <v-btn class="white--text" color="light-green darken-3" @click="excluir">Excluir Estande</v-btn>
+          <v-btn class="white--text" color="light-green darken-3" :loading="loading" @click="excluir">Excluir Estande</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -411,7 +411,8 @@ export default {
       confirmarExclusao: false,
       feiraSelecionada: "",
       cbFeiras: [],
-      buscaFeira: ""
+      buscaFeira: "",
+      loading: false
     };
   },
 
@@ -449,6 +450,7 @@ export default {
     },
 
     async salvar() {
+      this.loading = true;
       let formData = new FormData();
       if (this.imagem) {
         formData.append("imagem", this.imagem);
@@ -472,13 +474,18 @@ export default {
         id: this.estande.id,
         formData: formData
       });
+
+      this.loading = false;
+      this.$emit("redesenhar");
     },
 
     async excluir() {
-      this.confirmarExclusao = false;
+      this.loading = true;
       await this.deletarEstande(this.estande.id);
+      this.loading = false;
+      this.confirmarExclusao = false;
 
-      this.$destroy();
+      this.$emit("redesenhar");
     },
 
     cancelar() {

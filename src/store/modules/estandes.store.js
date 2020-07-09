@@ -6,9 +6,9 @@ import {
   avaliarEstande,
   cadastrarEstande,
   atualizarEstande,
-  excluirEstande,
-  cadastrarNoticiaEmEstande
+  excluirEstande
 } from "@/api/estandes.api";
+import { cadastrarNoticia, atualizarNoticia, excluirNoticia } from "@/api/noticias.api";
 import { fetchEstandesDoFeirante } from "@/api/usuarios.api";
 import { converterBytesParaDataUrl } from "@/utils/utils.js";
 
@@ -168,11 +168,37 @@ const actions = {
 
   async cadastrarNoticia({ state, dispatch }, noticia) {
     try {
-      const res = await cadastrarNoticiaEmEstande(noticia);
+      const res = await cadastrarNoticia(noticia);
       dispatch("getNoticiasDeEstande", state.estande.id);
     } catch (error) {
       console.log(error);
       this.dispatch("Mensagens/mostrarMensagem", { mensagem: "Erro ao cadastrar nova notícia.", tipo: "error" });
+    }
+  },
+
+  async atualizarNoticia({ state, dispatch }, payload) {
+    try {
+      const res = await atualizarNoticia(payload.id, payload.formData);
+      dispatch("getNoticiasDeEstande", state.feira.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao atualizar notícia.",
+        tipo: "error",
+      });
+    }
+  },
+
+  async excluirNoticia({ state, dispatch }, idNoticia) {
+    try {
+      const res = await excluirNoticia(idNoticia);
+      dispatch("getNoticiasDeEstande", state.feira.id);
+    } catch (error) {
+      console.log(error);
+      this.dispatch("Mensagens/mostrarMensagem", {
+        mensagem: "Erro ao excluir notícia.",
+        tipo: "error",
+      });
     }
   }
 };

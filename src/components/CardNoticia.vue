@@ -147,7 +147,9 @@ export default {
   },
 
   methods: {
-    ...mapActions("Feiras", ["atualizarNoticia", "excluirNoticia"]),
+    ...mapActions("Feiras", {atualizarNoticiaDeFeira: "atualizarNoticia", excluirNoticiaDeFeira: "excluirNoticia"}),
+
+    ...mapActions("Estandes", {atualizarNoticiaDeEstande: "atualizarNoticia", excluirNoticiaDeEstande: "excluirNoticia"}),
 
     abrirDialogImagem(imagem) {
       this.$emit("abrir-imagem-dialog", imagem);
@@ -162,13 +164,23 @@ export default {
       }
       formData.append("titulo", this.titulo);
       formData.append("descricao", this.descricao);
-      formData.append("idFeira", this.idFeira);
-      await this.atualizarNoticia(formData)
+
+      if (this.noticia.feira) {
+        formData.append("idFeira", this.noticia.feira.id);
+        await this.atualizarNoticiaDeFeira({id: this.noticia.id, formData})
+      } else if (this.noticia.estande) {
+        formData.append("idEstande", this.noticia.estande.id);
+        await this.atualizarNoticiaDeEstande({id: this.noticia.id, formData})
+      }
     },
 
     async excluir() {
       this.carregando = true;
-      await this.excluirNoticia(this.noticia.id);
+      if (this.noticia.feira) {
+        await this.excluirNoticiaDeFeira(this.noticia.id);
+      } else if (this.noticia.estande) {
+        await this.excluirNoticiaDeEstande(this.noticia.id);
+      }
 
       this.carregando = false;
       this.confirmarExclusao = false;

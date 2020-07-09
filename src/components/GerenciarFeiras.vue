@@ -51,13 +51,6 @@ export default {
       await this.cadastrarFeira(feira);
 
       await this.getFeirasDoOrganizador(this.usuario.id);
-      
-      // this.$router.push(`/gerenciar-feira/${this.feiras[this.feiras.length].id}`);
-    },
-
-    async onFeiraExcluida() {
-      await this.getFeirasDoOrganizador(usuario.id);
-      this.redesenhar();
     }
   }
 };

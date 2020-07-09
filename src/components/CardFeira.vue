@@ -4,8 +4,8 @@
       <div>
         <div class="d-inline-flex justify-space-between">
           <v-avatar size="120">
-            <img v-if="feira.imagem" :src="feira.imagem"></img>
-            <img v-else src="../assets/icone-feira.png"></img>
+            <v-img v-if="feira.imagem" :src="feira.imagem"></v-img>
+            <v-img v-else src="../assets/icone-feira.png"></v-img>
           </v-avatar>
           <v-spacer></v-spacer>
           <div>

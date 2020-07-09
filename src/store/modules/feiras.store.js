@@ -79,7 +79,7 @@ const actions = {
       for (let i = 0; i < res.data.length; i++) {
         res.data[i].imagem = converterBytesParaDataUrl(res.data[i].imagem);
       }
-      commit("SET_NOTICIAS", res.data.noticias);
+      commit("SET_NOTICIAS", res.data);
     } catch (error) {
       console.log(error);
     }
@@ -207,9 +207,9 @@ const actions = {
     }
   },
 
-  async atualizarNoticia({ state, dispatch }, noticia) {
+  async atualizarNoticia({ state, dispatch }, payload) {
     try {
-      const res = await atualizarNoticia(noticia);
+      const res = await atualizarNoticia(payload.id, payload.formData);
       dispatch("getNoticiasDeFeira", state.feira.id);
     } catch (error) {
       console.log(error);

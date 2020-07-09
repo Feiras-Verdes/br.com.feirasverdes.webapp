@@ -1,12 +1,12 @@
 <template>
-  <v-container fluid height="100%" class="pa-0 editar-estande">
+  <v-container fluid height="100%" class="pa-0 editar-estande" :key="chaveComponente">
     <v-tabs background-color="light-green darken-3" dark>
       <v-tab v-for="estande in estandes" :key="estande.id" :to="`/gerenciar-estandes/${estande.id}`" exact>{{ estande.nome }}</v-tab>
       <v-tab @click="adicionarEstande">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-tab>
     </v-tabs>
-    <router-view @estande-excluido="onEstandeExcluido"></router-view>
+    <router-view  @redesenhar="redesenhar"></router-view>
   </v-container>
 </template>
 
@@ -18,6 +18,7 @@ export default {
 
   data() {
     return {
+      chaveComponente: 0
     };
   },
 
@@ -34,6 +35,12 @@ export default {
   methods: {
     ...mapActions("Estandes", ["cadastrarEstande", "getEstandesDoFeirante"]),
 
+    async redesenhar() {
+      await this.getEstandesDoFeirante(this.usuario.id);
+
+      this.chaveComponente += 1;
+    },
+
     async adicionarEstande() {
       const estande = {
         nome: 'Novo Estande',
@@ -45,10 +52,6 @@ export default {
       await this.cadastrarEstande(estande);
 
       await this.getEstandesDoFeirante(this.usuario.id);
-    },
-
-    async onEstandeExcluido() {
-      await this.getEstandesDoFeirante(usuario.id);
     }
   }
 };

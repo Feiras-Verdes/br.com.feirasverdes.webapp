@@ -244,7 +244,7 @@ export default {
           this.cnpj.trim() != "" ||
           "CPF ou CNPJ devem ser preenchidos!",
       },
-      formularioValido: false,
+      formularioValido: false
     };
   },
 

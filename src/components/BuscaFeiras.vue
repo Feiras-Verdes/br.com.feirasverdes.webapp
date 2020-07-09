@@ -86,6 +86,7 @@ export default {
       this.setOrdenacao(this.ordenacao),
         (this.mostrarPopupOrdenacaoFeiras = false);
     },
+    
     alterarTipoOrdenacao() {
       if (this.tipoOrdenacao == "asc") {
         this.tipoOrdenacao = "desc";
